@@ -93,7 +93,7 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 </section>
 
 <section class="card">
-<h2>🖼️ Thumbnail <span class="sub">(Thumbnail Prompt)</span></h2><div id="thumbPrompt" class="out empty">Thumbnail Prompt ပေါ်လာပါမယ်။</div><button class="secondary copy" id="copyThumb">📋 Copy Thumbnail Prompt</button>
+<h2>🖼️ Thumbnail <span class="sub">(Thumbnail Prompt)</span></h2><div id="thumbPrompt" class="out empty">Thumbnail Prompt ပေါ်လာပါမယ်።</div><button class="secondary copy" id="copyThumb">📋 Copy Thumbnail Prompt</button>
 <h3>📝 Thumbnail Text <span class="sub">(Thumbnail စာသား)</span></h3><div id="thumbText" class="out empty">—</div><button class="secondary copy" id="copyThumbText">📋 Copy Thumbnail Text</button>
 <h3>🚫 Thumbnail Negative Prompt <span class="sub">(Thumbnail မဖြစ်စေချင်သောအရာများ)</span></h3><div id="thumbNeg" class="out empty">—</div><button class="secondary copy" id="copyThumbNeg">📋 Copy Thumbnail Negative Prompt</button>
 </section>
@@ -175,29 +175,21 @@ function openCharacterModal(i){
  document.getElementById("m_del").onclick=()=>{if(confirm("ဒီဇာတ်ကောင်ကို ဖျက်မှာ သေချာပါသလား?")){state.characters.splice(i,1);closeModal();renderChars();buildFinalFromScenes()}}
 }
 function stylePhrase(){let s=val("Art Style");return ({"Cinematic Realistic":"cinematic realistic live-action","Photorealistic":"photorealistic live-action","Realistic":"realistic live-action","Anime":"cinematic anime","3D Animation":"high-end cinematic 3D animation","Chinese Donghua":"cinematic Chinese donghua","Korean Webtoon":"cinematic Korean webtoon","Japanese Anime":"cinematic Japanese anime"})[s]||s}
-function refPrompt(c){return `Create a professional multi-angle character reference / model sheet for ${c.name||"the character"}.
+
+function refPrompt(c){
+ return `Create a professional character reference photo for ${c.name||"the character"}.
 Identity: ${c.name||"unnamed character"}.
 Role: ${c.role||"story character"}.
 Age: ${c.age||"age appropriate to the story"}.
 Description: ${c.description||"distinctive, recognizable appearance"}.
-Master visual style: ${stylePhrase()}.
+Visual style: ${stylePhrase()}, ${val("Genre")}, ${val("Setting Culture")}.
+Single cinematic character portrait, detailed facial features, clear expression, consistent costume and accessories, professional lighting, clean background, production-ready design reference.
+IDENTITY LOCK: Maintain exact face structure, eyes, eyebrows, nose, lips, hair color, and costume details. No identity drift.`;
+}
 
-ONE SINGLE CHARACTER REFERENCE SHEET containing multiple clearly separated views of the EXACT SAME character:
-1. Front full-body view.
-2. Left 3/4 full-body view.
-3. Right 3/4 full-body view.
-4. Left side profile.
-5. Right side profile.
-6. Back full-body view.
-7. Face close-up for identity reference.
-
-Keep the exact same identity in every angle: identical face structure, eyes, eyebrows, nose, lips, skin appearance, age, hairstyle, hairline, hair color, body shape, height/proportions, costume, clothing details, armor, accessories, footwear, weapon and signature props.
-Neutral readable poses, clean silhouette, consistent proportions, clear facial features, production-ready character design reference, organized model-sheet layout, consistent lighting and background.
-
-IDENTITY LOCK: this reference sheet becomes the master visual identity for the entire story. Never redesign, age, de-age, recolor, replace, or alter the character between views or future scenes. No identity drift, no costume drift, no accessory drift, no hairstyle drift, no body-proportion drift.`}
 function renderRefs(){
  const b=document.getElementById("refs");if(!state.characters.length){b.innerHTML='<span class="empty">Character ထည့်ပြီးနောက် ပေါ်လာပါမယ်။</span>';return}
- b.innerHTML=state.characters.map((c,i)=>`<div class="item"><b>${esc(c.name||"Character "+(i+1))}</b><textarea id="ref_${i}" readonly style="margin-top:7px;min-height:300px">${esc(refPrompt(c))}</textarea><button class="secondary copy" data-copyref="${i}">📋 Copy Prompt</button></div>`).join("");
+ b.innerHTML=state.characters.map((c,i)=>`<div class="item"><b>${esc(c.name||"Character "+(i+1))}</b><textarea id="ref_${i}" readonly style="margin-top:7px;min-height:160px">${esc(refPrompt(c))}</textarea><button class="secondary copy" data-copyref="${i}">📋 Copy Prompt</button></div>`).join("");
  b.querySelectorAll("[data-copyref]").forEach(e=>e.onclick=()=>copyText(document.getElementById("ref_"+e.dataset.copyref).value,e))
 }
 function fallbackBlueprint(summary){return {story_premise:summary,main_characters:state.characters.filter(c=>c.role?.toLowerCase().includes("main")).map(c=>c.name).join(", ")||"Auto-detect from story",supporting_characters:state.characters.filter(c=>!c.role?.toLowerCase().includes("main")).map(c=>c.name).join(", ")||"To be determined",setting_world:val("Setting Culture"),main_conflict:"Developed from the story",story_goal:"Developed from the story",story_direction:"Beginning → escalation → turning point → resolution",tone_emotion:val("Genre"),important_details:"Preserve story-specific details",continuity_anchors:"Character identity, clothing, props, location, time and unresolved events must remain consistent."}}
@@ -314,11 +306,6 @@ async function autoDetect(){
 function normalizeScenes(arr){
  return arr.map(s=>({duration:Math.min(10,Math.max(1,+s.duration_seconds||5)),character:s.character||"",action:s.action||"",dialogue:s.dialogue||"",camera:s.camera||val("Camera Style"),camera_movement:s.camera_movement||val("Camera Movement"),lighting:s.lighting||val("Lighting"),audio:s.audio||val("Audio Style"),transition:s.transition||"Smooth continuity-preserving transition."}))
 }
-function generateScenesLocal(){
- let total=durationSec(),durations=plan(total),story=state.summary||document.getElementById("story").value.trim();
- state.scenes=durations.map((d,i)=>({duration:d,character:state.characters.map(c=>c.name).filter(Boolean).join(", ")||"Main character",action:i===0?`Begin the story naturally: ${story}`:`Continue directly from the previous scene and advance the story.`,dialogue:val("Language")==="No Dialogue"?"":i===0?"":"Continue the story naturally.",camera:val("Camera Style"),camera_movement:val("Camera Movement"),lighting:val("Lighting"),audio:val("Audio Style"),transition:"Smooth continuity-preserving transition."}));
- state.negative="low quality, blurry, distorted face, deformed hands, extra fingers, duplicate character, inconsistent face, age drift, costume drift, wrong weapon, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";renderScenes();buildFinalFromScenes()
-}
 
 async function generateScenes(){
   let summary = state.summary || document.getElementById("summary").value.trim();
@@ -343,17 +330,28 @@ async function generateScenes(){
   - In the 'action' field, describe the visual movement, camera angle, and clearly state WHO is speaking to WHOM (e.g., "မောင်သစ်က မေမြတ်ကို မျက်နှာချင်းဆိုင်ရပ်ပြီး ပြုံးကာ ပြောသည်"). Write this action in Burmese.
   - In the 'dialogue' field, write the exact dialogue line in ${val("Language")}.
   
-  Return a JSON object containing a "scenes" array where each object has these exact keys:
-  duration_seconds, character, action, dialogue, camera, camera_movement, lighting, audio, transition.`;
+  Return a JSON object containing:
+  1. "scenes": an array of objects with keys: duration_seconds, character, action, dialogue, camera, camera_movement, lighting, audio, transition.
+  2. "negative_prompt": string
+  3. "thumbnail_prompt": string
+  4. "thumbnail_text": string
+  5. "thumbnail_negative_prompt": string`;
 
   try {
     let d = await callGemini(prompt);
     let rawScenes = Array.isArray(d) ? d : (d.scenes || []);
     if(!rawScenes.length) throw Error("Scenes array not returned by AI.");
     state.scenes = normalizeScenes(rawScenes);
+    
+    if(d.negative_prompt) state.negative = d.negative_prompt;
+    if(d.thumbnail_prompt) state.thumb = d.thumbnail_prompt;
+    if(d.thumbnail_text) state.thumbText = d.thumbnail_text;
+    if(d.thumbnail_negative_prompt) state.thumbNeg = d.thumbnail_negative_prompt;
+
     renderScenes();
     buildFinalFromScenes();
-    document.getElementById("finalStatus").textContent = "✓ Scenes generated successfully.";
+    renderExtras();
+    document.getElementById("finalStatus").textContent = "✓ Scenes & Thumbnails generated successfully.";
   } catch(e) {
     alert("Error generating scenes: " + e.message);
     document.getElementById("finalStatus").textContent = "❌ " + e.message;
@@ -363,7 +361,15 @@ async function generateScenes(){
   }
 }
 
-function renderExtras(){document.getElementById("negative").textContent=state.negative||"—";document.getElementById("thumbPrompt").textContent=state.thumb||`Create a striking ${stylePhrase()} ${val("Genre")} TikTok cover featuring the same locked main character and story world. Ratio 9:16. Strong facial emotion, one clear focal subject, cinematic lighting, clean composition, no clutter.`;document.getElementById("thumbText").textContent=state.thumbText||document.getElementById("title").value.trim()||"Story";document.getElementById("thumbNeg").textContent=state.thumbNeg||"blur, distorted face, duplicate character, unreadable text, watermark, logo, clutter, low quality";let notes={Flow:"Write concise cinematic scene prompts; keep each clip within the generator's supported clip length and use reference images where available.",Veo:"Use clear cinematic natural-language instructions with explicit subject, action, camera, audio/dialogue and continuity.",Kling:"Use concise visual/action/camera instructions and explicit character continuity; keep dialogue clearly separated inside the prompt.",Hailuo:"Prioritize concise visual action, camera and character consistency.",Runway:"Use shot-oriented prompt language with clear subject, motion and camera direction.",Luma:"Use descriptive cinematic motion and subject continuity.",Pika:"Keep prompts concise and visually explicit.",Dola:"Use concise scene/action wording and preserve character references.",YouTube:"Keep the prompt concise and follow the selected format; availability and limits depend on the YouTube AI tool.",Generic:"Use the full master prompt without generator-specific assumptions."};document.getElementById("formatNote").textContent=notes[val("Target AI Video Model")]||notes.Generic}
+function renderExtras(){
+ document.getElementById("negative").textContent=state.negative||"low quality, blurry, distorted face, deformed hands, extra fingers, duplicate characters, identity drift, costume drift, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
+ document.getElementById("thumbPrompt").textContent=state.thumb||`Create a striking ${stylePhrase()} ${val("Genre")} TikTok cover featuring the same locked main character and story world. Ratio 9:16. Strong facial emotion, one clear focal subject, cinematic lighting, clean composition, no clutter.`;
+ document.getElementById("thumbText").textContent=state.thumbText||document.getElementById("title").value.trim()||"Story";
+ document.getElementById("thumbNeg").textContent=state.thumbNeg||"blur, distorted face, duplicate character, unreadable text, watermark, logo, clutter, low quality";
+ 
+ let notes={Flow:"Write concise cinematic scene prompts; keep each clip within the generator's supported clip length and use reference images where available.",Veo:"Use clear cinematic natural-language instructions with explicit subject, action, camera, audio/dialogue and continuity.",Kling:"Use concise visual/action/camera instructions and explicit character continuity; keep dialogue clearly separated inside the prompt.",Hailuo:"Prioritize concise visual action, camera and character consistency.",Runway:"Use shot-oriented prompt language with clear subject, motion and camera direction.",Luma:"Use descriptive cinematic motion and subject continuity.",Pika:"Keep prompts concise and visually explicit.",Dola:"Use concise scene/action wording and preserve character references.",YouTube:"Keep the prompt concise and follow the selected format; availability and limits depend on the YouTube AI tool.",Generic:"Use the full master prompt without generator-specific assumptions."};
+ document.getElementById("formatNote").textContent=notes[val("Target AI Video Model")]||notes.Generic;
+}
 
 async function regenerate(){
  if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim())return alert("Story Input / Summary ထည့်ပါ။");document.getElementById("finalStatus").textContent="⏳ Regenerating...";
@@ -422,4 +428,3 @@ document.getElementById("collapseSettings").onclick=()=>{let d=document.getEleme
 renderChars();renderExtras();updatePreviousButton();
 </script>
 </body></html>
-
