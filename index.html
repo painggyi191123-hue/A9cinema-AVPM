@@ -178,10 +178,10 @@ function stylePhrase(){let s=val("Art Style");return ({"Cinematic Realistic":"ci
 
 function refPrompt(c){
  return `Create a professional character reference photo for ${c.name||"the character"}.
-Identity: ${c.name||"unnamed character"}.
-Role: ${c.role||"story character"}.
-Age: ${c.age||"age appropriate to the story"}.
-Description: ${c.description||"distinctive, recognizable appearance"}.
+Name / အမည်: ${c.name||"unnamed character"}
+Role / အခန်းကဏ္ဍ: ${c.role||"story character"}
+Age / အသက်: ${c.age||"age appropriate to the story"}
+Description / ဖော်ပြချက်: ${c.description||"distinctive, recognizable appearance"}
 Visual style: ${stylePhrase()}, ${val("Genre")}, ${val("Setting Culture")}.
 Single cinematic character portrait, detailed facial features, clear expression, consistent costume and accessories, professional lighting, clean background, production-ready design reference.
 IDENTITY LOCK: Maintain exact face structure, eyes, eyebrows, nose, lips, hair color, and costume details. No identity drift.`;
@@ -301,7 +301,7 @@ async function makeBlueprint(){
 }
 async function autoDetect(){
  let text=(document.getElementById("summary").value||document.getElementById("story").value||"").trim();if(!text)return alert("Story Summary / Story Input အရင်ထည့်ပါ။");document.getElementById("detectChars").disabled=true;
- try{let d=await callGemini(`Detect ALL meaningful named characters in the story. Return characters only. Do not invent unrelated people. If a character has no explicit age, leave age empty. Keep the exact name spelling from the story. Role and description should be concise.`);if(!Array.isArray(d.characters)||!d.characters.length)throw Error("No characters detected");state.characters=d.characters.map(c=>({name:c.name||"",role:c.role||"Supporting Character",age:c.age||"",description:c.description||"",locked:true}))}catch(e){let local=localCharacterParser(text);if(local.length)state.characters=local;else state.characters=[{name:"Main Character",role:"Main Character",age:"",description:"No named character detected. Edit this character manually.",locked:true}]}renderChars();document.getElementById("detectChars").disabled=false
+ try{let d=await callGemini(`Detect ALL meaningful named characters in the story. For the 'name' field, you MUST format it as 'English Name (မြန်မာအမည်)' (e.g., 'Moe Htet (မိုးထက်)'). Return characters only. Do not invent unrelated people. If a character has no explicit age, leave age empty. Role and description should be concise.`);if(!Array.isArray(d.characters)||!d.characters.length)throw Error("No characters detected");state.characters=d.characters.map(c=>({name:c.name||"",role:c.role||"Supporting Character",age:c.age||"",description:c.description||"",locked:true}))}catch(e){let local=localCharacterParser(text);if(local.length)state.characters=local;else state.characters=[{name:"Main Character",role:"Main Character",age:"",description:"No named character detected. Edit this character manually.",locked:true}]}renderChars();document.getElementById("detectChars").disabled=false
 }
 function normalizeScenes(arr){
  return arr.map(s=>({duration:Math.min(10,Math.max(1,+s.duration_seconds||5)),character:s.character||"",action:s.action||"",dialogue:s.dialogue||"",camera:s.camera||val("Camera Style"),camera_movement:s.camera_movement||val("Camera Movement"),lighting:s.lighting||val("Lighting"),audio:s.audio||val("Audio Style"),transition:s.transition||"Smooth continuity-preserving transition."}))
@@ -327,7 +327,7 @@ async function generateScenes(){
   Setting Culture: ${val("Setting Culture")}
 
   CRITICAL RULE FOR THUMBNAIL:
-  - thumbnail_prompt: Must be strictly written in English. Design a high-CTR, highly engaging 9:16 vertical thumbnail prompt with strong emotional contrast, dramatic facial expressions (like shock or awe), clean focus, and absolutely NO watermarks or logos.
+  - thumbnail_prompt: MUST be strictly written in English. Design a high-CTR, highly engaging 9:16 vertical thumbnail prompt with strong emotional contrast, dramatic facial expressions (like shock or awe), clean focus, and absolutely NO watermarks or logos.
   - thumbnail_text: A short, catchy Burmese hook text for the thumbnail.
 
   CRITICAL RULE FOR DIALOGUE & ACTION:
