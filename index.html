@@ -93,7 +93,7 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 </section>
 
 <section class="card">
-<h2>🖼️ Thumbnail <span class="sub">(Thumbnail Prompt)</span></h2><div id="thumbPrompt" class="out empty">Thumbnail Prompt ပေါ်လာပါမယ်።</div><button class="secondary copy" id="copyThumb">📋 Copy Thumbnail Prompt</button>
+<h2>🖼️ Thumbnail <span class="sub">(Thumbnail Prompt)</span></h2><div id="thumbPrompt" class="out empty">Thumbnail Prompt ပေါ်လာပါမယ်။</div><button class="secondary copy" id="copyThumb">📋 Copy Thumbnail Prompt</button>
 <h3>📝 Thumbnail Text <span class="sub">(Thumbnail စာသား)</span></h3><div id="thumbText" class="out empty">—</div><button class="secondary copy" id="copyThumbText">📋 Copy Thumbnail Text</button>
 <h3>🚫 Thumbnail Negative Prompt <span class="sub">(Thumbnail မဖြစ်စေချင်သောအရာများ)</span></h3><div id="thumbNeg" class="out empty">—</div><button class="secondary copy" id="copyThumbNeg">📋 Copy Thumbnail Negative Prompt</button>
 </section>
@@ -326,6 +326,10 @@ async function generateScenes(){
   Language for Dialogue: ${val("Language")}
   Setting Culture: ${val("Setting Culture")}
 
+  CRITICAL RULE FOR THUMBNAIL:
+  - thumbnail_prompt: Must design a high-CTR, highly engaging 9:16 vertical thumbnail prompt with strong emotional contrast, dramatic facial expressions (like shock or awe), clean focus, and absolutely NO watermarks or logos.
+  - thumbnail_text: A short, catchy Burmese hook text for the thumbnail.
+
   CRITICAL RULE FOR DIALOGUE & ACTION:
   - In the 'action' field, describe the visual movement, camera angle, and clearly state WHO is speaking to WHOM (e.g., "မောင်သစ်က မေမြတ်ကို မျက်နှာချင်းဆိုင်ရပ်ပြီး ပြုံးကာ ပြောသည်"). Write this action in Burmese.
   - In the 'dialogue' field, write the exact dialogue line in ${val("Language")}.
@@ -363,9 +367,9 @@ async function generateScenes(){
 
 function renderExtras(){
  document.getElementById("negative").textContent=state.negative||"low quality, blurry, distorted face, deformed hands, extra fingers, duplicate characters, identity drift, costume drift, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
- document.getElementById("thumbPrompt").textContent=state.thumb||`Create a striking ${stylePhrase()} ${val("Genre")} TikTok cover featuring the same locked main character and story world. Ratio 9:16. Strong facial emotion, one clear focal subject, cinematic lighting, clean composition, no clutter.`;
+ document.getElementById("thumbPrompt").textContent=state.thumb||`Create a striking high-contrast ${stylePhrase()} ${val("Genre")} thumbnail featuring the same locked main character and story world. Ratio 9:16. Strong emotional facial expression like shock or awe, high contrast lighting, one clear focal subject, clean composition, no watermark, no logo, no clutter.`;
  document.getElementById("thumbText").textContent=state.thumbText||document.getElementById("title").value.trim()||"Story";
- document.getElementById("thumbNeg").textContent=state.thumbNeg||"blur, distorted face, duplicate character, unreadable text, watermark, logo, clutter, low quality";
+ document.getElementById("thumbNeg").textContent=state.thumbNeg||"blur, distorted face, duplicate character, unreadable text, watermark, logo, text overlay, Dola AI watermark, clutter, low quality";
  
  let notes={Flow:"Write concise cinematic scene prompts; keep each clip within the generator's supported clip length and use reference images where available.",Veo:"Use clear cinematic natural-language instructions with explicit subject, action, camera, audio/dialogue and continuity.",Kling:"Use concise visual/action/camera instructions and explicit character continuity; keep dialogue clearly separated inside the prompt.",Hailuo:"Prioritize concise visual action, camera and character consistency.",Runway:"Use shot-oriented prompt language with clear subject, motion and camera direction.",Luma:"Use descriptive cinematic motion and subject continuity.",Pika:"Keep prompts concise and visually explicit.",Dola:"Use concise scene/action wording and preserve character references.",YouTube:"Keep the prompt concise and follow the selected format; availability and limits depend on the YouTube AI tool.",Generic:"Use the full master prompt without generator-specific assumptions."};
  document.getElementById("formatNote").textContent=notes[val("Target AI Video Model")]||notes.Generic;
