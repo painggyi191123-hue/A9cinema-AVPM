@@ -208,10 +208,27 @@ function plan(total){let remain=total,out=[],i=0;while(remain>0){let d=Math.min(
 
 function renderScenes(){
  const b=document.getElementById("scenes");
- if(!state.scenes.length){b.innerHTML='<span class="empty">Generate Scenes လုပ်ပြီးနောက် Dialogue တွေ ပေါ်လာပါမယ်။</span>';return}
- b.innerHTML=state.scenes.map((s,i)=>`<div class="item"><div class="itemhead"><b>SCENE ${String(i+1).padStart(2,"0")}</b><span class="pill">Dialogue</span></div><div class="field" style="margin-top:8px"><label>Dialogue <span>ဒီ scene ရဲ့ စကားပြောစာသား — ကိုယ်တိုင်ပြင်နိုင်သည်</span></label><textarea data-si="${i}" data-sk="dialogue" style="min-height:95px">${esc(s.dialogue||"")}</textarea></div></div>`).join("");
- b.querySelectorAll("[data-si]").forEach(e=>e.oninput=()=>{state.scenes[+e.dataset.si].dialogue=e.value;buildFinalFromScenes()})
+ if(!state.scenes.length){b.innerHTML='<span class="empty">Generate Scenes လုပ်ပြီးနောက် ဇာတ်ဝင်ခန်းများ ပေါ်လာပါမယ်။</span>';return}
+ b.innerHTML=state.scenes.map((s,i)=>`<div class="item">
+   <div class="itemhead"><b>SCENE ${String(i+1).padStart(2,"0")}</b><span class="pill">Action & Dialogue</span></div>
+   <div class="field" style="margin-top:8px">
+     <label>Action / Context <span>ဇာတ်ကောင်ပြုမူပုံ (ဥပမာ - မောင်သစ်က သစ်တောထဲ ရှုခင်းကြည့်ရင်း)</span></label>
+     <textarea data-si="${i}" data-sk="action" style="min-height:70px">${esc(s.action||"")}</textarea>
+   </div>
+   <div class="field" style="margin-top:8px">
+     <label>Dialogue <span>စကားပြောစာသား — ကိုယ်တိုင်ပြင်နိုင်သည်</span></label>
+     <textarea data-si="${i}" data-sk="dialogue" style="min-height:80px">${esc(s.dialogue||"")}</textarea>
+   </div>
+ </div>`).join("");
+ 
+ b.querySelectorAll("[data-si]").forEach(e=>e.oninput=()=>{
+   let idx = +e.dataset.si;
+   let key = e.dataset.sk;
+   state.scenes[idx][key] = e.value;
+   buildFinalFromScenes();
+ })
 }
+
 
 function scenePrompt(s,i){
  let chars=s.character||state.characters.map(c=>c.name).filter(Boolean).join(", ")||"Main character";
