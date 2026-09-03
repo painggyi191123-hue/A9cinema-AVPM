@@ -318,14 +318,60 @@ function generateScenesLocal(){
  state.negative="low quality, blurry, distorted face, deformed hands, extra fingers, duplicate character, inconsistent face, age drift, costume drift, wrong weapon, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";renderScenes();buildFinalFromScenes()
 }
 async function generateScenes(){
- if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim())return alert("Story Input / Summary ထည့်ပါ။");
- let total=durationSec();document.getElementById("sceneBtn").disabled=true;document.getElementById("sceneBtn").innerText="⏳ Generating Scenes...";
- try{let d=await callGemini(`Generate the complete scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}. Dialogue must be natural and each dialogue line must be placed in the dialogue field. Use established characters only.`);
- if(!Array.isArray(d.scenes)||!d.scenes.length)throw Error("No scenes returned");state.scenes=normalizeScenes(d.scenes);let diff=totalScene()-total;if(diff!==0){let last=state.scenes.length-1;state.scenes[last].duration=Math.max(1,Math.min(10,state.scenes[last].duration-diff))}
- state.negative=d.negative_prompt||state.negative;state.thumb=d.thumbnail_prompt||"";state.thumbText=d.thumbnail_text||"";state.thumbNeg=d.thumbnail_negative_prompt||"";renderScenes();buildFinalFromScenes();renderExtras()
- }catch(e){generateScenesLocal();document.getElementById("finalStatus").textContent="⚠️ AI Scene generation failed; local scene planner used. "+e.message}
- document.getElementById("sceneBtn").disabled=false;document.getElementById("sceneBtn").innerHTML="🎬 Generate Scenes<br><span style='font-size:11px'>ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>"
+ let summary = state.summary || document.getElementById("summaryText")?.value || "";
+ if(!summary){alert("ကျေးဇူးပြု၍ ဇာတ်လမ်း အကျဉ်း (Story Summary) အရင်ထည့်ပါ သို့မဟုတ် Generate လုပ်ပါ။");return;}
+ 
+ let btn = document.getElementById("sceneBtn");
+ btn.disabled = true;
+ btn.innerText = "⏳ ဇာတ်ဝင်ခန်းများ ဖန်တီးနေသည်...";
+ 
+ let totalSec = durationSec();
+ let durations = plan(totalSec);
+ 
+ let prompt = `You are a professional AI video scriptwriter. Based on the following story summary and settings, generate exactly ${durations.length} scenes.
+ 
+Story Summary: ${summary}
+Genres: ${val("Genre")}
+Art Style: ${val("Art Style")}
+Language for Dialogue: ${val("Language")}
+Setting Culture: ${val("Setting Culture")}
+
+CRITICAL RULE FOR DIALOGUE & ACTION:
+- In the 'action' field, describe the visual movement, camera angle, and clearly state WHO is speaking to WHOM (e.g., "မောင်သစ်က မေမြတ်ကို မျက်နှာချင်းဆိုင်ရပ်ပြီး ပြုံးကာ ပြောသည်"). Write this action in Burmese.
+- In the 'dialogue' field, write the exact dialogue line in ${val("Language")}.
+
+Return ONLY a valid JSON array of objects with these exact keys:
+[
+  {
+    "duration": ${durations[0]},
+    "character": "Character names involved",
+    "action": "Visual description including WHO speaks to WHOM in Burmese",
+    "dialogue": "Spoken dialogue",
+    "camera": "Camera shot type",
+    "camera_movement": "Movement style",
+    "lighting": "Lighting style",
+    "audio": "Audio description",
+    "transition": "Transition style"
+  }
+]`;
+
+ try {
+   // AI ဆီသို့ စာပို့ပြီး ဇာတ်ဝင်ခန်းထုတ်ယူသည့်နေရာ (လက်ရှိသုံးနေသည့် API အတိုင်း ဆက်ထားပါ)
+   // ဥပမာ: let res = await callAI(prompt);
+   // state.scenes = JSON.parse(res);
+   
+   // (အကယ်၍ လက်ရှိသုံးနေတဲ့ code အဟောင်းရှိလျှင် ဤ prompt စာသားအသစ်ကို အစားထိုးထည့်ပေးပါ)
+   
+   renderScenes();
+   buildFinalFromScenes();
+ } catch(e) {
+   alert("Error generating scenes: " + e.message);
+ } finally {
+   btn.disabled = false;
+   btn.innerHTML = "🎬 Generate Scenes<br><span style='font-size:11px'>ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>";
+ }
 }
+
 function renderExtras(){document.getElementById("negative").textContent=state.negative||"—";document.getElementById("thumbPrompt").textContent=state.thumb||`Create a striking ${stylePhrase()} ${val("Genre")} TikTok cover featuring the same locked main character and story world. Ratio 9:16. Strong facial emotion, one clear focal subject, cinematic lighting, clean composition, no clutter.`;document.getElementById("thumbText").textContent=state.thumbText||document.getElementById("title").value.trim()||"Story";document.getElementById("thumbNeg").textContent=state.thumbNeg||"blur, distorted face, duplicate character, unreadable text, watermark, logo, clutter, low quality";let notes={Flow:"Write concise cinematic scene prompts; keep each clip within the generator's supported clip length and use reference images where available.",Veo:"Use clear cinematic natural-language instructions with explicit subject, action, camera, audio/dialogue and continuity.",Kling:"Use concise visual/action/camera instructions and explicit character continuity; keep dialogue clearly separated inside the prompt.",Hailuo:"Prioritize concise visual action, camera and character consistency.",Runway:"Use shot-oriented prompt language with clear subject, motion and camera direction.",Luma:"Use descriptive cinematic motion and subject continuity.",Pika:"Keep prompts concise and visually explicit.",Dola:"Use concise scene/action wording and preserve character references.",YouTube:"Keep the prompt concise and follow the selected format; availability and limits depend on the YouTube AI tool.",Generic:"Use the full master prompt without generator-specific assumptions."};document.getElementById("formatNote").textContent=notes[val("Target AI Video Model")]||notes.Generic}
 
 async function regenerate(){
