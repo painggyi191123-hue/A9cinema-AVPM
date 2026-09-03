@@ -169,7 +169,7 @@ function renderChars(){
  b.querySelectorAll(".char-card").forEach(card=>card.onclick=()=>openCharacterModal(+card.dataset.ci));renderRefs()
 }
 function openCharacterModal(i){
- let c=state.characters[i],bodyHtml=`<div class="field"><label>Name <span>အမည်</span></label><input id="m_name" value="${esc(c.name)}"></div><div class="field" style="margin-top:8px"><label>Role <span>အခန်းကဏ္ဍ</span></label><input id="m_role" value="${esc(c.role)}"></div><div class="field" style="margin-top:8px"><label>Age <span>အသက်</span></label><input id="m_age" value="${esc(c.age)}"></div><div class="field" style="margin-top:8px"><label>Description <span>ဇာတ်ကောင်ဖော်ပြချက်</span></label><textarea id="m_desc" style="min-height:90px">${esc(c.description)}</textarea></div><div class="lock"><input type="checkbox" id="m_lock" ${c.locked?"checked":""}> 🔒 Lock Character <span class="sub">(ဇာတ်ကောင်တည်ငြိမ်မှု)</span></div>`;
+ let c=state.characters[i],bodyHtml=`<div class="field"><label>Name <span>အမည်</span></label><input id="m_name" value="${esc(c.name)}"></div><div class="field" style="margin-top:8px"><label>Role <span>အခန်းကဏ္ဍ</span></label><input id="m_role" value="${esc(c.role)}"></div><div class="field" style="margin-top:8px"><label>Age <span>အသက်</span></label><input id="m_age" value="${esc(c.age)}"></div><div class="field" style="margin-top:8px"><label>Description <span>ဇာတ်ကောင်ဖော်ပြချက် (English)</span></label><textarea id="m_desc" style="min-height:90px">${esc(c.description)}</textarea></div><div class="lock"><input type="checkbox" id="m_lock" ${c.locked?"checked":""}> 🔒 Lock Character <span class="sub">(ဇာတ်ကောင်တည်ငြိမ်မှု)</span></div>`;
  openModal(`Character #${i+1}: ${esc(c.name||"Unnamed")}`,bodyHtml,`<button class="danger" id="m_del" style="margin-right:auto;">🗑 Delete</button><button class="primary" id="m_save" style="width:auto;padding:9px 18px;">💾 Save</button>`);
  document.getElementById("m_save").onclick=()=>{state.characters[i].name=document.getElementById("m_name").value;state.characters[i].role=document.getElementById("m_role").value;state.characters[i].age=document.getElementById("m_age").value;state.characters[i].description=document.getElementById("m_desc").value;state.characters[i].locked=document.getElementById("m_lock").checked;closeModal();renderChars();buildFinalFromScenes()};
  document.getElementById("m_del").onclick=()=>{if(confirm("ဒီဇာတ်ကောင်ကို ဖျက်မှာ သေချာပါသလား?")){state.characters.splice(i,1);closeModal();renderChars();buildFinalFromScenes()}}
@@ -178,10 +178,10 @@ function stylePhrase(){let s=val("Art Style");return ({"Cinematic Realistic":"ci
 
 function refPrompt(c){
  return `Create a professional character reference photo for ${c.name||"the character"}.
-Name / အမည်: ${c.name||"unnamed character"}
-Role / အခန်းကဏ္ဍ: ${c.role||"story character"}
-Age / အသက်: ${c.age||"age appropriate to the story"}
-Description / ဖော်ပြချက်: ${c.description||"distinctive, recognizable appearance"}
+Name : ${c.name||"unnamed character"}
+Role : ${c.role||"story character"}
+Age : ${c.age||"age appropriate"}
+Description : ${c.description||"distinctive, recognizable appearance"}
 Visual style: ${stylePhrase()}, ${val("Genre")}, ${val("Setting Culture")}.
 Single cinematic character portrait, detailed facial features, clear expression, consistent costume and accessories, professional lighting, clean background, production-ready design reference.
 IDENTITY LOCK: Maintain exact face structure, eyes, eyebrows, nose, lips, hair color, and costume details. No identity drift.`;
@@ -301,7 +301,12 @@ async function makeBlueprint(){
 }
 async function autoDetect(){
  let text=(document.getElementById("summary").value||document.getElementById("story").value||"").trim();if(!text)return alert("Story Summary / Story Input အရင်ထည့်ပါ။");document.getElementById("detectChars").disabled=true;
- try{let d=await callGemini(`Detect ALL meaningful named characters in the story. For the 'name' field, you MUST format it as 'English Name (မြန်မာအမည်)' (e.g., 'Moe Htet (မိုးထက်)'). Return characters only. Do not invent unrelated people. If a character has no explicit age, leave age empty. Role and description should be concise.`);if(!Array.isArray(d.characters)||!d.characters.length)throw Error("No characters detected");state.characters=d.characters.map(c=>({name:c.name||"",role:c.role||"Supporting Character",age:c.age||"",description:c.description||"",locked:true}))}catch(e){let local=localCharacterParser(text);if(local.length)state.characters=local;else state.characters=[{name:"Main Character",role:"Main Character",age:"",description:"No named character detected. Edit this character manually.",locked:true}]}renderChars();document.getElementById("detectChars").disabled=false
+ try{let d=await callGemini(`Detect ALL meaningful named characters in the story. 
+- For the 'name' field, format it as 'English Name (မြန်မာအမည်)' (e.g., 'Thant Zin (သန့်စင်)').
+- For the 'role' field, format it as 'English Role (မြန်မာအဓိပ္ပာယ်)' (e.g., 'Leader of the group (အဖွဲ့ခေါင်းဆောင်)').
+- For the 'age' field, format it as 'Age (အသက်)' (e.g., '25 (၂၅)').
+- For the 'description' field, write it STRICTLY IN ENGLISH optimized for AI image generation. 
+Return characters only. Do not invent unrelated people.`);if(!Array.isArray(d.characters)||!d.characters.length)throw Error("No characters detected");state.characters=d.characters.map(c=>({name:c.name||"",role:c.role||"Supporting Character",age:c.age||"",description:c.description||"",locked:true}))}catch(e){let local=localCharacterParser(text);if(local.length)state.characters=local;else state.characters=[{name:"Main Character (မင််းသား)",role:"Main Character (အဓိကဇာတ်ကောင်)",age:"25 (၂၅)",description:"A smart and courageous young man wearing modern casual clothes.",locked:true}]}renderChars();document.getElementById("detectChars").disabled=false
 }
 function normalizeScenes(arr){
  return arr.map(s=>({duration:Math.min(10,Math.max(1,+s.duration_seconds||5)),character:s.character||"",action:s.action||"",dialogue:s.dialogue||"",camera:s.camera||val("Camera Style"),camera_movement:s.camera_movement||val("Camera Movement"),lighting:s.lighting||val("Lighting"),audio:s.audio||val("Audio Style"),transition:s.transition||"Smooth continuity-preserving transition."}))
@@ -331,7 +336,7 @@ async function generateScenes(){
   - thumbnail_text: A short, catchy Burmese hook text for the thumbnail.
 
   CRITICAL RULE FOR DIALOGUE & ACTION:
-  - In the 'action' field, describe the visual movement, camera angle, and clearly state WHO is speaking to WHOM (e.g., "မောင်သစ်က မေမြတ်ကို မျက်နှာချင်းဆိုင်ရပ်ပြီး ပြုံးကာ ပြောသည်"). Write this action in Burmese.
+  - In the 'action' field, describe the visual movement, camera angle, and clearly state WHO is speaking to WHOM. Write this action in Burmese.
   - In the 'dialogue' field, write the exact dialogue line in ${val("Language")}.
   
   Return a JSON object containing:
@@ -417,7 +422,7 @@ async function continueStory(){
   if(d.story_blueprint)renderBlueprint(d.story_blueprint);
   if(Array.isArray(d.characters))state.characters=d.characters.map(c=>({...c,locked:true}));
   if(Array.isArray(d.scenes))state.scenes=normalizeScenes(d.scenes);
-  renderChars();renderScenes();state.negative=d.negative_prompt||state.negative;state.thumb=d.thumbnail_prompt||state.thumb;state.thumbText=d.thumbnail_text||state.thumbText;state.thumbNeg=d.thumbnail_negative_prompt||state.thumbNeg;buildFinalFromScenes();renderExtras();updatePreviousButton();document.getElementById("finalStatus").textContent=`✓ Part ${state.part} generated with continuity.`
+  renderChars();renderScenes();state.negative=d.negative_prompt||state.negative;state.thumb=d.thumbnail_prompt||state.thumb;state.thumbText=d.thumbnail_text||state.thumbText;state.thumbNeg=d.thumbnail_negative_prompt||state.thumbnail_negative_prompt;buildFinalFromScenes();renderExtras();updatePreviousButton();document.getElementById("finalStatus").textContent=`✓ Part ${state.part} generated with continuity.`
  }catch(e){delete state.history[fromPart];document.getElementById("continuity").innerHTML=`<b>Part ${fromPart}</b> — Story continuity initialized.`;document.getElementById("finalStatus").textContent="❌ "+e.message;updatePreviousButton()}
 }
 
@@ -425,10 +430,11 @@ document.getElementById("saveApi").onclick=()=>{let k=document.getElementById("a
 if(localStorage.getItem("gemini_api_key")){document.getElementById("apiKey").value=localStorage.getItem("gemini_api_key");document.getElementById("apiStatus").textContent="✓ Local API key loaded."}
 document.getElementById("testApi").onclick=async()=>{document.getElementById("apiStatus").textContent="⏳ Testing...";try{await callGemini("Return a JSON object with test:true only.");document.getElementById("apiStatus").textContent="✓ Gemini API connected."}catch(e){document.getElementById("apiStatus").textContent="❌ "+e.message}}
 document.getElementById("summaryBtn").onclick=makeSummary;document.getElementById("blueprintBtn").onclick=makeBlueprint;document.getElementById("detectChars").onclick=autoDetect;
-document.getElementById("addChar").onclick=()=>{state.characters.push({name:"",role:"Supporting Character",age:"",description:"",locked:true});renderChars();openCharacterModal(state.characters.length-1)};
+document.getElementById("addChar").onclick=()=>{state.characters.push({name:"",role:"Supporting Character (အရန်ဇာတ်ကောင်)",age:"",description:"",locked:true});renderChars();openCharacterModal(state.characters.length-1)};
 document.getElementById("sceneBtn").onclick=generateScenes;document.getElementById("regen").onclick=regenerate;document.getElementById("previousPart").onclick=previousPart;document.getElementById("continue").onclick=continueStory;
 document.getElementById("copySummary").onclick=e=>copyText(document.getElementById("summary").value,e.currentTarget);document.getElementById("copyFinal").onclick=e=>copyText(state.lastFinal||document.getElementById("finalPrompt").textContent,e.currentTarget);document.getElementById("copyNeg").onclick=e=>copyText(state.negative,e.currentTarget);document.getElementById("copyThumb").onclick=e=>copyText(state.thumb||document.getElementById("thumbPrompt").textContent,e.currentTarget);document.getElementById("copyThumbText").onclick=e=>copyText(state.thumbText||document.getElementById("thumbText").textContent,e.currentTarget);document.getElementById("copyThumbNeg").onclick=e=>copyText(state.thumbNeg||document.getElementById("thumbNeg").textContent,e.currentTarget);
 document.getElementById("collapseSettings").onclick=()=>{let d=document.getElementById("settingsDetails");d.open=!d.open;document.getElementById("collapseSettings").textContent=d.open?"⌃":"⌄";setTimeout(()=>{const storyCard=document.getElementById("storyInputCard");if(storyCard)storyCard.scrollIntoView({behavior:"smooth",block:"start"})},100)};
 renderChars();renderExtras();updatePreviousButton();
 </script>
 </body></html>
+
