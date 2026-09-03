@@ -84,9 +84,11 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 <button class="primary copy" id="copyFinal">📋 Copy Prompt<br><span style="font-size:11px">Prompt တစ်ခုလုံးကို ကူးယူရန်</span></button>
 <div class="row">
 <button id="previousPart" disabled>◀️ Previous Part<br><span class="sub">အရင် Part သို့ ပြန်သွားရန်</span></button>
-<button id="regen">🔄 Regenerate<br><span class="sub">Version အသစ်</span></button>
+<button id="continue">➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></button>
 </div>
-<div class="row"><button id="continue">➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></button></div>
+<div style="margin-top:8px">
+<button id="regen" style="width:100%">🔄 Regenerate<br><span class="sub">Version အသစ်</span></button>
+</div>
 <div id="finalStatus" class="status"></div>
 </section>
 
@@ -317,59 +319,48 @@ function generateScenesLocal(){
  state.scenes=durations.map((d,i)=>({duration:d,character:state.characters.map(c=>c.name).filter(Boolean).join(", ")||"Main character",action:i===0?`Begin the story naturally: ${story}`:`Continue directly from the previous scene and advance the story.`,dialogue:val("Language")==="No Dialogue"?"":i===0?"":"Continue the story naturally.",camera:val("Camera Style"),camera_movement:val("Camera Movement"),lighting:val("Lighting"),audio:val("Audio Style"),transition:"Smooth continuity-preserving transition."}));
  state.negative="low quality, blurry, distorted face, deformed hands, extra fingers, duplicate character, inconsistent face, age drift, costume drift, wrong weapon, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";renderScenes();buildFinalFromScenes()
 }
+
 async function generateScenes(){
- let summary = state.summary || document.getElementById("summaryText")?.value || "";
- if(!summary){alert("ကျေးဇူးပြု၍ ဇာတ်လမ်း အကျဉ်း (Story Summary) အရင်ထည့်ပါ သို့မဟုတ် Generate လုပ်ပါ။");return;}
- 
- let btn = document.getElementById("sceneBtn");
- btn.disabled = true;
- btn.innerText = "⏳ ဇာတ်ဝင်ခန်းများ ဖန်တီးနေသည်...";
- 
- let totalSec = durationSec();
- let durations = plan(totalSec);
- 
- let prompt = `You are a professional AI video scriptwriter. Based on the following story summary and settings, generate exactly ${durations.length} scenes.
- 
-Story Summary: ${summary}
-Genres: ${val("Genre")}
-Art Style: ${val("Art Style")}
-Language for Dialogue: ${val("Language")}
-Setting Culture: ${val("Setting Culture")}
+  let summary = state.summary || document.getElementById("summary").value.trim();
+  if(!summary){alert("ကျေးဇူးပြု၍ ဇာတ်လမ်း အကျဉ်း (Story Summary) အရင်ထည့်ပါ သို့မဟုတ် Generate လုပ်ပါ။");return;}
+  
+  let btn = document.getElementById("sceneBtn");
+  btn.disabled = true;
+  btn.innerText = "⏳ ဇာတ်ဝင်ခန်းများ ဖန်တီးနေသည်...";
+  
+  let totalSec = durationSec();
+  let durations = plan(totalSec);
+  
+  let prompt = `You are a professional AI video scriptwriter. Based on the following story summary and settings, generate exactly ${durations.length} scenes with individual durations matching: ${JSON.stringify(durations)}. Each scene must be <= 10 seconds.
+  
+  Story Summary: ${summary}
+  Genres: ${val("Genre")}
+  Art Style: ${val("Art Style")}
+  Language for Dialogue: ${val("Language")}
+  Setting Culture: ${val("Setting Culture")}
 
-CRITICAL RULE FOR DIALOGUE & ACTION:
-- In the 'action' field, describe the visual movement, camera angle, and clearly state WHO is speaking to WHOM (e.g., "မောင်သစ်က မေမြတ်ကို မျက်နှာချင်းဆိုင်ရပ်ပြီး ပြုံးကာ ပြောသည်"). Write this action in Burmese.
-- In the 'dialogue' field, write the exact dialogue line in ${val("Language")}.
+  CRITICAL RULE FOR DIALOGUE & ACTION:
+  - In the 'action' field, describe the visual movement, camera angle, and clearly state WHO is speaking to WHOM (e.g., "မောင်သစ်က မေမြတ်ကို မျက်နှာချင်းဆိုင်ရပ်ပြီး ပြုံးကာ ပြောသည်"). Write this action in Burmese.
+  - In the 'dialogue' field, write the exact dialogue line in ${val("Language")}.
+  
+  Return a JSON object containing a "scenes" array where each object has these exact keys:
+  duration_seconds, character, action, dialogue, camera, camera_movement, lighting, audio, transition.`;
 
-Return ONLY a valid JSON array of objects with these exact keys:
-[
-  {
-    "duration": ${durations[0]},
-    "character": "Character names involved",
-    "action": "Visual description including WHO speaks to WHOM in Burmese",
-    "dialogue": "Spoken dialogue",
-    "camera": "Camera shot type",
-    "camera_movement": "Movement style",
-    "lighting": "Lighting style",
-    "audio": "Audio description",
-    "transition": "Transition style"
+  try {
+    let d = await callGemini(prompt);
+    let rawScenes = Array.isArray(d) ? d : (d.scenes || []);
+    if(!rawScenes.length) throw Error("Scenes array not returned by AI.");
+    state.scenes = normalizeScenes(rawScenes);
+    renderScenes();
+    buildFinalFromScenes();
+    document.getElementById("finalStatus").textContent = "✓ Scenes generated successfully.";
+  } catch(e) {
+    alert("Error generating scenes: " + e.message);
+    document.getElementById("finalStatus").textContent = "❌ " + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>';
   }
-]`;
-
- try {
-   // AI ဆီသို့ စာပို့ပြီး ဇာတ်ဝင်ခန်းထုတ်ယူသည့်နေရာ (လက်ရှိသုံးနေသည့် API အတိုင်း ဆက်ထားပါ)
-   // ဥပမာ: let res = await callAI(prompt);
-   // state.scenes = JSON.parse(res);
-   
-   // (အကယ်၍ လက်ရှိသုံးနေတဲ့ code အဟောင်းရှိလျှင် ဤ prompt စာသားအသစ်ကို အစားထိုးထည့်ပေးပါ)
-   
-   renderScenes();
-   buildFinalFromScenes();
- } catch(e) {
-   alert("Error generating scenes: " + e.message);
- } finally {
-   btn.disabled = false;
-   btn.innerHTML = "🎬 Generate Scenes<br><span style='font-size:11px'>ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>";
- }
 }
 
 function renderExtras(){document.getElementById("negative").textContent=state.negative||"—";document.getElementById("thumbPrompt").textContent=state.thumb||`Create a striking ${stylePhrase()} ${val("Genre")} TikTok cover featuring the same locked main character and story world. Ratio 9:16. Strong facial emotion, one clear focal subject, cinematic lighting, clean composition, no clutter.`;document.getElementById("thumbText").textContent=state.thumbText||document.getElementById("title").value.trim()||"Story";document.getElementById("thumbNeg").textContent=state.thumbNeg||"blur, distorted face, duplicate character, unreadable text, watermark, logo, clutter, low quality";let notes={Flow:"Write concise cinematic scene prompts; keep each clip within the generator's supported clip length and use reference images where available.",Veo:"Use clear cinematic natural-language instructions with explicit subject, action, camera, audio/dialogue and continuity.",Kling:"Use concise visual/action/camera instructions and explicit character continuity; keep dialogue clearly separated inside the prompt.",Hailuo:"Prioritize concise visual action, camera and character consistency.",Runway:"Use shot-oriented prompt language with clear subject, motion and camera direction.",Luma:"Use descriptive cinematic motion and subject continuity.",Pika:"Keep prompts concise and visually explicit.",Dola:"Use concise scene/action wording and preserve character references.",YouTube:"Keep the prompt concise and follow the selected format; availability and limits depend on the YouTube AI tool.",Generic:"Use the full master prompt without generator-specific assumptions."};document.getElementById("formatNote").textContent=notes[val("Target AI Video Model")]||notes.Generic}
@@ -431,3 +422,4 @@ document.getElementById("collapseSettings").onclick=()=>{let d=document.getEleme
 renderChars();renderExtras();updatePreviousButton();
 </script>
 </body></html>
+
