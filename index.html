@@ -7,9 +7,46 @@
 <title>AI Video Prompt Master V4.2</title>
 <style>
 :root{--bg:#050816;--card:#0c1428;--card2:#101b34;--line:#28385d;--text:#f3f6ff;--muted:#9eacd0;--a:#8b5cf6;--b:#22d3ee;--ok:#34d399;--bad:#fb7185}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 0,#17204a 0,#070b18 42%,#02040a 100%);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans Myanmar","Noto Sans",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body {
+  margin: 0;
+  background-color: #030408;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 60%),
+    linear-gradient(rgba(34, 211, 238, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Noto Sans Myanmar", "Noto Sans", sans-serif;
+}
+
 .wrap{width:min(860px,100%);margin:auto;padding:12px 10px 70px}.hero{text-align:center;padding:18px 8px}.badge{display:inline-block;border:1px solid #3b4e7e;border-radius:99px;padding:5px 11px;color:#b9f2ff;font-size:11px}.hero h1{font-size:28px;margin:8px 0;background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);-webkit-background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:13px;line-height:1.6}
-.card{background:linear-gradient(180deg,rgba(16,27,52,.97),rgba(8,14,28,.97));border:1px solid var(--line);border-radius:18px;padding:14px;margin:11px 0;box-shadow:0 14px 35px #0007}h2{font-size:17px;margin:0 0 8px}h3{font-size:15px;margin:12px 0 7px}.sub{color:var(--muted);font-size:11px;font-weight:500}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:800;margin:0 0 6px}.field label span{display:block;color:var(--muted);font-size:11px;font-weight:500;margin-top:2px}
+.card {
+  background: linear-gradient(135deg, rgba(10, 18, 38, 0.88), rgba(5, 10, 22, 0.96));
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 10px;
+  padding: 14px;
+  margin: 11px 0;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(34, 211, 238, 0.03);
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px;
+  width: 6px; height: 6px;
+  border-top: 2px solid var(--b);
+  border-left: 2px solid var(--b);
+}
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 6px; height: 6px;
+  border-bottom: 2px solid var(--b);
+  border-right: 2px solid var(--b);
+}
+
 input,textarea,select{width:100%;border:1px solid #2b3c62;background:#070d1c;color:var(--text);border-radius:11px;padding:11px;font:inherit;outline:none}textarea{min-height:120px;resize:vertical;line-height:1.55}input:focus,textarea:focus,select:focus{border-color:var(--b);box-shadow:0 0 0 2px #22d3ee18}
 button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;background:#182544;font-weight:800;font-size:13px;cursor:pointer}.primary{width:100%;background:linear-gradient(100deg,#7c3aed,#2563eb,#06b6d4);border:0}.secondary{background:#151f38}.danger{background:#251727;border-color:#613247}.copy{width:100%;margin-top:8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:9px}
 .notice{padding:10px;border-radius:12px;background:#0a1930;border:1px solid #244a70;color:#bdd7ff;font-size:12px;line-height:1.55}.status{font-size:12px;color:#9fb0d8;margin-top:8px;line-height:1.5}.out{white-space:pre-wrap;word-break:break-word;background:#040814;border:1px solid #293a60;border-radius:13px;padding:12px;line-height:1.6;font-size:12px;max-height:600px;overflow:auto}.empty{color:#7f8dad;font-size:12px}.item{border:1px solid #26385d;background:#091226;border-radius:14px;padding:11px;margin:9px 0}.itemhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.pill{font-size:10px;color:#bcefff;background:#122544;border:1px solid #29476d;border-radius:99px;padding:4px 7px}.dual{position:relative}.dual button{width:100%;text-align:left;min-height:52px;background:#070d1c}.en{display:block;font-weight:800}.mm{display:block;color:var(--muted);font-size:11px;margin-top:3px}.menu{position:absolute;z-index:100;left:0;right:0;top:calc(100% + 5px);background:#0a1225;border:1px solid #344a76;border-radius:12px;padding:5px;max-height:280px;overflow:auto;box-shadow:0 20px 45px #000a}.menu button{border:0;background:transparent;margin:1px 0}.menu button:hover,.menu button.active{background:#172746}.hidden{display:none}.collapse{text-align:center;margin-top:8px}.collapse button{width:44px;height:44px;border-radius:50%;font-size:20px}.sticky{position:sticky;bottom:8px;z-index:80}.tiny{font-size:11px;color:var(--muted)}.lock{display:flex;gap:8px;align-items:center;font-size:12px;margin-top:8px}
@@ -17,14 +54,21 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 .char-card{background:linear-gradient(145deg,#0c1428,#080e1c);border:1px solid #26385d;border-radius:8px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:72px;cursor:pointer;justify-content:space-between;min-width:0;overflow:hidden;transition:border-color 0.2s}.char-card:hover{border-color:var(--b)}.char-card-title{font-weight:800;font-size:9px;color:#fff;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.char-card-sub{font-size:8px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(2,4,10,0.85);z-index:999;display:flex;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(4px)}.modal-overlay.hidden{display:none}.modal-box{background:linear-gradient(180deg,#101b34,#080e1c);border:1px solid #35476f;border-radius:18px;padding:16px;width:min(520px,100%);box-shadow:0 25px 50px #000c}.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #28385d;padding-bottom:8px;margin-bottom:10px}.modal-header h3{margin:0;font-size:16px;color:#fff}.final-scene{border:1px solid #26385d;background:#091226;border-radius:14px;padding:11px;margin:9px 0}.final-scene .out{max-height:none;margin-top:8px}
 @media(max-width:560px){.grid{grid-template-columns:1fr}.row3{grid-template-columns:1fr 1fr}.wrap{padding-left:6px;padding-right:6px}.hero h1{font-size:24px}}
+
+/* ဒီနေရာမှာ ထည့်ပါ */
+.card h2 {
+  font-size: 15px;
+  margin: 0 0 8px 0;
+}
+.card summary {
+  font-size: 14px;
+}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header class="hero">
-<div class="badge">V4.2 • 5 ITEMS PER ROW • BURMESE ACTION & DIALOGUE</div>
 <h1>🎬 AI Video Prompt Master</h1>
-<p>Story → Summary → Blueprint → Characters → Reference → Scenes → Final Prompt</p>
 </header>
 
 <section class="card">
@@ -47,17 +91,16 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 </section>
 
 <section class="card" id="settingsCard">
-<details open id="settingsDetails">
-<summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
-<div id="settings" class="grid" style="margin-top:12px"></div>
-<div class="notice" style="margin-top:11px">⏱️ <b>AI Scene Timing Rule</b> — Total Duration ကို အခြေခံပြီး scene တစ်ခန်းချင်းစီကို AI က Dialogue + Action + Natural Pause အပေါ်မူတည်ရွေးမယ်။ <b>Scene တစ်ခန်း ≤ 10 sec</b>။</div>
-</details>
-<div class="collapse"><button id="collapseSettings">⌃</button></div>
+  <details open id="settingsDetails">
+    <summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
+    <div id="settings" class="grid" style="margin-top:12px"></div>
+  </details>
+  <div class="collapse"><button id="collapseSettings">⌃</button></div>
 </section>
 
 <section class="card" id="storyInputCard">
 <h2>📝 Story Input <span class="sub">(ဇာတ်လမ်းထည့်ရန်)</span></h2>
-<div class="field"><label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ် / အကြမ်းဖျင်းအကြောင်းအရာ</span></label><input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်"></div>
+<div class="field"><label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ်</span></label><input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်"></div>
 <div class="field" style="margin-top:9px"><label>Story / Rough Notes <span>ဇာတ်လမ်း / အကြမ်းဖျင်းမှတ်စု</span></label><textarea id="story" placeholder="ဇာတ်လမ်းကို မြန်မာလိုဖြစ်စေ၊ အင်္ဂလိပ်လိုဖြစ်စေ ထည့်နိုင်ပါတယ်..."></textarea></div>
 <button class="primary" id="summaryBtn" style="margin-top:9px">🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span></button>
 <div id="summaryStatus" class="status"></div>
@@ -65,8 +108,8 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 
 <section class="card">
 <h2>📖 Story Summary <span class="sub">(ဇာတ်လမ်းအကျဉ်းချုပ်)</span></h2>
-<textarea id="summary" placeholder="AI Story Summary ဒီနေရာမှာ ပေါ်လာပါမယ်။ ကိုယ်တိုင်လည်း ပြင်နိုင်ပါတယ်။"></textarea>
-<div class="row">
+<textarea id="summary" placeholder="AI Story Summary ဒီနေရာမှာ ပေါ်လာပါမယ်။ ကိုယ်တိုင်လည်း ပြင်နိုင်ပါတယ်။" style="min-height: 180px;"></textarea>
+<div style="display:none;">
 <button class="copy" id="copySummary">📋 Copy Summary<br><span class="sub">Summary ကို ကူးယူရန်</span></button>
 <button id="blueprintBtn">🧩 Create Story Blueprint<br><span class="sub">ဇာတ်လမ်းဖွဲ့စည်းပုံ ဖန်တီးရန်</span></button>
 </div>
@@ -79,13 +122,12 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 </section>
 
 <section class="card">
-<h2>👤 Character Studio <span class="sub">(ဇာတ်ကောင်စတူဒီယို - 5 Items Per Row)</span></h2>
-<div class="notice">Auto Detect က Story Summary + Blueprint ကိုအခြေခံပြီး English နာမည်များဖြင့် ဇာတ်ကောင်များကို ခွဲထုတ်ပေးမယ်။ ဇာတ်ကောင်ကတ်ပြားများကို နှိပ်၍ အသေးစိတ်ပြင်ဆင်နိုင်ပါသည်။</div>
-<div class="row">
-<button id="detectChars">🤖 Auto Detect Characters<br><span class="sub">AI ဖြင့် အလိုအလျောက်ရှာရန်</span></button>
-<button id="addChar">＋ Add Character<br><span class="sub">ကိုယ်တိုင်ထည့်ရန်</span></button>
+<h2>👥 Character Studio</h2>
+<div id="charactersContainer"></div>
+<div class="row" style="margin-top: 12px;">
+<button id="autoDetectChars">🤖 Auto Detect Characters<br><span class="sub">AI ဖြင့် အလိုအလျောက်ရှာရန်</span></button>
+<button id="addCharBtn">＋ Add Character<br><span class="sub">ကိုယ်တိုင်ထည့်ရန်</span></button>
 </div>
-<div id="characters"></div>
 </section>
 
 <section class="card">
@@ -103,7 +145,9 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 <section class="card">
 <h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံးအသုံးပြုရန် Prompt)</span></h2>
 <div id="finalPrompt" class="out empty">Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
+<div style="display:none;">
 <button class="primary copy" id="copyFinal">📋 Copy Prompt<br><span style="font-size:11px">Prompt တစ်ခုလုံးကို ကူးယူရန်</span></button>
+</div>
 <div class="row">
 <button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
 <button id="continue">➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></button>
@@ -119,25 +163,26 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 <h3>📝 Thumbnail Text <span class="sub">(Thumbnail စာသား)</span></h3>
 <div id="thumbText" class="out empty">—</div>
 <button class="secondary copy" id="copyThumbText">📋 Copy Thumbnail Text</button>
+<div style="display:none;">
 <h3>🚫 Thumbnail Negative Prompt <span class="sub">(Thumbnail မဖြစ်စေချင်သောအရာများ)</span></h3>
 <div id="thumbNeg" class="out empty">—</div>
 <button class="secondary copy" id="copyThumbNeg">📋 Copy Thumbnail Negative Prompt</button>
-</section>
+</div>
 
-<section class="card">
+<section class="card" style="display:none;">
 <h2>🚫 Negative Prompt <span class="sub">(မဖြစ်စေချင်သောအရာများ)</span></h2>
 <div id="negative" class="out empty">Final Prompt ထုတ်ပြီးနောက် Negative Prompt ပေါ်လာပါမယ်။</div>
 <button class="secondary copy" id="copyNeg">📋 Copy Negative Prompt</button>
 </section>
 
-<section class="card">
+<section class="card" style="display:none;">
 <h2>▶️ Generator Format <span class="sub">(AI Generator အလိုက် Prompt Format)</span></h2>
 <div class="notice">ဒီ Tool က prompt format ကို selected target model အလိုက် ပြင်ပေးတာဖြစ်ပြီး generator တစ်ခုချင်းစီမှာ မရှိတဲ့ feature ကို မရှိသလို မဟုတ်မမှန် မတောင်းဆိုပါဘူး။</div>
 <div id="formatNote" class="out" style="margin-top:9px"></div>
 </section>
 
-<section class="card">
-<h2>🔄 Story Continuity <span class="sub">(ဇာတ်လမ်းဆက်စပ်မှု)</span></h2>
+<section class="card" style="display:none;">
+<h2>🔄 Story Continuity (ဇာတ်လမ်းဆက်စပ်မှု)</h2>
 <div id="continuity" class="notice">Part 1 — Story continuity initialized.</div>
 </section>
 </div>
@@ -303,7 +348,8 @@ description:"Detected from the story. Refine details here.",locked:true
 }
 
 function renderChars(){
-const b=document.getElementById("characters");
+const b=document.getElementById("charactersContainer");
+if(!b) return;
 if(!state.characters.length){
 b.innerHTML='<div class="empty" style="margin-top:10px">Character မရှိသေးပါ။ Auto Detect သို့မဟုတ် Add Character ကိုနှိပ်ပါ။</div>';
 renderRefs();return
@@ -365,6 +411,7 @@ return `Full character design sheet, ${age} ${name}, ${role}, ${description}, ${
 
 function renderRefs(){
 const b=document.getElementById("refs");
+if(!b) return;
 if(!state.characters.length){
 b.innerHTML='<span class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။';return
 }
@@ -439,6 +486,7 @@ return out
 
 function renderScenes(){
 const b=document.getElementById("scenes");
+if(!b) return;
 if(!state.scenes.length){
 b.innerHTML='<span class="empty">Generate Scenes လုပ်ပြီးနောက် Action နှင့် Dialogue တွေ ပေါ်လာပါမယ်။';return
 }
@@ -484,6 +532,7 @@ Visual Style: ${stylePhrase()}, ${val("Genre")}, ${val("Setting Culture")}, ${va
 
 function renderFinalPrompts(){
 const b=document.getElementById("finalPrompt");
+if(!b) return;
 
 if(!state.scenes.length){
 b.classList.add("empty");
@@ -654,7 +703,8 @@ renderBlueprint(fallbackBlueprint(s));document.getElementById("finalStatus").tex
 async function autoDetect(){
 let text=(document.getElementById("summary").value||document.getElementById("story").value||"").trim();
 if(!text)return alert("Story Summary / Story Input အရင်ထည့်ပါ။");
-document.getElementById("detectChars").disabled=true;
+let btn=document.getElementById("autoDetectChars");
+if(btn) btn.disabled=true;
 try{
 let d=await callGemini(`Detect ALL meaningful named characters in the story. Character names MUST be strictly in English romanized letters. Return characters only.`);
 if(!Array.isArray(d.characters)||!d.characters.length)throw Error("No characters detected");
@@ -663,7 +713,8 @@ state.characters=d.characters.map(c=>({name:String(c.name||"Main Character").rep
 let local=localCharacterParser(text);
 if(local.length){state.characters=local}else{state.characters=[{name:"Main Character",role:"Main Character",age:"",description:"No named character detected. Edit this character manually.",locked:true}]}
 }
-renderChars();document.getElementById("detectChars").disabled=false
+renderChars();
+if(btn) btn.disabled=false;
 }
 
 function normalizeScenes(arr){
@@ -703,7 +754,8 @@ renderScenes();buildFinalFromScenes()
 async function generateScenes(){
 if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim())return alert("Story Input / Summary ထည့်ပါ။");
 let total=durationSec();
-document.getElementById("sceneBtn").disabled=true;document.getElementById("sceneBtn").innerText="⏳ Generating Scenes...";
+let btn=document.getElementById("sceneBtn");
+btn.disabled=true;btn.innerText="⏳ Generating Scenes...";
 try{
 let d=await callGemini(`Generate the complete progressive scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}. Distribute the story chronologically across multiple scenes. Action must be in English for video prompt and action_my must be in Burmese for UI.`);
 if(!Array.isArray(d.scenes)||!d.scenes.length)throw Error("No scenes returned");
@@ -718,7 +770,7 @@ renderScenes();buildFinalFromScenes();renderExtras()
 }catch(e){
 generateScenesLocal();document.getElementById("finalStatus").textContent="⚠️ AI Scene generation failed; local scene planner used. "+e.message
 }
-document.getElementById("sceneBtn").disabled=false;document.getElementById("sceneBtn").innerHTML="🎬 Generate Scenes<br><span style='font-size:11px'>ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>"
+btn.disabled=false;btn.innerHTML="🎬 Generate Scenes<br><span style='font-size:11px'>ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>"
 }
 
 function renderExtras(){
@@ -738,7 +790,8 @@ Dola:"Use concise scene/action wording in English.",
 YouTube:"Keep prompt concise and follow selected format.",
 Generic:"Use the full master prompt without generator-specific assumptions."
 };
-document.getElementById("formatNote").textContent=notes[val("Target AI Video Model")]||notes.Generic
+let fn=document.getElementById("formatNote");
+if(fn) fn.textContent=notes[val("Target AI Video Model")]||notes.Generic;
 }
 
 async function regenerate(){
@@ -758,68 +811,80 @@ return{part:state.part,title:document.getElementById("title").value,story:docume
 }
 
 function updatePreviousButton(){
-let b=document.getElementById("previousPart");
-let hasPrevious=Object.keys(state.history).some(k=>Number(k)<state.part);
-b.disabled=!hasPrevious;
+    let b=document.getElementById("previousPart");
+    if(!b) return;
+    let hasPrevious=Object.keys(state.history).length > 0 || state.part > 1;
+    b.disabled=!hasPrevious;
 }
 
 function restoreSnapshot(snap){
-if(!snap)return;
-state.part=snap.part;state.summary=snap.summary||"";state.blueprint=cloneData(snap.blueprint);state.characters=cloneData(snap.characters)||[];state.scenes=cloneData(snap.scenes)||[];state.lastFinal=snap.lastFinal||"";state.negative=snap.negative||"";state.thumb=snap.thumb||"";state.thumbText=snap.thumbText||"";state.thumbNeg=snap.thumbNeg||"";
-document.getElementById("title").value=snap.title||"";document.getElementById("story").value=snap.story||"";document.getElementById("summary").value=state.summary;
-if(snap.settings){Object.entries(snap.settings).forEach(([k,v])=>{let el=document.getElementById("s_"+k.replaceAll(" ","_"));if(el){el.value=v;el.dispatchEvent(new Event("change"))}})}
-if(state.blueprint){renderBlueprint(state.blueprint)}else{let bp=document.getElementById("blueprint");bp.className="out empty";bp.textContent="Create Story Blueprint ပြီးနောက် ဒီနေရာမှာ ပေါ်လာပါမယ်။"}
-renderChars();renderScenes();renderExtras();
-if(state.scenes.length){buildFinalFromScenes()}else{let fp=document.getElementById("finalPrompt");fp.className="out empty";fp.textContent="Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။"}
-document.getElementById("continuity").innerHTML=`<b>Part ${state.part}</b> — Story state restored exactly from the previous Part.`;updatePreviousButton()
+    if(!snap)return;
+    state.part=snap.part;state.summary=snap.summary||"";state.blueprint=cloneData(snap.blueprint);state.characters=cloneData(snap.characters)||[];state.scenes=cloneData(snap.scenes)||[];state.lastFinal=snap.lastFinal||"";state.negative=snap.negative||"";state.thumb=snap.thumb||"";state.thumbText=snap.thumbText||"";state.thumbNeg=snap.thumbNeg||"";
+    document.getElementById("title").value=snap.title||"";document.getElementById("story").value=snap.story||"";document.getElementById("summary").value=state.summary;
+    if(snap.settings){Object.entries(snap.settings).forEach(([k,v])=>{let el=document.getElementById("s_"+k.replaceAll(" ","_"));if(el){el.value=v;el.dispatchEvent(new Event("change"))}})}
+    if(state.blueprint){renderBlueprint(state.blueprint)}else{let bp=document.getElementById("blueprint");bp.className="out empty";bp.textContent="Create Story Blueprint ပြီးနောက် ဒီနေရာမှာ ပေါ်လာပါမယ်။"}
+    renderChars();renderScenes();renderExtras();
+    if(state.scenes.length){buildFinalFromScenes()}else{let fp=document.getElementById("finalPrompt");fp.className="out empty";fp.textContent="Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။"}
+    let cont=document.getElementById("continuity");
+    if(cont) cont.innerHTML=`<b>Part ${state.part}</b> — Story state restored exactly from the previous Part.`;
+    updatePreviousButton()
 }
 
 function previousPart(){
-const parts=Object.keys(state.history).map(Number).filter(n=>n>=1&&n<state.part).sort((a,b)=>a-b);
-if(!parts.length)return;
-const old=document.getElementById("previousPartPopup");
-if(old)old.remove();
+    // လက်ရှိရောက်နေတဲ့ Part ရဲ့ state ကိုပါ history ထဲ အလိုအလျောက် သိမ်းပါမည်
+    state.history[state.part] = snapshotState();
 
-const overlay=document.createElement("div");
-overlay.id="previousPartPopup";
-overlay.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;";
-
-const box=document.createElement("div");
-box.style.cssText="width:min(360px,100%);max-height:75vh;background:#181818;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.5);color:#fff;display:flex;flex-direction:column;";
-
-const title=document.createElement("div");
-title.textContent="📚 Previous Parts";
-title.style.cssText="font-size:20px;font-weight:700;margin-bottom:14px;text-align:center;";
-
-const list=document.createElement("div");
-list.style.cssText="overflow-y:auto;max-height:50vh;display:flex;flex-direction:column;gap:8px;padding-right:4px;";
-
-parts.forEach(n=>{
-const btn=document.createElement("button");
-btn.textContent=`Part ${n}`;
-btn.style.cssText="width:100%;padding:13px 14px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:#242424;color:#fff;font-size:16px;font-weight:600;cursor:pointer;text-align:left;";
-btn.onclick=()=>{
-const snap=state.history[n];
-if(!snap){document.getElementById("finalStatus").textContent="❌ Previous Part state မတွေ့ပါ။";overlay.remove();return;}
-overlay.remove();restoreSnapshot(snap);
-document.getElementById("finalStatus").textContent=`✓ Part ${state.part} state restored.`;
-};
-list.appendChild(btn);
-});
-
-const cancel=document.createElement("button");
-cancel.textContent="Cancel";
-cancel.style.cssText="width:100%;margin-top:14px;padding:12px;border:0;border-radius:10px;background:#333;color:#fff;font-size:15px;cursor:pointer;";
-cancel.onclick=()=>overlay.remove();
-
-box.appendChild(title);box.appendChild(list);box.appendChild(cancel);overlay.appendChild(box);document.body.appendChild(overlay);
-overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};
+    const parts=Object.keys(state.history).map(Number).filter(n=>n>=1).sort((a,b)=>a-b);
+    if(!parts.length)return;
+    
+    const old=document.getElementById("previousPartPopup");
+    if(old)old.remove();
+    
+    const overlay=document.createElement("div");
+    overlay.id="previousPartPopup";
+    overlay.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;";
+    
+    const box=document.createElement("div");
+    box.style.cssText="width:min(360px,100%);max-height:75vh;background:#181818;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.5);color:#fff;display:flex;flex-direction:column;";
+    
+    const title=document.createElement("div");
+    title.textContent="📚 Select Part";
+    title.style.cssText="font-size:20px;font-weight:700;margin-bottom:14px;text-align:center;";
+    
+    const list=document.createElement("div");
+    list.style.cssText="overflow-y:auto;max-height:50vh;display:flex;flex-direction:column;gap:8px;padding-right:4px;";
+    
+    parts.forEach(n=>{
+        const btn=document.createElement("button");
+        const isCurrent = n === state.part;
+        btn.textContent = isCurrent ? `Part ${n} (Current)` : `Part ${n}`;
+        btn.style.cssText=`width:100%;padding:13px 14px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:${isCurrent?'#1e3a8a':'#242424'};color:#fff;font-size:16px;font-weight:600;cursor:pointer;text-align:left;`;
+        
+        btn.onclick=()=>{
+            const snap=state.history[n];
+            if(!snap){document.getElementById("finalStatus").textContent="❌ Part state မတွေ့ပါ။";overlay.remove();return;}
+            overlay.remove();
+            restoreSnapshot(snap);
+            document.getElementById("finalStatus").textContent=`✓ Part ${state.part} state restored.`;
+        };
+        list.appendChild(btn);
+    });
+    
+    const cancel=document.createElement("button");
+    cancel.textContent="Cancel";
+    cancel.style.cssText="width:100%;margin-top:14px;padding:12px;border:0;border-radius:10px;background:#333;color:#fff;font-size:15px;cursor:pointer;";
+    cancel.onclick=()=>overlay.remove();
+    
+    box.appendChild(title);box.appendChild(list);box.appendChild(cancel);overlay.appendChild(box);document.body.appendChild(overlay);
+    overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};
 }
+
 
 async function continueStory(){
 const fromPart=state.part,nextPart=fromPart+1,backup=snapshotState();
 state.history[fromPart]=backup;
-document.getElementById("continuity").innerHTML=`<b>Part ${nextPart}</b> — Previous ending, locked characters, relationships, props and unresolved events will be used as continuity context.`;
+let cont=document.getElementById("continuity");
+if(cont) cont.innerHTML=`<b>Part ${nextPart}</b> — Previous ending, locked characters, relationships, props and unresolved events will be used as continuity context.`;
 document.getElementById("finalStatus").textContent="⏳ Continuing story...";
 try{
 let prev=state.scenes.length?state.scenes[state.scenes.length-1]:"";
@@ -832,7 +897,9 @@ if(Array.isArray(d.scenes)){state.scenes=normalizeScenes(d.scenes)}
 renderChars();renderScenes();state.negative=d.negative_prompt||state.negative;state.thumb=d.thumbnail_prompt||state.thumb;state.thumbText=d.thumbnail_text||state.thumbText;state.thumbNeg=d.thumbnail_negative_prompt||state.thumbNeg;buildFinalFromScenes();renderExtras();updatePreviousButton();
 document.getElementById("finalStatus").textContent=`✓ Part ${state.part} generated with continuity.`
 }catch(e){
-delete state.history[fromPart];document.getElementById("continuity").innerHTML=`<b>Part ${fromPart}</b> — Story continuity initialized.`;document.getElementById("finalStatus").textContent="❌ "+e.message;updatePreviousButton()
+delete state.history[fromPart];
+if(cont) cont.innerHTML=`<b>Part ${fromPart}</b> — Story continuity initialized.`;
+document.getElementById("finalStatus").textContent="❌ "+e.message;updatePreviousButton()
 }
 }
 
@@ -858,9 +925,9 @@ catch(e){document.getElementById("apiStatus").textContent="❌ "+e.message}
 
 document.getElementById("summaryBtn").onclick=makeSummary;
 document.getElementById("blueprintBtn").onclick=makeBlueprint;
-document.getElementById("detectChars").onclick=autoDetect;
+document.getElementById("autoDetectChars").onclick=autoDetect;
 
-document.getElementById("addChar").onclick=()=>{
+document.getElementById("addCharBtn").onclick=()=>{
 state.characters.push({name:"Character",role:"Supporting Character",age:"",description:"",locked:true});
 renderChars();openCharacterModal(state.characters.length-1)
 };
@@ -879,12 +946,15 @@ document.getElementById("copyThumbNeg").onclick=e=>copyText(state.thumbNeg||docu
 
 document.getElementById("collapseSettings").onclick=()=>{
 let d=document.getElementById("settingsDetails");
+if(d){
 d.open=!d.open;
-document.getElementById("collapseSettings").textContent=d.open?"⌃":"⌄";
+let collapseBtn=document.getElementById("collapseSettings");
+if(collapseBtn) collapseBtn.textContent=d.open?"⌃":"⌄";
 setTimeout(()=>{
 const storyCard=document.getElementById("storyInputCard");
 if(storyCard){storyCard.scrollIntoView({behavior:"smooth",block:"start"})}
 },100)
+}
 };
 
 renderChars();
@@ -895,3 +965,4 @@ updatePreviousButton();
 </script>
 </body>
 </html>
+
