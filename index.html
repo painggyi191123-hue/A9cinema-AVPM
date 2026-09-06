@@ -55,13 +55,12 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(2,4,10,0.85);z-index:999;display:flex;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(4px)}.modal-overlay.hidden{display:none}.modal-box{background:linear-gradient(180deg,#101b34,#080e1c);border:1px solid #35476f;border-radius:18px;padding:16px;width:min(520px,100%);box-shadow:0 25px 50px #000c}.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #28385d;padding-bottom:8px;margin-bottom:10px}.modal-header h3{margin:0;font-size:16px;color:#fff}.final-scene{border:1px solid #26385d;background:#091226;border-radius:14px;padding:11px;margin:9px 0}.final-scene .out{max-height:none;margin-top:8px}
 @media(max-width:560px){.grid{grid-template-columns:1fr}.row3{grid-template-columns:1fr 1fr}.wrap{padding-left:6px;padding-right:6px}.hero h1{font-size:24px}}
 
-/* ဒီနေရာမှာ ထည့်ပါ */
 .card h2 {
-  font-size: 15px;
+  font-size: 16px;
   margin: 0 0 8px 0;
 }
 .card summary {
-  font-size: 14px;
+  font-size: 16px;
 }
 </style>
 </head>
@@ -74,10 +73,8 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 <section class="card">
 <h2>🔑 Gemini API <span class="sub">(Gemini API ချိတ်ဆက်မှု)</span></h2>
 <div class="grid">
-<div class="field"><label>API Key <span>API Key ထည့်ရန်</span></label><input id="apiKey" type="password" placeholder="Paste Gemini API key"></div>
-<div class="field"><label>Gemini Model <span>အသုံးပြုမည့် Gemini Model</span></label><select id="model">
-<option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
-<option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+<div class="field"><label>API Key ထည့်ရန်</span></label><input id="apiKey" type="password" placeholder="Paste Gemini API key"></div>
+<div class="field"><label>Gemini Model </span></label><select id="model">
 <option value="gemini-3.7-flash">Gemini 3.7 Flash</option>
 <option value="gemini-3.6-flash">Gemini 3.6 Flash</option>
 <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
@@ -137,30 +134,36 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 
 <section class="card">
 <h2>🎞️ Scene Generation <span class="sub">(ဇာတ်ဝင်ခန်းဖန်တီးခြင်း)</span></h2>
-<div class="notice">🎭 <b>Dialogue + Action:</b> Generate Scenes နှိပ်ပြီးနောက် ဇာတ်ဝင်ခန်းတစ်ခန်းချင်းစီရဲ့ <b>Action (မြန်မာလိုပြပါ)</b> နှင့် <b>Dialogue (မြန်မာလိုပြပါ)</b> ကို ဒီနေရာမှာ ကိုယ်တိုင်ပြင်နိုင်ပါတယ်။</div>
+<div class="notice">🎭 <b>Dialogue + Action:</b> Generate Scenes နှိပ်ပြီးနောက် ဇာတ်ဝင်ခန်းတစ်ခန်းချင်းစီရဲ့ <b>Action </b> နှင့် <b>Dialogue </b> ကို ဒီနေရာမှာ ကိုယ်တိုင်ပြင်နိုင်ပါတယ်။</div>
 <button class="primary" id="sceneBtn" style="margin-top:9px">🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span></button>
 <div id="scenes" style="margin-top:9px"></div>
 </section>
 
 <section class="card">
-<h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံးအသုံးပြုရန် Prompt)</span></h2>
-<div id="finalPrompt" class="out empty">Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
-<div style="display:none;">
-<button class="primary copy" id="copyFinal">📋 Copy Prompt<br><span style="font-size:11px">Prompt တစ်ခုလုံးကို ကူးယူရန်</span></button>
-</div>
-<div class="row">
-<button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
-<button id="continue">➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></button>
-</div>
-<button id="regen" style="width:100%;margin-top:8px;">🔄 Regenerate<br><span class="sub">Version အသစ်</span></button>
-<div id="finalStatus" class="status"></div>
+  <h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံးအသုံးပြုရန် Prompt)</span></h2>
+  <button class="primary" id="buildFinalBtn" style="margin-bottom:9px;">⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများမှ Final Prompt ဖန်တီးရန်</span></button>
+  <div id="finalPrompt" class="out empty">Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
+  <div style="display:none;">
+    <button class="primary copy" id="copyFinal">📋 Copy Prompt<br><span style="font-size:11px">Prompt တစ်ခုလုံးကို ကူးယူရန်</span></button>
+  </div>
+  <div class="row">
+    <button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
+    <button id="continue">➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></button>
+  </div>
+  <button id="regen" style="width:100%;margin-top:8px;">🔄 Regenerate<br><span class="sub">Version အသစ်</span></button>
+  <div id="finalStatus" class="status"></div>
 </section>
+<div class="row" style="display:none;">
+<button id="previousPart2" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
+<button id="continue2">➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></button>
+</div>
+<div id="finalStatus2" class="status" style="display:none;"></div>
 
 <section class="card">
-<h2>🖼️ Thumbnail <span class="sub">(Thumbnail Prompt)</span></h2>
+<h2>🖼️ Thumbnail Prompt</span></h2>
 <div id="thumbPrompt" class="out empty">Thumbnail Prompt ပေါ်လာပါမယ်။</div>
 <button class="secondary copy" id="copyThumb">📋 Copy Thumbnail Prompt</button>
-<h3>📝 Thumbnail Text <span class="sub">(Thumbnail စာသား)</span></h3>
+<h3>📝 Thumbnail Text စာသား</span></h3>
 <div id="thumbText" class="out empty">—</div>
 <button class="secondary copy" id="copyThumbText">📋 Copy Thumbnail Text</button>
 <div style="display:none;">
@@ -485,34 +488,41 @@ return out
 }
 
 function renderScenes(){
-const b=document.getElementById("scenes");
-if(!b) return;
-if(!state.scenes.length){
-b.innerHTML='<span class="empty">Generate Scenes လုပ်ပြီးနောက် Action နှင့် Dialogue တွေ ပေါ်လာပါမယ်။';return
-}
-b.innerHTML=state.scenes.map((s,i)=>
-`<div class="item">
-<div class="itemhead"><b>SCENE ${String(i+1).padStart(2,"0")}</b><span class="pill">${s.duration}s</span></div>
-<div class="field" style="margin-top:8px">
-<label>Action <span>ဒီ scene ရဲ့ သီးသန့်လှုပ်ရှားမှု (မြန်မာလိုပြပါ)</span></label>
-<textarea data-si="${i}" data-sk="action_my" style="min-height:110px">${esc(s.action_my||"")}</textarea>
-</div>
-<div class="field" style="margin-top:8px">
-<label>Dialogue <span>ဒီ scene ရဲ့ စကားပြောစာသား (မြန်မာလိုပြပါ)</span></label>
-<textarea data-si="${i}" data-sk="dialogue" style="min-height:85px">${esc(s.dialogue||"")}</textarea>
-</div>
-<button class="danger copy" data-delete-scene="${i}" style="margin-top:8px">🗑️ Delete Scene ${String(i+1).padStart(2,"0")}</button>
-</div>`).join("");
-b.querySelectorAll("[data-si]").forEach(e=>{
-e.oninput=()=>{state.scenes[+e.dataset.si][e.dataset.sk]=e.value;buildFinalFromScenes()}
-});
-b.querySelectorAll("[data-delete-scene]").forEach(e=>{
-e.onclick=()=>{
-let i=+e.dataset.deleteScene;
-if(!confirm(`SCENE ${String(i+1).padStart(2,"0")} ကို ဖျက်မှာ သေချာပါသလား?`))return;
-state.scenes.splice(i,1);renderScenes();buildFinalFromScenes();
-}
-})
+    const b=document.getElementById("scenes");
+    if(!b) return;
+    if(!state.scenes.length){
+        b.innerHTML='<span class="empty">Generate Scenes လုပ်ပြီးနောက် Action နှင့် Dialogue တွေ ပေါ်လာပါမယ်။';
+        return;
+    }
+    b.innerHTML=state.scenes.map((s,i)=> `<div class="item">
+        <div class="itemhead"><b>SCENE ${String(i+1).padStart(2,"0")}</b><span class="pill">${s.duration}s</span></div>
+        <div class="field" style="margin-top:8px">
+            <label>Action <span>ဇာတ်ဝင်ခန်း လှုပ်ရှားမှု (English Prompt)</span></label>
+            <textarea data-si="${i}" data-sk="action" style="min-height:110px">${esc(s.action||"")}</textarea>
+        </div>
+        <div class="field" style="margin-top:8px">
+            <label>Dialogue <span>စကားပြောစာသား (မြန်မာလို)</span></label>
+            <textarea data-si="${i}" data-sk="dialogue" style="min-height:85px">${esc(s.dialogue||"")}</textarea>
+        </div>
+        <button class="danger copy" data-delete-scene="${i}" style="margin-top:8px">🗑️ Delete Scene ${String(i+1).padStart(2,"0")}</button>
+    </div>`).join("");
+    
+    b.querySelectorAll("[data-si]").forEach(e=>{
+        e.oninput=()=>{
+            state.scenes[+e.dataset.si][e.dataset.sk]=e.value;
+            buildFinalFromScenes();
+        }
+    });
+    
+    b.querySelectorAll("[data-delete-scene]").forEach(e=>{
+        e.onclick=()=>{
+            let i=+e.dataset.deleteScene;
+            if(!confirm(`SCENE ${String(i+1).padStart(2,"0")} ကို ဖျက်မှာ သေချာပါသလား?`))return;
+            state.scenes.splice(i,1);
+            renderScenes();
+            buildFinalFromScenes();
+        }
+    })
 }
 
 function scenePrompt(s,i){
@@ -542,24 +552,9 @@ return
 
 b.classList.remove("empty");
 
-const finalText=state.lastFinal||"";
-const sceneParts={};
-
-const matches=[...finalText.matchAll(/(?:^|\n)(SCENE\s+(\d{2})\s*[—-][^\n]*(?:\n|$))/g)];
-
-matches.forEach((m,index)=>{
-const sceneNo=parseInt(m[2],10);
-const start=m.index+(m[0].startsWith("\n")?1:0);
-const end=index+1<matches.length
-?matches[index+1].index+(matches[index+1].index>0&&finalText[matches[index+1].index-1]==="\n"?0:0)
-:finalText.length;
-
-sceneParts[sceneNo]=finalText.slice(start,end).trim();
-});
-
 b.innerHTML=state.scenes.map((s,i)=>{
 const sceneNo=i+1;
-const p=sceneParts[sceneNo]||scenePrompt(s,i);
+const p=scenePrompt(s,i);
 
 return `<div class="final-scene">
 <div class="itemhead">
@@ -577,7 +572,7 @@ b.querySelectorAll("[data-copyscene]").forEach(e=>{
 e.onclick=()=>{
 let i=+e.dataset.copyscene;
 let sceneNo=i+1;
-let p=sceneParts[sceneNo]||scenePrompt(state.scenes[i],i);
+let p=scenePrompt(state.scenes[i],i);
 copyText(p.trim(),e)
 }
 })
@@ -733,44 +728,51 @@ transition:s.transition||"Smooth continuity-preserving transition."
 }
 
 function generateScenesLocal(){
-let total=durationSec(),durations=plan(total),story=state.summary||document.getElementById("story").value.trim();
-let charName=state.characters[0]?.name||"Main Character";
-state.scenes=durations.map((d,i)=>({
-duration:d,
-character:charName,
-action:`Scene ${i+1} action sequence in English.`,
-action_my:`ဇာတ်ဝင်ခန်း ${i+1} ၏ လှုပ်ရှားမှုအကြောင်းအရာ။`,
-dialogue:val("Language")==="No Dialogue"?"":`ဇာတ်ဝင်ခန်း ${i+1} စကားပြော။`,
-camera:val("Camera Style"),
-camera_movement:val("Camera Movement"),
-lighting:val("Lighting"),
-audio:val("Audio Style"),
-transition:"Smooth continuity-preserving transition."
-}));
-state.negative="low quality, blurry, distorted face, deformed hands, extra fingers, duplicate character, inconsistent face, age drift, costume drift, wrong weapon, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
-renderScenes();buildFinalFromScenes()
+    let total=durationSec(),durations=plan(total),story=state.summary||document.getElementById("story").value.trim();
+    let charName=state.characters[0]?.name||"Main Character";
+    state.scenes=durations.map((d,i)=>({
+        duration:d,
+        character:charName,
+        action:`Scene ${i+1} action sequence in English.`,
+        action_my:`ဇာတ်ဝင်ခန်း ${i+1} ၏ လှုပ်ရှားမှုအကြောင်းအရာ။`,
+        dialogue:val("Language")==="No Dialogue"?"":`ဇာတ်ဝင်ခန်း ${i+1} စကားပြော။`,
+        camera:val("Camera Style"),
+        camera_movement:val("Camera Movement"),
+        lighting:val("Lighting"),
+        audio:val("Audio Style"),
+        transition:"Smooth continuity-preserving transition."
+    }));
+    state.negative="low quality, blurry, distorted face, deformed hands, extra fingers, duplicate character, inconsistent face, age drift, costume drift, wrong weapon, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
+    renderScenes();
+    renderExtras();
+    buildFinalFromScenes();
+    document.getElementById("finalStatus").textContent="✓ Scenes generated locally and Final Prompt updated.";
 }
 
 async function generateScenes(){
-if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim())return alert("Story Input / Summary ထည့်ပါ။");
-let total=durationSec();
-let btn=document.getElementById("sceneBtn");
-btn.disabled=true;btn.innerText="⏳ Generating Scenes...";
-try{
-let d=await callGemini(`Generate the complete progressive scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}. Distribute the story chronologically across multiple scenes. Action must be in English for video prompt and action_my must be in Burmese for UI.`);
-if(!Array.isArray(d.scenes)||!d.scenes.length)throw Error("No scenes returned");
-state.scenes=normalizeScenes(d.scenes);
-let diff=totalScene()-total;
-if(diff!==0 && state.scenes.length>0){
-let last=state.scenes.length-1;
-state.scenes[last].duration=Math.max(1,Math.min(10,state.scenes[last].duration-diff));
-}
-state.negative=d.negative_prompt||state.negative;state.thumb=d.thumbnail_prompt||"";state.thumbText=d.thumbnail_text||"";state.thumbNeg=d.thumbnail_negative_prompt||"";
-renderScenes();buildFinalFromScenes();renderExtras()
-}catch(e){
-generateScenesLocal();document.getElementById("finalStatus").textContent="⚠️ AI Scene generation failed; local scene planner used. "+e.message
-}
-btn.disabled=false;btn.innerHTML="🎬 Generate Scenes<br><span style='font-size:11px'>ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>"
+    if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim())return alert("Story Input / Summary ထည့်ပါ။");
+    let total=durationSec();
+    let btn=document.getElementById("sceneBtn");
+    btn.disabled=true;btn.innerText="⏳ Generating Scenes...";
+    try{
+        let d=await callGemini(`Generate the complete progressive scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}. Distribute the story chronologically across multiple scenes. Action must be in English for video prompt and action_my must be in Burmese for UI.`);
+        if(!Array.isArray(d.scenes)||!d.scenes.length)throw Error("No scenes returned");
+        state.scenes=normalizeScenes(d.scenes);
+        let diff=totalScene()-total;
+        if(diff!==0 && state.scenes.length>0){
+            let last=state.scenes.length-1;
+            state.scenes[last].duration=Math.max(1,Math.min(10,state.scenes[last].duration-diff));
+        }
+        state.negative=d.negative_prompt||state.negative;state.thumb=d.thumbnail_prompt||"";state.thumbText=d.thumbnail_text||"";state.thumbNeg=d.thumbnail_negative_prompt||"";
+        renderScenes();
+        renderExtras();
+        await buildFinalFromScenes();
+        document.getElementById("finalStatus").textContent="✓ Scenes generated and Final AI Video Prompt successfully updated!";
+    }catch(e){
+        generateScenesLocal();
+        document.getElementById("finalStatus").textContent="⚠️ AI Scene generation failed; local scene planner used. "+e.message;
+    }
+    btn.disabled=false;btn.innerHTML="🎬 Generate Scenes<br><span style='font-size:11px'>ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>";
 }
 
 function renderExtras(){
@@ -831,7 +833,6 @@ function restoreSnapshot(snap){
 }
 
 function previousPart(){
-    // လက်ရှိရောက်နေတဲ့ Part ရဲ့ state ကိုပါ history ထဲ အလိုအလျောက် သိမ်းပါမည်
     state.history[state.part] = snapshotState();
 
     const parts=Object.keys(state.history).map(Number).filter(n=>n>=1).sort((a,b)=>a-b);
@@ -881,27 +882,46 @@ function previousPart(){
 
 
 async function continueStory(){
-const fromPart=state.part,nextPart=fromPart+1,backup=snapshotState();
-state.history[fromPart]=backup;
-let cont=document.getElementById("continuity");
-if(cont) cont.innerHTML=`<b>Part ${nextPart}</b> — Previous ending, locked characters, relationships, props and unresolved events will be used as continuity context.`;
-document.getElementById("finalStatus").textContent="⏳ Continuing story...";
-try{
-let prev=state.scenes.length?state.scenes[state.scenes.length-1]:"";
-let d=await callGemini(`Continue the exact story into Part ${nextPart}. Do NOT restart. Start immediately after the previous ending. Preserve all locked character identities, relationships, location, time, props and unresolved plot. Return a new story_summary, story_blueprint, characters and scenes for the continuation with Action in English and Dialogue in Burmese. Previous ending scene: ${JSON.stringify(prev)}`);
-state.part=nextPart;
-if(d.story_summary){state.summary=d.story_summary;document.getElementById("summary").value=state.summary}
-if(d.story_blueprint){renderBlueprint(d.story_blueprint)}
-if(Array.isArray(d.characters)){state.characters=d.characters.map(c=>({...c,name:String(c.name||"Main Character").replace(/[^\x00-\x7F]/g,"").trim()||"Main Character",locked:true}))}
-if(Array.isArray(d.scenes)){state.scenes=normalizeScenes(d.scenes)}
-renderChars();renderScenes();state.negative=d.negative_prompt||state.negative;state.thumb=d.thumbnail_prompt||state.thumb;state.thumbText=d.thumbnail_text||state.thumbText;state.thumbNeg=d.thumbnail_negative_prompt||state.thumbNeg;buildFinalFromScenes();renderExtras();updatePreviousButton();
-document.getElementById("finalStatus").textContent=`✓ Part ${state.part} generated with continuity.`
-}catch(e){
-delete state.history[fromPart];
-if(cont) cont.innerHTML=`<b>Part ${fromPart}</b> — Story continuity initialized.`;
-document.getElementById("finalStatus").textContent="❌ "+e.message;updatePreviousButton()
+    const allParts = [state.part, ...Object.keys(state.history).map(Number)];
+    const maxPart = Math.max(...allParts);
+    
+    if (state.part < maxPart && state.history[maxPart]) {
+        restoreSnapshot(state.history[maxPart]);
+    }
+    
+    const fromPart = state.part, nextPart = fromPart + 1, backup = snapshotState();
+    state.history[fromPart] = backup;
+    
+    let cont = document.getElementById("continuity");
+    if(cont) cont.innerHTML=`<b>Part ${nextPart}</b> — Previous ending, locked characters, relationships, props and unresolved events will be used as continuity context.`;
+    
+    document.getElementById("finalStatus").textContent="⏳ Continuing story...";
+    try {
+        let prev = state.scenes.length ? state.scenes[state.scenes.length-1] : "";
+        let d = await callGemini(`Continue the exact story into Part ${nextPart}. Do NOT restart. Start immediately after the previous ending. Preserve all locked character identities, relationships, location, time, props and unresolved plot. Return a new story_summary, story_blueprint, characters and scenes for the continuation with Action in English and Dialogue in Burmese. Previous ending scene: ${JSON.stringify(prev)}`);
+        
+        state.part = nextPart;
+        if(d.story_summary){state.summary=d.story_summary;document.getElementById("summary").value=state.summary}
+        if(d.story_blueprint){renderBlueprint(d.story_blueprint)}
+        if(Array.isArray(d.characters)){state.characters=d.characters.map(c=>({...c,name:String(c.name||"Main Character").replace(/[^\x00-\x7F]/g,"").trim()||"Main Character",locked:true}))}
+        if(Array.isArray(d.scenes)){state.scenes=normalizeScenes(d.scenes)}
+        
+        renderChars();renderScenes();
+        state.negative = d.negative_prompt || state.negative;
+        state.thumb = d.thumbnail_prompt || state.thumb;
+        state.thumbText = d.thumbnail_text || state.thumbText;
+        state.thumbNeg = d.thumbnail_negative_prompt || state.thumbNeg;
+        
+        buildFinalFromScenes();renderExtras();updatePreviousButton();
+        document.getElementById("finalStatus").textContent=`✓ Part ${state.part} generated with continuity.`;
+    } catch(e) {
+        delete state.history[fromPart];
+        if(cont) cont.innerHTML=`<b>Part ${fromPart}</b> — Story continuity initialized.`;
+        document.getElementById("finalStatus").textContent="❌ "+e.message;
+        updatePreviousButton();
+    }
 }
-}
+
 
 document.getElementById("saveApi").onclick=()=>{
 let k=document.getElementById("apiKey").value.replace(/[\u200B-\u200D\uFEFF]/g,"").trim();
@@ -927,12 +947,18 @@ document.getElementById("summaryBtn").onclick=makeSummary;
 document.getElementById("blueprintBtn").onclick=makeBlueprint;
 document.getElementById("autoDetectChars").onclick=autoDetect;
 
+document.getElementById("sceneBtn").onclick=generateScenes;
+
 document.getElementById("addCharBtn").onclick=()=>{
 state.characters.push({name:"Character",role:"Supporting Character",age:"",description:"",locked:true});
 renderChars();openCharacterModal(state.characters.length-1)
 };
 
-document.getElementById("sceneBtn").onclick=generateScenes;
+document.getElementById("buildFinalBtn").onclick = () => {
+    if(!state.scenes.length) return alert("ဇာတ်ဝင်ခန်းများ (Scenes) မရှိသေးပါ။ Generate Scenes အရင်လုပ်ပါ။");
+    buildFinalFromScenes();
+    document.getElementById("finalStatus").textContent = "✓ Final AI Video Prompt အောင်မြင်စွာ ထုတ်ပြီးပါပြီ။";
+};
 document.getElementById("regen").onclick=regenerate;
 document.getElementById("previousPart").onclick=previousPart;
 document.getElementById("continue").onclick=continueStory;
@@ -965,4 +991,3 @@ updatePreviousButton();
 </script>
 </body>
 </html>
-
