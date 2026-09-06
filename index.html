@@ -497,7 +497,7 @@ function renderScenes(){
     b.innerHTML=state.scenes.map((s,i)=> `<div class="item">
         <div class="itemhead"><b>SCENE ${String(i+1).padStart(2,"0")}</b><span class="pill">${s.duration}s</span></div>
         <div class="field" style="margin-top:8px">
-            <label>Action <span>ဇာတ်ဝင်ခန်း လှုပ်ရှားမှု (English Prompt)</span></label>
+            <label>Action <span>ဇာတ်ဝင်ခန်း လှုပ်ရှားမှု (မြန်မာလို)</span></label>
             <textarea data-si="${i}" data-sk="action" style="min-height:110px">${esc(s.action||"")}</textarea>
         </div>
         <div class="field" style="margin-top:8px">
@@ -609,12 +609,12 @@ let system=`You are AI Video Prompt Master V4.2. Return strictly valid JSON with
 For story_summary: write a natural, human-readable Burmese story synopsis/draft. 
 For story_blueprint use keys: story_premise, main_characters, supporting_characters, setting_world, main_conflict, story_goal, story_direction, tone_emotion, important_details, continuity_anchors. 
 For characters return an array of objects with name, role, age, description. Character names MUST be strictly in English romanized letters. 
-For scenes return an array of objects with scene_number, duration_seconds, character, action (strictly in English for video prompt), action_my (in Burmese for UI display), dialogue (in Burmese), camera, camera_movement, lighting, audio, transition. 
+For scenes return an array of objects with scene_number, duration_seconds, character, action (in Burmese language for UI display), dialogue (in Burmese), camera, camera_movement, lighting, audio, transition. 
 CRITICAL RULES FOR SCENES: 
 1. Total duration of all scenes must equal the requested duration exactly. 
 2. Every scene duration must be <= 10 seconds. 
 3. Distribute the narrative chronologically and progressively across all scenes. 
-4. Action and Dialogue should be in Burmese as requested by the user. 
+4. Action must be in Burmese as requested by the user. 
 Return also negative_prompt, thumbnail_prompt, thumbnail_text, thumbnail_negative_prompt.`;
 
 let user=`Selected settings: ${JSON.stringify(settingsObj(),null,2)} Story title: ${document.getElementById("title").value.trim()} Story input: ${document.getElementById("story").value.trim()} Current summary: ${document.getElementById("summary").value.trim()} Current blueprint: ${JSON.stringify(state.blueprint||{},null,2)} Current characters: ${JSON.stringify(state.characters,null,2)} Part: ${state.part} Instruction: ${instruction}`;
@@ -716,8 +716,7 @@ function normalizeScenes(arr){
 return arr.map((s,i)=>({
 duration:Math.min(10,Math.max(1,+s.duration_seconds||5)),
 character:String(s.character||state.characters.map(c=>c.name).filter(Boolean).join(", ")||"Main Character").replace(/[^\x00-\x7F]/g,"").trim(),
-action:String(s.action||`Scene ${i+1} action sequence in English.`).trim(),
-action_my:String(s.action_my||s.action||`ဇာတ်ဝင်ခန်း ${i+1} လှုပ်ရှားမှု။`).trim(),
+action:String(s.action||`ဇာတ်ဝင်ခန်း ${i+1} ၏ လှုပ်ရှားမှုအကြောင်းအရာ။`).trim(),
 dialogue:String(s.dialogue||"").trim(),
 camera:s.camera||val("Camera Style"),
 camera_movement:s.camera_movement||val("Camera Movement"),
@@ -733,8 +732,7 @@ function generateScenesLocal(){
     state.scenes=durations.map((d,i)=>({
         duration:d,
         character:charName,
-        action:`Scene ${i+1} action sequence in English.`,
-        action_my:`ဇာတ်ဝင်ခန်း ${i+1} ၏ လှုပ်ရှားမှုအကြောင်းအရာ။`,
+        action:`ဇာတ်ဝင်ခန်း ${i+1} ၏ လှုပ်ရှားမှုအကြောင်းအရာ။`,
         dialogue:val("Language")==="No Dialogue"?"":`ဇာတ်ဝင်ခန်း ${i+1} စကားပြော။`,
         camera:val("Camera Style"),
         camera_movement:val("Camera Movement"),
@@ -755,7 +753,7 @@ async function generateScenes(){
     let btn=document.getElementById("sceneBtn");
     btn.disabled=true;btn.innerText="⏳ Generating Scenes...";
     try{
-        let d=await callGemini(`Generate the complete progressive scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}. Distribute the story chronologically across multiple scenes. Action must be in English for video prompt and action_my must be in Burmese for UI.`);
+        let d=await callGemini(`Generate the complete progressive scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}. Distribute the story chronologically across multiple scenes. Action must be in Burmese language.`);
         if(!Array.isArray(d.scenes)||!d.scenes.length)throw Error("No scenes returned");
         state.scenes=normalizeScenes(d.scenes);
         let diff=totalScene()-total;
@@ -800,7 +798,7 @@ async function regenerate(){
 if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim())return alert("Story Input / Summary ထည့်ပါ။");
 document.getElementById("finalStatus").textContent="⏳ Regenerating...";
 try{
-let d=await callGemini("Regenerate a genuinely different creative version while preserving the exact story meaning, selected settings, locked character identities and continuity. Action in English and action_my in Burmese.");
+let d=await callGemini("Regenerate a genuinely different creative version while preserving the exact story meaning, selected settings, locked character identities and continuity. Action in Burmese.");
 if(Array.isArray(d.scenes)){state.scenes=normalizeScenes(d.scenes);renderScenes()}
 state.lastFinal=d.final_master_prompt||"";state.negative=d.negative_prompt||state.negative;state.thumb=d.thumbnail_prompt||state.thumb;state.thumbText=d.thumbnail_text||state.thumbText;state.thumbNeg=d.thumbnail_negative_prompt||state.thumbNeg;
 if(state.scenes.length){await buildFinalFromScenes()}else if(state.lastFinal){document.getElementById("finalPrompt").classList.remove("empty");document.getElementById("finalPrompt").textContent=state.lastFinal}
@@ -898,7 +896,7 @@ async function continueStory(){
     document.getElementById("finalStatus").textContent="⏳ Continuing story...";
     try {
         let prev = state.scenes.length ? state.scenes[state.scenes.length-1] : "";
-        let d = await callGemini(`Continue the exact story into Part ${nextPart}. Do NOT restart. Start immediately after the previous ending. Preserve all locked character identities, relationships, location, time, props and unresolved plot. Return a new story_summary, story_blueprint, characters and scenes for the continuation with Action in English and Dialogue in Burmese. Previous ending scene: ${JSON.stringify(prev)}`);
+        let d = await callGemini(`Continue the exact story into Part ${nextPart}. Do NOT restart. Start immediately after the previous ending. Preserve all locked character identities, relationships, location, time, props and unresolved plot. Return a new story_summary, story_blueprint, characters and scenes for the continuation with Action in Burmese and Dialogue in Burmese. Previous ending scene: ${JSON.stringify(prev)}`);
         
         state.part = nextPart;
         if(d.story_summary){state.summary=d.story_summary;document.getElementById("summary").value=state.summary}
@@ -991,3 +989,4 @@ updatePreviousButton();
 </script>
 </body>
 </html>
+
