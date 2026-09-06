@@ -10,7 +10,7 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body {
   margin: 0;
-  background-color: #030408;
+  background-color: #030468;
   background-image:
     radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 60%),
     linear-gradient(rgba(34, 211, 238, 0.015) 1px, transparent 1px),
@@ -56,6 +56,213 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
 
 .card h2 {font-size: 16px;margin: 0 0 8px 0;}
 .card summary {font-size: 16px;}
+/* Card ခေါင်းစဉ်ကြီးများ (h2, h3, summary) - Neon Cyan + အလင်းဖြာ Effect */
+.card h2, .card h3, .card summary b, .card summary {
+  color: #00f3ff !important;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+/* Field ခေါင်းစဉ်များ - Laser Purple */
+label {
+  color: #c084fc !important;
+  font-weight: 600;
+}
+
+/* စာသားသေးသေးလေးများ - Matrix Green */
+label span, .sub {
+  color: #00ff9d !important;
+}
+/* ===== ⚡ Animated Cyber Grid & AI Laser Scanline ===== */
+
+/* 1. ဘက်ဂရောင်း ဇယားကွက် လှုပ်ရှားသည့် Animation */
+@keyframes cyberGridMove {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 0 0, 0 0, 0 40px, 0 40px; }
+}
+
+/* 2. အပေါ်အောက် ပြေးနေမည့် AI Laser Scanner Animation */
+@keyframes aiScanline {
+  0% { top: -5%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { top: 105%; opacity: 0; }
+}
+
+/* 3. Card များ အလင်းမှိတ်တုတ် မှိတ်တုတ် Pulse ဖြစ်သည့် Animation */
+@keyframes cyanPulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.25), inset 0 0 12px rgba(0, 243, 255, 0.05); }
+  50% { box-shadow: 0 0 30px rgba(0, 243, 255, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.18); }
+}
+
+/* နောက်ခံအပြင်အဆင် - လှုပ်ရှားနေသော Grid */
+body {
+  background-color: #02040a !important;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.22) 0%, transparent 65%),
+    radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.18) 0%, transparent 55%),
+    linear-gradient(rgba(0, 243, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.08) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px !important;
+  background-attachment: fixed !important;
+  animation: cyberGridMove 6s linear infinite !important;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 1. စခရင် အနားသတ်အတိုင်း လှည့်ပတ်ပြေးမည့် Laser Trail Animation */
+@keyframes borderLaserLoop {
+  0% {
+    top: 0; left: 0;
+    width: 140px; height: 3px;
+    background: linear-gradient(90deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  25% {
+    top: 0; left: calc(100vw - 140px);
+    width: 140px; height: 3px;
+    background: linear-gradient(90deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  25.001% {
+    top: 0; left: calc(100vw - 3px);
+    width: 3px; height: 140px;
+    background: linear-gradient(180deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  50% {
+    top: calc(100vh - 140px); left: calc(100vw - 3px);
+    width: 3px; height: 140px;
+    background: linear-gradient(180deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  50.001% {
+    top: calc(100vh - 3px); left: calc(100vw - 140px);
+    width: 140px; height: 3px;
+    background: linear-gradient(270deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  75% {
+    top: calc(100vh - 3px); left: 0;
+    width: 140px; height: 3px;
+    background: linear-gradient(270deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  75.001% {
+    top: calc(100vh - 140px); left: 0;
+    width: 3px; height: 140px;
+    background: linear-gradient(0deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+  100% {
+    top: 0; left: 0;
+    width: 3px; height: 140px;
+    background: linear-gradient(0deg, transparent, #00f3ff, #c084fc, #00ff9d);
+    box-shadow: 0 0 15px #00f3ff, 0 0 25px #00ff9d;
+  }
+}
+
+/* 2. ပြင်ဆင်ထားသော body::before */
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  animation: borderLaserLoop 6s linear infinite;
+}
+
+/* Card ဘောက်စ်များ (Neon Pulsing Glass) */
+.card {
+  background: rgba(5, 12, 28, 0.85) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(0, 243, 255, 0.4) !important;
+  border-radius: 14px !important;
+  animation: cyanPulse 4s infinite ease-in-out !important;
+  transition: all 0.3s ease !important;
+}
+
+.card:hover {
+  border-color: #00f3ff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(0, 243, 255, 0.7), inset 0 0 25px rgba(0, 243, 255, 0.25) !important;
+}
+
+/* Input / Textarea / Select ဘောက်စ်များအလင်းရောင် */
+input, textarea, select {
+  background: rgba(3, 8, 20, 0.95) !important;
+  border: 1px solid rgba(0, 243, 255, 0.35) !important;
+  color: #00f3ff !important;
+  box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.08) !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #00f3ff !important;
+  box-shadow: 0 0 18px rgba(0, 243, 255, 0.5), inset 0 0 12px rgba(0, 243, 255, 0.2) !important;
+}
+/* ===== 🚀 Ultra-Futuristic Sci-Fi Cut-Corner Buttons ===== */
+
+/* ခလုတ် အားလုံးအတွက် မူလ Cyberpunk Style */
+button {
+  position: relative !important;
+  background: rgba(0, 243, 255, 0.08) !important;
+  color: #00f3ff !important;
+  border: 1px solid #00f3ff !important;
+  padding: 12px 24px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  
+  /* Sci-Fi ဒေါင့်စွန်း ဖြတ်တောက်ထားသည့် Shape (Polygon Clip) */
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px) !important;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.25), inset 0 0 10px rgba(0, 243, 255, 0.1) !important;
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.8) !important;
+}
+
+/* Mouse တင်လျှင် ဖြတ်ပြေးမည့် Laser Light Sweep Effect */
+button::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent) !important;
+  transition: 0.5s !important;
+}
+
+/* Hover ဖြစ်ချိန် Glow Effect မြှင့်ခြင်း */
+button:hover::before {
+  left: 100% !important;
+}
+
+button:hover {
+  background: #00f3ff !important;
+  color: #02040a !important;
+  box-shadow: 0 0 25px #00f3ff, 0 0 45px rgba(0, 243, 255, 0.7) !important;
+  text-shadow: none !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Click နှိပ်လိုက်ချိန် Tactile Animation */
+button:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* 🗑️ Delete/Danger ခလုတ်များအတွက် Neon Pink Vibe */
+button.danger {
+  background: rgba(255, 0, 127, 0.08) !important;
+  color: #ff007f !important;
+  border-color: #ff007f !important;
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.25), inset 0 0 10px rgba(255, 0, 127, 0.1) !important;
+  text-shadow: 0 0 8px rgba(255, 0, 127, 0.8) !important;
+}
+
+button.danger:hover {
+  background: #ff007f !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 25px #ff007f, 0 0 45px rgba(255, 0, 127, 0.7) !important;
+}
+
 </style>
 </head>
 
@@ -1125,3 +1332,4 @@ updatePreviousButton();
 </script>
 </body>
 </html>
+  
