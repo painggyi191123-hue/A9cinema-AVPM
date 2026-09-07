@@ -80,14 +80,7 @@ label span, .sub {
   100% { background-position: 0 0, 0 0, 0 40px, 0 40px; }
 }
 
-/* 2. အပေါ်အောက် ပြေးနေမည့် AI Laser Scanner Animation */
-@keyframes aiScanline {
-  0% { top: -5%; opacity: 0; }
-  50% { opacity: 1; }
-  100% { top: 105%; opacity: 0; }
-}
-
-/* 3. Card များ အလင်းမှိတ်တုတ် မှိတ်တုတ် Pulse ဖြစ်သည့် Animation */
+/* 2. Card များ အလင်းမှိတ်တုတ် မှိတ်တုတ် Pulse ဖြစ်သည့် Animation */
 @keyframes cyanPulse {
   0%, 100% { box-shadow: 0 0 15px rgba(0, 243, 255, 0.25), inset 0 0 12px rgba(0, 243, 255, 0.05); }
   50% { box-shadow: 0 0 30px rgba(0, 243, 255, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.18); }
@@ -108,7 +101,7 @@ body {
   overflow-x: hidden;
 }
 
-/* 2. ပြင်ဆင်ထားသော body::before */
+/* 1. ပြင်ဆင်ထားသော body::before */
 body::before {
   content: "";
   position: fixed;
@@ -162,12 +155,7 @@ button {
   overflow: hidden !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   
-  /* Sci-Fi ဒေါင့်စွန်း ဖြတ်တောက်ထားသည့် Shape (Polygon Clip) */
-  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px) !important;
-  box-shadow: 0 0 15px rgba(0, 243, 255, 0.25), inset 0 0 10px rgba(0, 243, 255, 0.1) !important;
-  text-shadow: 0 0 8px rgba(0, 243, 255, 0.8) !important;
 }
-
 /* Mouse တင်လျှင် ဖြတ်ပြေးမည့် Laser Light Sweep Effect */
 button::before {
   content: '' !important;
