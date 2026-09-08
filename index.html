@@ -1470,9 +1470,7 @@ if(jsonStart!==-1 && jsonEnd!==-1 && jsonEnd>jsonStart){t=t.substring(jsonStart,
 
   try {
     return JSON.parse(t);
-  } catch (e) {
-    throw Error("Gemini က valid JSON မပေးပါ။");
-  }
+} catch (e) {
 }
 
 async function makeSummary(){
