@@ -1163,15 +1163,6 @@ if(d){
 d.open=!d.open;
 let collapseBtn=document.getElementById("collapseSettings");
 if(collapseBtn){collapseBtn.textContent=d.open?"⌃":"⌄";}
-
-if(!d.open){
-setTimeout(()=>{
-document.getElementById("storyInputCard")?.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-},50);
-}
 }
 };
 
