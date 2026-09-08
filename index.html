@@ -1463,14 +1463,8 @@ if(!t)throw Error("Gemini response မရပါ။");
 t=t.replace(/```json/gi,"").replace(/```/g,"").trim();
 let jsonStart=t.indexOf("{"),jsonEnd=t.lastIndexOf("}");
 if(jsonStart!==-1 && jsonEnd!==-1 && jsonEnd>jsonStart){t=t.substring(jsonStart,jsonEnd+1);}
-  // သင့် မူရင်း Code အောက်ဆုံးနား
-  t = t.substring(jsonStart, jsonEnd + 1);
 
-  alert("Gemini ပြန်ပေးလိုက်သော စာသား:\n" + t); // <--- ဒီလိုင်းလေး ခဏထည့်ပါ
-
-  try {
-    return JSON.parse(t);
-} catch (e) {
+try{return JSON.parse(t);}catch(e){throw Error("Gemini က valid JSON မပေးပါ။");}
 }
 
 async function makeSummary(){
