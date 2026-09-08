@@ -107,54 +107,72 @@ body {
   align-items: center;
 }
 
-/* ========== ပြုပြင်ချက် ၁ – ပြန်ပြုပြင်: Settings ကျုံ့လျှင် Story Input မရွေ့စေ + Settings ပုံမှန်အလုပ်လုပ်စေ ========== */
+/* ========== ပြုပြင်ချက် ၁ – Settings ကျုံ့လျှင် Page Scroll မဖြစ်အောင် ထိန်းထားခြင်း ========== */
 #settingsCard {
   contain: layout;
 }
-/* အရေးကြီး – မူလအလုပ်လုပ်တဲ့အတိုင်း summary details ကို ပြန်ထား၊ အမြင့်ပိတ်ဆို့မှု မဖြစ်စေ */
 #settingsDetails {
   overflow: visible;
 }
 #settingsDetails[open] {
   min-height: auto;
 }
-/* Story Input အပိုင်းကို သီးခြားစီ သတ်မှတ် – Settings ပြောင်းလဲမှုကနေ လုံးဝလွတ်လပ်စေ */
 #storyInputCard {
   position: relative;
   transform: translateZ(0);
 }
 
-/* ========== ပြုပြင်ချက် ၂ – ခလုတ်များအတွင်း Robot Icon + အခြေအနေပြောင်းခြင်း – ထိန်းသိမ်း ========== */
+/* ========== ပြုပြင်ချက် ၂ – ခလုတ် ၆ ခု၏ စာဖျောက် Robot အလယ်ပို့ အလုပ်လုပ်ခြင်း Logic ========== */
 .btn-with-robot {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   position: relative;
+  transition: all 0.3s ease;
 }
+
 .btn-robot {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   transition: all 0.3s ease;
 }
-/* အဆင်သင့်အနေအထား – ရပ်နေ၊ အပြာရောင် */
-.robot-ready .robot-eye { fill: #00f0ff; }
-.robot-ready .core-pulse { fill: #00f0ff; animation: none; }
-.robot-ready .antenna-dot { fill: #ff007f; animation: none; }
-.robot-ready .arm-l, .robot-ready .arm-r { animation: none; transform: translateY(0); }
 
-/* အလုပ်လုပ်နေချိန် – လှုပ်ရှား၊ တက်ကြွ */
-.robot-working .robot-eye { fill: #ffd000; animation: eye-blink 0.6s infinite alternate !important; }
-.robot-working .core-pulse { fill: #ffd000; animation: core-glow-work 0.4s infinite alternate !important; }
-.robot-working .antenna-dot { fill: #ffd000; animation: blink-dot-work 0.5s infinite alternate !important; }
-.robot-working .arm-l { animation: arm-work-l 0.35s infinite alternate !important; }
-.robot-working .arm-r { animation: arm-work-r 0.35s infinite alternate 0.17s !important; }
+.btn-text-content {
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
 
-/* ပြီးဆုံးသွားချိန် – အစိမ်းရောင်၊ ပြုံး */
-.robot-done .robot-eye { fill: #00ff9d; }
-.robot-done .core-pulse { fill: #00ff9d; filter: drop-shadow(0 0 6px #00ff9d); animation: done-burst 0.6s ease-out forwards; }
-.robot-done .antenna-dot { fill: #00ff9d; }
-.robot-done .arm-l, .robot-done .arm-r { animation: none; transform: translateY(-2px); }
+/* ခလုတ်အလုပ်လုပ်နေချိန်: စာပျောက်မည်၊ Robot အလယ်ရောက်၍ Pulse Animation ပြုလုပ်မည် */
+.btn-working .btn-text-content {
+  display: none !important;
+}
+
+.btn-working {
+  justify-content: center !important;
+  cursor: wait !important;
+}
+
+.btn-working .btn-robot {
+  transform: scale(1.4);
+}
+
+.btn-working .robot-eye { fill: #ffd000; animation: eye-blink 0.6s infinite alternate !important; }
+.btn-working .core-pulse { fill: #ffd000; animation: core-glow-work 0.4s infinite alternate !important; }
+.btn-working .antenna-dot { fill: #ffd000; animation: blink-dot-work 0.5s infinite alternate !important; }
+.btn-working .arm-l { animation: arm-work-l 0.35s infinite alternate !important; }
+.btn-working .arm-r { animation: arm-work-r 0.35s infinite alternate 0.17s !important; }
+
+/* အလုပ်ပြီးသွားချိန်: မီးလင်းမည် */
+.btn-done {
+  border-color: #00ff9d !important;
+  box-shadow: 0 0 12px rgba(0, 255, 157, 0.4) !important;
+}
+
+.btn-done .robot-eye { fill: #00ff9d; }
+.btn-done .core-pulse { fill: #00ff9d; filter: drop-shadow(0 0 6px #00ff9d); }
+.btn-done .antenna-dot { fill: #00ff9d; }
 
 @keyframes core-glow-work {
   0% { fill: #ff9500; opacity: 0.5; }
@@ -163,11 +181,6 @@ body {
 @keyframes blink-dot-work {
   0% { fill: #ff5500; }
   100% { fill: #ffd000; }
-}
-@keyframes done-burst {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.4); }
-  100% { transform: scale(1); }
 }
 </style>
 </head>
@@ -178,31 +191,17 @@ body {
 <header class="hero-robot-header">
   <h1 class="compact-title">AI VIDEO PROMPT MASTER</h1>
   
-  <!-- ၂။ ခေါင်းစဉ်အောက်ရှိ Animated AI Robot -->
   <div class="robot-status-wrapper">
     <div class="mini-robot">
       <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Antenna Line & Light -->
         <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
         <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
-        
-        <!-- Robot Head -->
         <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
-        
-        <!-- Glowing Eyes -->
         <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
         <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
-        
-        <!-- Mouth / Wave Screen -->
         <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
-        
-        <!-- Body -->
         <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
-        
-        <!-- Chest Core Pulse -->
         <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
-        
-        <!-- Animated Working Arms -->
         <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
         <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
       </svg>
@@ -322,12 +321,8 @@ body {
 <div class="grid">
 <div class="field"><label>API Key ထည့်ရန်</label><input id="apiKey" type="password" placeholder="Paste Gemini API key"></div>
 <div class="field"><label>Gemini Model</label><select id="model">
-<option value="gemini-3.7-flash">Gemini 3.7 Flash</option>
-<option value="gemini-3.6-flash">Gemini 3.6 Flash</option>
-<option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
-<option value="gemini-3.5-flash-lite" selected>Gemini 3.5 Flash-Lite</option>
-<option value="gemini-3.1-flash-lite">Gemini 3.1 Flash-Lite</option>
-<option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
+<option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+<option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
 </select></div>
 </div>
 <div class="row"><button id="saveApi">💾 Save API Key</button><button id="testApi">🔌 Test API</button></div>
@@ -337,10 +332,9 @@ body {
 <section class="card" id="settingsCard">
 <details open id="settingsDetails">
 <summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
-<!-- မူလအတိုင်း ပြန်ထား – settings JS က အလုပ်လုပ်နိုင်စေ -->
 <div id="settings" class="grid" style="margin-top:12px"></div>
 </details>
-<div class="collapse"><button id="collapseSettings">⌃</button></div>
+<div class="collapse"><button id="collapseSettings" type="button">⌃</button></div>
 </section>
 
 <section class="card" id="storyInputCard">
@@ -348,7 +342,7 @@ body {
 <div class="field"><label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ်</span></label><input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်"></div>
 <div class="field" style="margin-top:9px"><label>Story / Rough Notes <span>ဇာတ်လမ်း / အကြမ်းဖျင်းမှတ်စု</span></label><textarea id="story" placeholder="ဇာတ်လမ်းကို မြန်မာလိုဖြစ်စေ၊ အင်္ဂလိပ်လိုဖြစ်စေ ထည့်နိုင်ပါတယ်..."></textarea></div>
 
-<!-- ========== ခလုတ် ၁ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<!-- ========== ခလုတ် ၁ – Summary Button ========== -->
 <button class="primary btn-with-robot" id="summaryBtn" style="margin-top:9px">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -364,7 +358,9 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span></span>
+  <span class="btn-text-content">
+    🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span>
+  </span>
 </button>
 <div id="summaryStatus" class="status"></div>
 </section>
@@ -388,7 +384,8 @@ body {
 <h2>👥 Character Studio</h2>
 <div id="charactersContainer"></div>
 <div class="row" style="margin-top: 12px;">
-<!-- ========== ခလုတ် ၂ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+
+<!-- ========== ခလုတ် ၂ – Auto Detect Characters ========== -->
 <button id="autoDetectChars" class="btn-with-robot" style="padding: 6px 9px; font-size: 11px;">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -404,8 +401,11 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>🤖 Auto Detect Characters<br><span class="sub" style="font-size: 9px;">AI ဖြင့် အလိုအလျောက်ရှာရန်</span></span>
+  <span class="btn-text-content">
+    🤖 Auto Detect Characters<br><span class="sub" style="font-size: 9px;">AI ဖြင့် အလိုအလျောက်ရှာရန်</span>
+  </span>
 </button>
+
 <button id="addCharBtn" style="padding: 6px 9px; font-size: 11px;">＋ Add Character<br><span class="sub" style="font-size: 9px;">ကိုယ်တိုင်ထည့်ရန်</span></button>
 </div>
 <div style="margin-top: 15px; border-top: 1px dashed rgba(0, 243, 255, 0.3); padding-top: 10px;">
@@ -428,7 +428,7 @@ body {
 <h2>🎞️ Scene Generation <span class="sub">(ဇာတ်ဝင်ခန်းဖန်တီးခြင်း)</span></h2>
 <div class="notice">🎭 <b>Dialogue + Action:</b> Generate Scenes နှိပ်ပြီးနောက် ဇာတ်ဝင်ခန်းတစ်ခန်းချင်းစီရဲ့ <b>Action</b> နှင့် <b>Dialogue</b> ကို ဒီနေရာမှာ ကိုယ်တိုင်ပြင်နိုင်ပါတယ်။</div>
 
-<!-- ========== ခလုတ် ၃ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<!-- ========== ခလုတ် ၃ – Generate Scenes ========== -->
 <button class="primary btn-with-robot" id="sceneBtn" style="margin-top:9px">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -444,7 +444,9 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span></span>
+  <span class="btn-text-content">
+    🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>
+  </span>
 </button>
 <div id="scenes" style="margin-top:9px"></div>
 </section>
@@ -452,7 +454,7 @@ body {
 <section class="card">
 <h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံးအသုံးပြုရန် Prompt)</span></h2>
 
-<!-- ========== ခလုတ် ၄ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<!-- ========== ခလုတ် ၄ – Build Final AI Prompt ========== -->
 <button class="primary btn-with-robot" id="buildFinalBtn" style="margin-bottom:9px;">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -468,7 +470,9 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများမှ ကိုယ်ပြင်ထားသော Action/Dialogue အတိုင်း Final Prompt ဖန်တီးရန်</span></span>
+  <span class="btn-text-content">
+    ⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများမှ ကိုယ်ပြင်ထားသော Action/Dialogue အတိုင်း Final Prompt ဖန်တီးရန်</span>
+  </span>
 </button>
 
 <div id="finalPromptContainer">
@@ -478,7 +482,7 @@ body {
 <div class="row" style="margin-top:12px;">
 <button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
 
-<!-- ========== ခလုတ် ၅ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<!-- ========== ခလုတ် ၅ – Continue Story ========== -->
 <button id="continue" class="btn-with-robot">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -494,11 +498,13 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></span>
+  <span class="btn-text-content">
+    ➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span>
+  </span>
 </button>
 </div>
 
-<!-- ========== ခလုတ် ၆ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<!-- ========== ခလုတ် ၆ – Regenerate ========== -->
 <button id="regen" class="btn-with-robot" style="width:100%;margin-top:8px;">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -514,7 +520,9 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>🔄 Regenerate<br><span class="sub">Version အသစ်</span></span>
+  <span class="btn-text-content">
+    🔄 Regenerate<br><span class="sub">Version အသစ်</span>
+  </span>
 </button>
 
 <div id="finalStatus" class="status"></div>
@@ -541,6 +549,36 @@ body {
 <div id="modalFooter" style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end;"></div>
 </div>
 </div>
+
+<script>
+// Video Settings Accordion Toggle (Scroll Focusing / Page Jump မဖြစ်အောင် ထိန်းထားပါသည်)
+const collapseBtn = document.getElementById("collapseSettings");
+const settingsDetails = document.getElementById("settingsDetails");
+
+if (collapseBtn && settingsDetails) {
+  collapseBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    settingsDetails.open = !settingsDetails.open;
+  });
+}
+
+// Robot Button State Controller (ခလုတ် ၆ ခုလုံးအတွက် ခလုတ်နှိပ်ချိန် စာဖျောက် Robot အလုပ်လုပ်ခိုင်းသည့် Logic)
+function setButtonState(buttonId, state) {
+  const btn = document.getElementById(buttonId);
+  if (!btn) return;
+
+  btn.classList.remove("btn-working", "btn-done");
+
+  if (state === "working") {
+    btn.classList.add("btn-working");
+    btn.disabled = true;
+  } else if (state === "done") {
+    btn.classList.add("btn-done");
+    btn.disabled = false;
+  } else {
+    btn.disabled = false;
+  }
+}
 
 <script>
 // ========== Robot အခြေအနေ ပြောင်းလဲပေးမည့် Function – အသစ်ထည့် ==========
