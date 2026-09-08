@@ -280,20 +280,6 @@ let labels={
 "Target AI Video Model":"အသုံးပြုမည့် AI Video Model",
 "Prompt Output Language":"Prompt ထွက်မည့် ဘာသာစကား"
 };
-function toggleVideoSettings() {
-  const vsCard = document.getElementById("videoSettings"); // Video Settings Card ရဲ့ ID
-  if (!vsCard) return;
-
-  // ၁။ Section ကို ကျုံ့ / ချဲ့ ပြုလုပ်ခြင်း
-  vsCard.classList.toggle("collapsed");
-
-  // ၂။ Video Settings ကျုံ့သွားပါက Story Input ထံသို့ View ရောက်သွားစေခြင်း
-  const storyInput = document.getElementById("story") || document.getElementById("summary");
-  if (storyInput) {
-    storyInput.scrollIntoView({ behavior: "smooth", block: "start" });
-    storyInput.focus({ preventScroll: true });
-  }
-}
 
 let state={
 part:1,
@@ -1177,6 +1163,15 @@ if(d){
 d.open=!d.open;
 let collapseBtn=document.getElementById("collapseSettings");
 if(collapseBtn){collapseBtn.textContent=d.open?"⌃":"⌄";}
+
+if(!d.open){
+setTimeout(()=>{
+document.getElementById("storyInputCard")?.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+},50);
+}
 }
 };
 
