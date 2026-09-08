@@ -128,12 +128,16 @@ body {
 <div id="apiStatus" class="status">API key is stored locally on this device only.</div>
 </section>
 
-<section class="card" id="settingsCard">
-<details open id="settingsDetails">
-<summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
-<div id="settings" class="grid" style="margin-top:12px"></div>
-</details>
-<div class="collapse"><button id="collapseSettings">⌃</button></div>
+<!-- Video Settings Section နမူနာ -->
+<section class="card" id="videoSettings">
+  <!-- ခေါင်းစဉ်ကို နှိပ်လိုက်လျှင် Toggle အလုပ်လုပ်စေရန် onclick ထည့်ခြင်း -->
+  <h2 onclick="toggleVideoSettings()" style="cursor: pointer;">
+    ⚙️ Video Settings <span class="sub">(ကျုံ့ရန်/ချဲ့ရန် နှိပ်ပါ)</span>
+  </h2>
+
+  <div class="card-body">
+    <!-- Video settings inputs များ... -->
+  </div>
 </section>
 
 <section class="card" id="storyInputCard">
@@ -276,6 +280,20 @@ let labels={
 "Target AI Video Model":"အသုံးပြုမည့် AI Video Model",
 "Prompt Output Language":"Prompt ထွက်မည့် ဘာသာစကား"
 };
+function toggleVideoSettings() {
+  const vsCard = document.getElementById("videoSettings"); // Video Settings Card ရဲ့ ID
+  if (!vsCard) return;
+
+  // ၁။ Section ကို ကျုံ့ / ချဲ့ ပြုလုပ်ခြင်း
+  vsCard.classList.toggle("collapsed");
+
+  // ၂။ Video Settings ကျုံ့သွားပါက Story Input ထံသို့ View ရောက်သွားစေခြင်း
+  const storyInput = document.getElementById("story") || document.getElementById("summary");
+  if (storyInput) {
+    storyInput.scrollIntoView({ behavior: "smooth", block: "start" });
+    storyInput.focus({ preventScroll: true });
+  }
+}
 
 let state={
 part:1,
@@ -488,20 +506,6 @@ card.onclick=()=>openCharacterModal(+card.dataset.ci)
 });
 
 renderRefs()
-}
-function toggleVideoSettings() {
-  const vsCard = document.getElementById("videoSettings"); // သင့် Video Settings Container ID
-  if (!vsCard) return;
-
-  // 1. Collapse / Expand ပြုလုပ်ခြင်း
-  vsCard.classList.toggle("collapsed");
-
-  // 2. Video Setting ကျုံ့သွားပါက Story Input နေရာ၌ View ရပ်နေစေရန် မောင်းနှင်ခြင်း
-  const storyInput = document.getElementById("story") || document.getElementById("summary");
-  if (storyInput) {
-    storyInput.scrollIntoView({ behavior: "smooth", block: "start" });
-    storyInput.focus({ preventScroll: true });
-  }
 }
 
 function openCharacterModal(i){
