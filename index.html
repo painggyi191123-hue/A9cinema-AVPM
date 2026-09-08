@@ -1106,6 +1106,21 @@ document.getElementById("finalStatus").textContent="❌ "+e.message;
 updatePreviousButton();
 }
 }
+function toggleVideoSettings() {
+  const vsCard = document.getElementById("videoSettings"); // သင့် Video Settings Container ID
+  if (!vsCard) return;
+
+  // 1. Collapse / Expand ပြုလုပ်ခြင်း
+  vsCard.classList.toggle("collapsed");
+
+  // 2. Video Setting ကျုံ့သွားပါက Story Input နေရာ၌ View ရပ်နေစေရန် မောင်းနှင်ခြင်း
+  const storyInput = document.getElementById("story") || document.getElementById("summary");
+  if (storyInput) {
+    storyInput.scrollIntoView({ behavior: "smooth", block: "start" });
+    storyInput.focus({ preventScroll: true });
+  }
+}
+
 
 document.getElementById("saveApi").onclick=()=>{
 let k=document.getElementById("apiKey").value.replace(/[\u200B-\u200D\uFEFF]/g,"").trim();
