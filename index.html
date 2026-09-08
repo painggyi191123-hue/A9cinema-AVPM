@@ -107,63 +107,67 @@ body {
   align-items: center;
 }
 
-/* ========== ROBOT ICON FOR BUTTONS ========== */
-.btn-robot {
-  width: 22px;
-  height: 22px;
+/* ========== ပြုပြင်ချက် ၁ – ပြန်ပြုပြင်: Settings ကျုံ့လျှင် Story Input မရွေ့စေ + Settings ပုံမှန်အလုပ်လုပ်စေ ========== */
+#settingsCard {
+  contain: layout;
+}
+/* အရေးကြီး – မူလအလုပ်လုပ်တဲ့အတိုင်း summary details ကို ပြန်ထား၊ အမြင့်ပိတ်ဆို့မှု မဖြစ်စေ */
+#settingsDetails {
+  overflow: visible;
+}
+#settingsDetails[open] {
+  min-height: auto;
+}
+/* Story Input အပိုင်းကို သီးခြားစီ သတ်မှတ် – Settings ပြောင်းလဲမှုကနေ လုံးဝလွတ်လပ်စေ */
+#storyInputCard {
+  position: relative;
+  transform: translateZ(0);
+}
+
+/* ========== ပြုပြင်ချက် ၂ – ခလုတ်များအတွင်း Robot Icon + အခြေအနေပြောင်းခြင်း – ထိန်းသိမ်း ========== */
+.btn-with-robot {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  margin-right: 6px;
-  vertical-align: middle;
+  gap: 8px;
+  position: relative;
+}
+.btn-robot {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
+  transition: all 0.3s ease;
 }
-.btn-robot svg {width: 100%; height: 100%;}
-
-/* Robot States */
-.robot-ready .antenna-dot { fill: #00f0ff; animation: blink-slow 2s infinite alternate; }
+/* အဆင်သင့်အနေအထား – ရပ်နေ၊ အပြာရောင် */
 .robot-ready .robot-eye { fill: #00f0ff; }
-.robot-ready .core-pulse { fill: #00f0ff; animation: pulse-slow 2s infinite alternate; }
-.robot-ready .arm-l, .robot-ready .arm-r { stroke: #00f0ff; }
+.robot-ready .core-pulse { fill: #00f0ff; animation: none; }
+.robot-ready .antenna-dot { fill: #ff007f; animation: none; }
+.robot-ready .arm-l, .robot-ready .arm-r { animation: none; transform: translateY(0); }
 
-.robot-working .antenna-dot { fill: #ff007f; animation: blink-fast 0.6s infinite alternate; }
-.robot-working .robot-eye { fill: #ff007f; animation: eye-blink 1.2s infinite; }
-.robot-working .core-pulse { fill: #ff007f; animation: core-glow 0.5s infinite alternate; }
-.robot-working .arm-l { stroke: #ff007f; animation: arm-work-l 0.5s infinite alternate; }
-.robot-working .arm-r { stroke: #ff007f; animation: arm-work-r 0.5s infinite alternate 0.25s; }
+/* အလုပ်လုပ်နေချိန် – လှုပ်ရှား၊ တက်ကြွ */
+.robot-working .robot-eye { fill: #ffd000; animation: eye-blink 0.6s infinite alternate !important; }
+.robot-working .core-pulse { fill: #ffd000; animation: core-glow-work 0.4s infinite alternate !important; }
+.robot-working .antenna-dot { fill: #ffd000; animation: blink-dot-work 0.5s infinite alternate !important; }
+.robot-working .arm-l { animation: arm-work-l 0.35s infinite alternate !important; }
+.robot-working .arm-r { animation: arm-work-r 0.35s infinite alternate 0.17s !important; }
 
-.robot-done .antenna-dot { fill: #00ff9d; animation: none; }
+/* ပြီးဆုံးသွားချိန် – အစိမ်းရောင်၊ ပြုံး */
 .robot-done .robot-eye { fill: #00ff9d; }
-.robot-done .core-pulse { fill: #00ff9d; filter: drop-shadow(0 0 6px #00ff9d); }
-.robot-done .arm-l, .robot-done .arm-r { stroke: #00ff9d; transform: translateY(-2px); }
+.robot-done .core-pulse { fill: #00ff9d; filter: drop-shadow(0 0 6px #00ff9d); animation: done-burst 0.6s ease-out forwards; }
+.robot-done .antenna-dot { fill: #00ff9d; }
+.robot-done .arm-l, .robot-done .arm-r { animation: none; transform: translateY(-2px); }
 
-@keyframes blink-slow {
-  0% { opacity: 0.4; }
-  100% { opacity: 1; }
+@keyframes core-glow-work {
+  0% { fill: #ff9500; opacity: 0.5; }
+  100% { fill: #ffd000; opacity: 1; filter: drop-shadow(0 0 6px #ffd000); }
 }
-@keyframes pulse-slow {
-  0% { opacity: 0.3; }
-  100% { opacity: 0.8; }
+@keyframes blink-dot-work {
+  0% { fill: #ff5500; }
+  100% { fill: #ffd000; }
 }
-@keyframes blink-fast {
-  0% { opacity: 0.4; }
-  100% { opacity: 1; }
-}
-@keyframes eye-blink {
-  0%, 85%, 100% { transform: scaleY(1); }
-  92% { transform: scaleY(0.1); }
-}
-@keyframes core-glow {
-  0% { opacity: 0.4; }
-  100% { opacity: 1; }
-}
-@keyframes arm-work-l {
-  0% { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(-2px) rotate(5deg); }
-}
-@keyframes arm-work-r {
-  0% { transform: translateY(-2px) rotate(-5deg); }
-  100% { transform: translateY(0) rotate(0deg); }
+@keyframes done-burst {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
 }
 </style>
 </head>
@@ -259,6 +263,49 @@ body {
   50% { transform: translateY(-3px); }
 }
 
+.antenna-dot {
+  animation: blink-dot 1s infinite alternate;
+}
+
+@keyframes blink-dot {
+  0% { fill: #ff007f; filter: drop-shadow(0 0 2px #ff007f); }
+  100% { fill: #00f0ff; filter: drop-shadow(0 0 6px #00f0ff); }
+}
+
+.robot-eye {
+  animation: eye-blink 3s infinite;
+}
+
+@keyframes eye-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+.core-pulse {
+  animation: core-glow 0.8s infinite alternate;
+}
+
+@keyframes core-glow {
+  0% { fill: #00f0ff; opacity: 0.4; }
+  100% { fill: #ff007f; opacity: 1; filter: drop-shadow(0 0 4px #ff007f); }
+}
+
+.arm-l {
+  animation: arm-work-l 0.5s infinite alternate;
+}
+.arm-r {
+  animation: arm-work-r 0.5s infinite alternate 0.25s;
+}
+
+@keyframes arm-work-l {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-2px); }
+}
+@keyframes arm-work-r {
+  0% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
 @media (max-width: 480px) {
   .hero-robot-header .compact-title {
     font-size: 1rem;
@@ -290,21 +337,23 @@ body {
 <section class="card" id="settingsCard">
 <details open id="settingsDetails">
 <summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
+<!-- မူလအတိုင်း ပြန်ထား – settings JS က အလုပ်လုပ်နိုင်စေ -->
 <div id="settings" class="grid" style="margin-top:12px"></div>
 </details>
 <div class="collapse"><button id="collapseSettings">⌃</button></div>
 </section>
 
-<!-- ✅ ပြင်ထားသောအပိုင်း - ကျုံ့လိုက်လျှင်လည်း မြင်နေရစေခြင်း -->
-<section class="card" id="storyInputCard" style="position:sticky;top:10px;z-index:10;">
+<section class="card" id="storyInputCard">
 <h2>📝 Story Input <span class="sub">(ဇာတ်လမ်းထည့်ရန်)</span></h2>
 <div class="field"><label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ်</span></label><input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်"></div>
 <div class="field" style="margin-top:9px"><label>Story / Rough Notes <span>ဇာတ်လမ်း / အကြမ်းဖျင်းမှတ်စု</span></label><textarea id="story" placeholder="ဇာတ်လမ်းကို မြန်မာလိုဖြစ်စေ၊ အင်္ဂလိပ်လိုဖြစ်စေ ထည့်နိုင်ပါတယ်..."></textarea></div>
-<button class="primary" id="summaryBtn" style="margin-top:9px;display:flex;align-items:center;justify-content:center;">
+
+<!-- ========== ခလုတ် ၁ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<button class="primary btn-with-robot" id="summaryBtn" style="margin-top:9px">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="32" cy="5" r="3" fill="#00f0ff" class="antenna-dot"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
       <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
       <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
       <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
@@ -315,7 +364,7 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span>
+  <span>🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span></span>
 </button>
 <div id="summaryStatus" class="status"></div>
 </section>
@@ -339,11 +388,12 @@ body {
 <h2>👥 Character Studio</h2>
 <div id="charactersContainer"></div>
 <div class="row" style="margin-top: 12px;">
-<button id="autoDetectChars" style="padding: 6px 9px; font-size: 11px; display:flex;align-items:center;justify-content:center;">
+<!-- ========== ခလုတ် ၂ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<button id="autoDetectChars" class="btn-with-robot" style="padding: 6px 9px; font-size: 11px;">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="32" cy="5" r="3" fill="#00f0ff" class="antenna-dot"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
       <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
       <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
       <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
@@ -354,7 +404,7 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  🤖 Auto Detect Characters<br><span class="sub" style="font-size: 9px;">AI ဖြင့် အလိုအလျောက်ရှာရန်</span>
+  <span>🤖 Auto Detect Characters<br><span class="sub" style="font-size: 9px;">AI ဖြင့် အလိုအလျောက်ရှာရန်</span></span>
 </button>
 <button id="addCharBtn" style="padding: 6px 9px; font-size: 11px;">＋ Add Character<br><span class="sub" style="font-size: 9px;">ကိုယ်တိုင်ထည့်ရန်</span></button>
 </div>
@@ -377,11 +427,13 @@ body {
 <section class="card">
 <h2>🎞️ Scene Generation <span class="sub">(ဇာတ်ဝင်ခန်းဖန်တီးခြင်း)</span></h2>
 <div class="notice">🎭 <b>Dialogue + Action:</b> Generate Scenes နှိပ်ပြီးနောက် ဇာတ်ဝင်ခန်းတစ်ခန်းချင်းစီရဲ့ <b>Action</b> နှင့် <b>Dialogue</b> ကို ဒီနေရာမှာ ကိုယ်တိုင်ပြင်နိုင်ပါတယ်။</div>
-<button class="primary" id="sceneBtn" style="margin-top:9px; display:flex;align-items:center;justify-content:center;">
+
+<!-- ========== ခလုတ် ၃ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<button class="primary btn-with-robot" id="sceneBtn" style="margin-top:9px">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="32" cy="5" r="3" fill="#00f0ff" class="antenna-dot"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
       <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
       <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
       <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
@@ -392,18 +444,20 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>
+  <span>🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span></span>
 </button>
 <div id="scenes" style="margin-top:9px"></div>
 </section>
 
 <section class="card">
 <h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံးအသုံးပြုရန် Prompt)</span></h2>
-<button class="primary" id="buildFinalBtn" style="margin-bottom:9px; display:flex;align-items:center;justify-content:center;">
+
+<!-- ========== ခလုတ် ၄ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<button class="primary btn-with-robot" id="buildFinalBtn" style="margin-bottom:9px;">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="32" cy="5" r="3" fill="#00f0ff" class="antenna-dot"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
       <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
       <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
       <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
@@ -414,7 +468,7 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  ⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများမှ ကိုယ်ပြင်ထားသော Action/Dialogue အတိုင်း Final Prompt ဖန်တီးရန်</span>
+  <span>⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများမှ ကိုယ်ပြင်ထားသော Action/Dialogue အတိုင်း Final Prompt ဖန်တီးရန်</span></span>
 </button>
 
 <div id="finalPromptContainer">
@@ -423,11 +477,13 @@ body {
 
 <div class="row" style="margin-top:12px;">
 <button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
-<button id="continue" style="display:flex;align-items:center;justify-content:center;">
+
+<!-- ========== ခလုတ် ၅ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<button id="continue" class="btn-with-robot">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="32" cy="5" r="3" fill="#00f0ff" class="antenna-dot"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
       <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
       <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
       <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
@@ -438,14 +494,16 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  ➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span>
+  <span>➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></span>
 </button>
 </div>
-<button id="regen" style="width:100%;margin-top:8px; display:flex;align-items:center;justify-content:center;">
+
+<!-- ========== ခလုတ် ၆ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
+<button id="regen" class="btn-with-robot" style="width:100%;margin-top:8px;">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="32" cy="5" r="3" fill="#00f0ff" class="antenna-dot"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
       <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
       <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
       <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
@@ -456,8 +514,9 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  🔄 Regenerate<br><span class="sub">Version အသစ်</span>
+  <span>🔄 Regenerate<br><span class="sub">Version အသစ်</span></span>
 </button>
+
 <div id="finalStatus" class="status"></div>
 </section>
 
@@ -484,17 +543,15 @@ body {
 </div>
 
 <script>
-// ========== ROBOT STATE CONTROL ==========
-function setButtonRobot(btnId, state) {
+// ========== Robot အခြေအနေ ပြောင်းလဲပေးမည့် Function – အသစ်ထည့် ==========
+function setButtonRobotState(btnId, state) {
   const btn = document.getElementById(btnId);
   if (!btn) return;
   const robot = btn.querySelector('.btn-robot');
   if (!robot) return;
-  robot.classList.remove('robot-ready','robot-working','robot-done');
+  robot.classList.remove('robot-ready', 'robot-working', 'robot-done');
   robot.classList.add('robot-' + state);
 }
-
-// ========== ကျန်ကုဒ်အားလုံးကို အပြောင်းအလဲမလုပ်ဘဲ ထိန်းသိမ်းထားသည် ==========
 
 window.copyText = function(t, btn){
   navigator.clipboard?.writeText(String(t||"")).then(()=>{
@@ -508,125 +565,8 @@ window.copyText = function(t, btn){
 
 (function(){
 
-const opts={
-"Character Consistency":[["AI Generated Character","AI ဖြင့် ဖန်တီးထားသော ဇာတ်ကောင်"],["Real Human","လူသားအစစ်ပုံစံ"],["Myanmar Character","မြန်မာဇာတ်ကောင်"],["Chinese Character","တရုတ်ဇာတ်ကောင်"],["Korean Character","ကိုရီးယားဇာတ်ကောင်"],["Japanese Character","ဂျပန်ဇာတ်ကောင်"],["Custom Character","ကိုယ်တိုင်သတ်မှတ်မည့် ဇာတ်ကောင်"]],
-"Art Style":[["Cinematic Realistic","ရုပ်ရှင်ဆန်သော လက်တွေ့ကျ ပုံစံ"],["Photorealistic","ဓာတ်ပုံကဲ့သို့ လက်တွေ့ကျ"],["Realistic","လက်တွေ့ကျ"],["Anime","အန်နီမေး"],["3D Animation","3D အန်နီမေးရှင်း"],["Chinese Donghua","တရုတ် Donghua ပုံစံ"],["Korean Webtoon","ကိုရီးယား Webtoon ပုံစံ"],["Japanese Anime","ဂျပန် Anime ပုံစံ"],["Comic Book","Comic စာအုပ်ပုံစံ"],["Watercolor","ရေဆေးပန်းချီပုံစံ"],["Oil Painting","ဆီဆေးပန်းချီပုံစံ"],["Fantasy","စိတ်ကူးယဉ်ပုံစံ"],["Dark Fantasy","အမှောင်ဆန်သော စိတ်ကူးယဉ်ပုံစံ"],["Cyberpunk","Cyberpunk ပုံစံ"],["Stick Man","Stick Man ပုံစံ"],["Clay Animation","ရွံ့ရုပ်အန်နီမေးရှင်းပုံစံ"],["Custom Style","ကိုယ်တိုင်သတ်မှတ်မည့် ပုံစံ"]],
-"Genre":[["Action","အက်ရှင်"],["Adventure","စွန့်စားခန်း"],["Comedy","ဟာသ"],["Romance","အချစ်ဇာတ်လမ်း"],["Drama","ဒရာမာ"],["Wuxia","တရုတ်ရှေးဟောင်း ဓားသိုင်း"],["Xianxia","တရုတ်ရှေးဟောင်း မှော်နှင့် နတ်ဘုရားလောက"],["Fantasy","စိတ်ကူးယဉ်"],["Horror","ထိတ်လန့်ဖွယ်"],["Thriller","ရင်ခုန်စိတ်လှုပ်ရှားဖွယ်"],["Mystery","လျှို့ဝှက်ဆန်းကြယ်"],["Sci-Fi","သိပ္ပံစိတ်ကူးယဉ်"],["Historical","သမိုင်းနောက်ခံ"],["Crime","ရာဇဝတ်မှု"],["Martial Arts","ကိုယ်ခံပညာ / ဓားသိုင်း"],["Emotional","စိတ်ခံစားမှုအသားပေး"],["Family","မိသားစုဇာတ်လမ်း"],["Epic","ခမ်းနားကြီးကျယ်သော ဇာတ်လမ်း"],["Documentary","မှတ်တမ်းပုံစံ"],["Custom","ကိုယ်တိုင်သတ်မှတ်မည်"]],
-"Audio Style":[["Character Speaking","ဇာတ်ကောင်ကိုယ်တိုင် ပြောဆိုခြင်း"],["Narration","နောက်ခံဇာတ်ကြောင်းပြောခြင်း"],
-</header>
-
-<section class="card">
-<h2>🔑 Gemini API <span class="sub">(Gemini API ချိတ်ဆက်မှု)</span></h2>
-<div class="grid">
-<div class="field"><label>API Key ထည့်ရန်</label><input id="apiKey" type="password" placeholder="Paste Gemini API key"></div>
-<div class="field"><label>Gemini Model</label><select id="model">
-<option value="gemini-3.7-flash">Gemini 3.7 Flash</option>
-<option value="gemini-3.6-flash">Gemini 3.6 Flash</option>
-<option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
-<option value="gemini-3.5-flash-lite" selected>Gemini 3.5 Flash-Lite</option>
-<option value="gemini-3.1-flash-lite">Gemini 3.1 Flash-Lite</option>
-<option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
-</select></div>
-</div>
-<div class="row"><button id="saveApi">💾 Save API Key</button><button id="testApi">🔌 Test API</button></div>
-<div id="apiStatus" class="status">API key is stored locally on this device only.</div>
-</section>
-
-<!-- Video Settings Section နမူနာ -->
-<section class="card" id="videoSettings">
-  <!-- ခေါင်းစဉ်ကို နှိပ်လိုက်လျှင် Toggle အလုပ်လုပ်စေရန် onclick ထည့်ခြင်း -->
-  <h2 onclick="toggleVideoSettings()" style="cursor: pointer;">
-    ⚙️ Video Settings <span class="sub">(ကျုံ့ရန်/ချဲ့ရန် နှိပ်ပါ)</span>
-  </h2>
-
-  <div class="card-body">
-    <!-- Video settings inputs များ... -->
-  </div>
-</section>
-
-<section class="card" id="storyInputCard">
-<h2>📝 Story Input <span class="sub">(ဇာတ်လမ်းထည့်ရန်)</span></h2>
-<div class="field"><label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ်</span></label><input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်"></div>
-<div class="field" style="margin-top:9px"><label>Story / Rough Notes <span>ဇာတ်လမ်း / အကြမ်းဖျင်းမှတ်စု</span></label><textarea id="story" placeholder="ဇာတ်လမ်းကို မြန်မာလိုဖြစ်စေ၊ အင်္ဂလိပ်လိုဖြစ်စေ ထည့်နိုင်ပါတယ်..."></textarea></div>
-<button class="primary" id="summaryBtn" style="margin-top:9px">🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span></button>
-<div id="summaryStatus" class="status"></div>
-</section>
-
-<section class="card">
-<h2>📖 Story Summary <span class="sub">(ဇာတ်လမ်းအကျဉ်းချုပ်)</span></h2>
-<textarea id="summary" placeholder="AI Story Summary ဒီနေရာမှာ ပေါ်လာပါမယ်။ ကိုယ်တိုင်လည်း ပြင်နိုင်ပါတယ်။" style="min-height: 300px;"></textarea>
-<div style="display:none;">
-<button class="copy" id="copySummary">📋 Copy Summary<br><span class="sub">Summary ကို ကူးယူရန်</span></button>
-<button id="blueprintBtn">🧩 Create Story Blueprint<br><span class="sub">ဇာတ်လမ်းဖွဲ့စည်းပုံ ဖန်တီးရန်</span></button>
-</div>
-</section>
-
-<section class="card">
-<h2>🧩 Story Blueprint <span class="sub">(ဇာတ်လမ်းအခြေခံဖွဲ့စည်းပုံ)</span></h2>
-<div id="blueprint" class="out empty">Create Story Blueprint ပြီးနောက် ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
-<div class="notice" style="margin-bottom:8px">💡 <b>Tip:</b> အကွက်တစ်ခုချင်းစီကို နှိပ်၍ အသေးစိတ်အချက်အလက်များကို Pop-up ဖြင့် ကြည့်ရှုနိုင်ပါသည်။</div>
-</section>
-
-<section class="card">
-<h2>👥 Character Studio</h2>
-<div id="charactersContainer"></div>
-<div class="row" style="margin-top: 12px;">
-<button id="autoDetectChars" style="padding: 6px 9px; font-size: 11px;">🤖 Auto Detect Characters<br><span class="sub" style="font-size: 9px;">AI ဖြင့် အလိုအလျောက်ရှာရန်</span></button>
-<button id="addCharBtn" style="padding: 6px 9px; font-size: 11px;">＋ Add Character<br><span class="sub" style="font-size: 9px;">ကိုယ်တိုင်ထည့်ရန်</span></button>
-</div>
-</section>
-
-<section class="card">
-<h2>🖼️ Character Reference Image Prompts <span class="sub">(ဇာတ်ကောင်ရည်ညွှန်းပုံ Prompt များ - English Only)</span></h2>
-<div id="refs" class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။</div>
-</section>
-
-<section class="card">
-<h2>🎞️ Scene Generation <span class="sub">(ဇာတ်ဝင်ခန်းဖန်တီးခြင်း)</span></h2>
-<div class="notice">🎭 <b>Dialogue + Action:</b> Generate Scenes နှိပ်ပြီးနောက် ဇာတ်ဝင်ခန်းတစ်ခန်းချင်းစီရဲ့ <b>Action</b> နှင့် <b>Dialogue</b> ကို ဒီနေရာမှာ ကိုယ်တိုင်ပြင်နိုင်ပါတယ်။</div>
-<button class="primary" id="sceneBtn" style="margin-top:9px">🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span></button>
-<div id="scenes" style="margin-top:9px"></div>
-</section>
-
-<section class="card">
-<h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံးအသုံးပြုရန် Prompt)</span></h2>
-<button class="primary" id="buildFinalBtn" style="margin-bottom:9px;">⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများမှ ကိုယ်ပြင်ထားသော Action/Dialogue အတိုင်း Final Prompt ဖန်တီးရန်</span></button>
-<div id="finalPrompt" class="out empty">Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
-<div style="display:none;">
-<button class="primary copy" id="copyFinal">📋 Copy Prompt<br><span style="font-size:11px">Prompt တစ်ခုလုံးကို ကူးယူရန်</span></button>
-</div>
-<div class="row">
-<button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
-<button id="continue">➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></button>
-</div>
-<button id="regen" style="width:100%;margin-top:8px;">🔄 Regenerate<br><span class="sub">Version အသစ်</span></button>
-<div id="finalStatus" class="status"></div>
-</section>
-
-<section class="card">
-<h2>🖼️ Thumbnail Prompt</h2>
-<div id="thumbPrompt" class="out empty">Thumbnail Prompt ပေါ်လာပါမယ်။</div>
-<button class="secondary copy" id="copyThumb">📋 Copy Thumbnail Prompt</button>
-<h3>📝 Thumbnail Text စာသား</h3>
-<div id="thumbText" class="out empty">—</div>
-<button class="secondary copy" id="copyThumbText">📋 Copy Thumbnail Text</button>
-</section>
-
-</div>
-
-<div id="modalOverlay" class="modal-overlay hidden">
-<div class="modal-box">
-<div class="modal-header">
-<h3 id="modalTitle">Details</h3>
-<button id="modalClose" class="secondary" style="padding:4px 10px;width:auto;border-radius:8px;">✕</button>
-</div>
-<div id="modalBody" style="margin-top:10px;max-height:65vh;overflow-y:auto;padding-right:4px"></div>
-<div id="modalFooter" style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end;"></div>
-</div>
-</div>
-
-<script>
-function(){
+// ==========================================
+// ⚠️ အရေးကြီး – မူလ Video Settings ဖန်တီးတဲ့ ကုဒ်ကို လုံးဝပြန်ထားပြီး ထိခိုက်မှုမရှိအော
 
 const opts={
 "Character Consistency":[["AI Generated Character","AI ဖြင့် ဖန်တီးထားသော ဇာတ်ကောင်"],["Real Human","လူသားအစစ်ပုံစံ"],["Myanmar Character","မြန်မာဇာတ်ကောင်"],["Chinese Character","တရုတ်ဇာတ်ကောင်"],["Korean Character","ကိုရီးယားဇာတ်ကောင်"],["Japanese Character","ဂျပန်ဇာတ်ကောင်"],["Custom Character","ကိုယ်တိုင်သတ်မှတ်မည့် ဇာတ်ကောင်"]],
@@ -688,10 +628,11 @@ let labels={
 let state={
 part:1,
 characters:[],
+groups:[],
 scenes:[],
 summary:"",
 blueprint:null,
-lastFinal:"",
+finalScenesData:[],
 negative:"",
 thumb:"",
 thumbText:"",
@@ -710,16 +651,6 @@ return String(v||"").replace(/[&<>"']/g,m=>({
 }
 
 function cloneData(v){return v==null?v:JSON.parse(JSON.stringify(v))}
-
-function copyText(t,btn){
-navigator.clipboard?.writeText(String(t||"")).then(()=>{
-let old=btn.innerText;
-btn.innerText="✅ Copied / ကူးပြီးပါပြီ";
-setTimeout(()=>btn.innerText=old,1200)
-}).catch(()=>{
-alert("Clipboard permission မရပါ။ Prompt ကို long-press လုပ်ပြီး copy လုပ်ပါ။")
-})
-}
 
 function openModal(title,bodyHtml,footerHtml){
 document.getElementById("modalTitle").textContent=title;
@@ -740,7 +671,6 @@ document.getElementById("modalOverlay").classList.add("hidden")
 }
 
 document.getElementById("modalClose").onclick=closeModal;
-
 document.getElementById("modalOverlay").onclick=e=>{
 if(e.target===document.getElementById("modalOverlay"))closeModal()
 };
@@ -750,7 +680,6 @@ let id="s_"+key.replaceAll(" ","_"),
 d=document.createElement("div");
 
 d.className="field";
-
 d.innerHTML=`
 <label>${key}<span>${labels[key]||"ရွေးချယ်ရန်"}</span></label>
 <div class="dual">
@@ -775,13 +704,11 @@ s.appendChild(o);
 let b=document.createElement("button");
 b.type="button";
 b.innerHTML=`<span class="en">${v}</span><span class="mm">${m}</span>`;
-
 b.onclick=()=>{
 s.value=v;
 upd();
 menu.classList.add("hidden")
 };
-
 menu.appendChild(b)
 });
 
@@ -839,6 +766,102 @@ Object.keys(opts).forEach(k=>x[k]=val(k));
 return x
 }
 
+/* 👥 Character Group / Crowd Logic */
+window.addGroupInput = function(name="", desc=""){
+  state.groups.push({ name: name, description: desc });
+  renderGroups();
+};
+
+function renderGroups() {
+  const gContainer = document.getElementById("group-list");
+  if (!gContainer) return;
+
+  if (!state.groups || !state.groups.length) {
+    gContainer.innerHTML = '<div class="empty" style="margin-top:8px; font-size:11px; color:var(--muted)">Crowd/Group မရှိသေးပါ။</div>';
+    return;
+  }
+
+  gContainer.innerHTML = `
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin-top: 10px;">
+      ${state.groups.map((g, i) => `
+        <div class="char-card group-card" data-gi="${i}" style="padding: 8px; text-align: center; cursor: pointer;">
+          <div style="display:flex; justify-content:space-between; width:100%; font-size:8px; color:var(--b);">
+            <span>#G${i+1}</span>
+            <span>👥</span>
+          </div>
+          <div class="char-card-title" style="font-size:11px; font-weight:bold; margin: 4px 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            ${esc(g.name || "Group " + (i+1))}
+          </div>
+          <div style="font-size:8px; color:var(--muted);">Tap</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+
+  gContainer.querySelectorAll(".group-card").forEach(card => {
+    card.onclick = () => openGroupModal(+card.dataset.gi);
+  });
+}
+
+function openGroupModal(index) {
+  const group = state.groups[index];
+  if (!group) return;
+
+  let modal = document.getElementById("groupModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "groupModal";
+    modal.style.cssText = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; z-index:9999;";
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div style="background: #1e1e2d; border: 1px solid rgba(0, 243, 255, 0.3); padding: 16px; border-radius: 8px; width: 300px; color: #fff;">
+      <h3 style="margin-top:0; font-size:14px; color:#c084fc;">👥 Edit Group (#G${index + 1})</h3>
+      <label style="font-size:10px;">Group Name (အမည်):</label>
+      <input type="text" id="modalGroupName" value="${esc(group.name)}" style="width:100%; margin: 4px 0 10px 0; padding:6px; background:#12121a; border:1px solid #333; color:#fff; border-radius:4px; font-size:12px;">
+      <label style="font-size:10px;">Description (အသေးစိတ်):</label>
+      <textarea id="modalGroupDesc" style="width:100%; height:50px; margin: 4px 0 10px 0; padding:6px; background:#12121a; border:1px solid #333; color:#fff; border-radius:4px; font-size:11px;">${esc(group.description || "")}</textarea>
+      <div style="display:flex; justify-content:space-between; margin-top:10px;">
+        <button id="btnGroupDelete" type="button" style="background:#ff4d4d; color:#fff; border:none; padding:6px 12px; border-radius:4px; font-size:11px; cursor:pointer;">🗑 Delete</button>
+        <div>
+          <button id="btnGroupCancel" type="button" style="background:#444; color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; margin-right:5px; cursor:pointer;">Cancel</button>
+          <button id="btnGroupSave" type="button" style="background:#00f3ff; color:#000; font-weight:bold; border:none; padding:6px 12px; border-radius:4px; font-size:11px; cursor:pointer;">Save</button>
+        </div>
+      </div>
+    </div>
+  `;
+  modal.style.display = "flex";
+
+  document.getElementById("btnGroupDelete").onclick = () => deleteGroup(index);
+  document.getElementById("btnGroupCancel").onclick = () => closeGroupModal();
+  document.getElementById("btnGroupSave").onclick = () => saveGroup(index);
+}
+
+function closeGroupModal() {
+  const modal = document.getElementById("groupModal");
+  if (modal) modal.style.display = "none";
+}
+
+function saveGroup(index) {
+  const name = document.getElementById("modalGroupName").value.trim();
+  const desc = document.getElementById("modalGroupDesc").value.trim();
+  if (name && state.groups[index]) {
+    state.groups[index].name = name;
+    state.groups[index].description = desc;
+    renderGroups();
+    closeGroupModal();
+  }
+}
+
+function deleteGroup(index) {
+  if (confirm("ဒီ Group ကို ဖျက်ရန် သေချာပါသလား?")) {
+    state.groups.splice(index, 1);
+    renderGroups();
+    closeGroupModal();
+  }
+}
+
 function localCharacterParser(text){
 let found=[],
 seen=new Set(),
@@ -864,6 +887,64 @@ locked:true
 }))
 }
 
+// 🎯 SCENE အလိုက် Photo Prompt + Video Prompt ခွဲခြားပြသပေးသည့် Function
+function renderFinalPrompts(){
+const el = document.getElementById("finalPrompt");
+if(!el) return;
+
+if(!state.finalScenesData || !state.finalScenesData.length){
+  el.className = "empty";
+  el.textContent = "Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။";
+  return;
+}
+
+el.className = "";
+let title = document.getElementById("title").value.trim() || "Untitled";
+let cleanNeg = state.negative || "low quality, blurry, distorted face, deformed hands, extra fingers, duplicate characters, identity drift, costume drift, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
+
+let masterHeader = `Create a generator-ready ${stylePhrase()} ${val("Genre")} video for ${val("Target AI Video Model")}. Story title: ${title}. Aspect ratio: ${val("Aspect Ratio")}. Master continuity: Preserve every locked character exactly. Never change face, age, hairstyle, hair color, skin appearance, body shape, costume, armor, accessories, weapons or signature props. Preserve established location, time, relationships and unresolved story events.`;
+
+let html = `
+<div class="final-scene-card" style="border-color:#344a76;">
+  <div class="final-prompt-title">⚙️ MASTER CONTINUITY PROMPT & SETTINGS</div>
+  <div class="out" id="masterPromptText" style="max-height:120px;">${esc(masterHeader)}</div>
+  <button class="secondary copy" onclick="copyText(document.getElementById('masterPromptText').textContent, this)">📋 Copy Master Header</button>
+</div>
+`;
+
+state.finalScenesData.forEach((item, i) => {
+  let sNum = String(i + 1).padStart(2, "0");
+  html += `
+  <div class="final-scene-card">
+    <div class="final-prompt-title">
+      <span>🎬 SCENE ${sNum} PROMPTS</span>
+      <span class="pill">${item.duration}s</span>
+    </div>
+    
+    <!-- 1. Video Prompt Section -->
+    <label style="color:#00f3ff !important; margin-top:4px; display:block;">🎥 Scene ${sNum} Video Prompt:</label>
+    <div class="out" id="vid_prompt_${i}" style="margin-top:4px;">${esc(item.videoPrompt)}</div>
+    <button class="secondary copy" onclick="copyText(document.getElementById('vid_prompt_${i}').textContent, this)">📋 Copy Scene ${sNum} Video Prompt</button>
+    
+    <!-- 2. Photo Prompt Section -->
+    <label style="color:#00ff9d !important; margin-top:12px; display:block;">📸 Scene ${sNum} Photo Prompt:</label>
+    <div class="out" id="photo_prompt_${i}" style="margin-top:4px;">${esc(item.photoPrompt)}</div>
+    <button class="secondary copy" onclick="copyText(document.getElementById('photo_prompt_${i}').textContent, this)">📋 Copy Scene ${sNum} Photo Prompt</button>
+  </div>
+  `;
+});
+
+html += `
+<div class="final-scene-card" style="border-color:#344a76; margin-top:12px;">
+  <div class="final-prompt-title">🚫 NEGATIVE PROMPT</div>
+  <div class="out" id="negPromptText" style="max-height:80px;">${esc(cleanNeg)}</div>
+  <button class="secondary copy" onclick="copyText(document.getElementById('negPromptText').textContent, this)">📋 Copy Negative Prompt</button>
+</div>
+`;
+
+el.innerHTML = html;
+}
+
 function renderChars(){
 const b=document.getElementById("charactersContainer");
 if(!b)return;
@@ -871,6 +952,7 @@ if(!b)return;
 if(!state.characters.length){
 b.innerHTML='<div class="empty" style="margin-top:10px">Character မရှိသေးပါ။ Auto Detect သို့မဟုတ် Add Character ကိုနှိပ်ပါ။</div>';
 renderRefs();
+renderGroups();
 return
 }
 
@@ -895,7 +977,8 @@ b.querySelectorAll(".char-card").forEach(card=>{
 card.onclick=()=>openCharacterModal(+card.dataset.ci)
 });
 
-renderRefs()
+renderRefs();
+renderGroups();
 }
 
 function openCharacterModal(i){
@@ -917,7 +1000,7 @@ state.characters[i].description=document.getElementById("m_desc").value;
 state.characters[i].locked=document.getElementById("m_lock").checked;
 closeModal();
 renderChars();
-state.lastFinal="";
+state.finalScenesData=[];
 renderFinalPrompts();
 };
 
@@ -926,7 +1009,7 @@ if(confirm("ဒီဇာတ်ကောင်ကို ဖျက်မှာ သ
 state.characters.splice(i,1);
 closeModal();
 renderChars();
-state.lastFinal="";
+state.finalScenesData=[];
 renderFinalPrompts();
 }
 }
@@ -1042,10 +1125,10 @@ i++;
 }
 return out
 }
+
 function estDuration(action, dialogue) {
   let actLen = (action || "").replace(/\s+/g, "").length;
   let diaLen = (dialogue || "").replace(/\s+/g, "").length;
-  // Dialogue ၁ စက္ကန့်လျှင် ၁၀ စာလုံး၊ Action ၁ စက္ကန့်လျှင် ၂၀ စာလုံးနှုန်းဖြင့် တွက်ချက်ခြင်း
   let sec = Math.round((diaLen / 10) + (actLen / 20));
   return Math.max(sec, 2);
 }
@@ -1090,9 +1173,8 @@ const i=+e.dataset.si;
 const key=e.dataset.sk;
 if(state.scenes[i]){
 state.scenes[i][key]=e.value;
-state.lastFinal="";
+state.finalScenesData=[];
 
-// Real-time Duration update
 let est = estDuration(state.scenes[i].action_my || state.scenes[i].action, state.scenes[i].dialogue);
 let estEl = document.getElementById("est_" + i);
 if(estEl){
@@ -1113,7 +1195,7 @@ e.onclick=()=>{
 let i=+e.dataset.deleteScene;
 if(!confirm(`SCENE ${String(i+1).padStart(2,"0")} ကို ဖျက်မှာ သေချာပါသလား?`))return;
 state.scenes.splice(i,1);
-state.lastFinal="";
+state.finalScenesData=[];
 renderScenes();
 renderFinalPrompts();
 }
@@ -1130,57 +1212,48 @@ state.scenes[i][key]=e.value;
 });
 }
 
-function scenePrompt(s, i){
+function buildScenePromptObject(s, i){
 let chars = s.character || state.characters.map(c=>c.name).filter(Boolean).join(", ") || "Main Character";
 let actionText = s.action || s.action_my || "Cinematic action sequence";
 let dialogueText = s.dialogue ? `\nDialogue: ${s.dialogue}` : "";
 
-return `SCENE ${String(i+1).padStart(2,"0")} — ${s.duration} seconds
+let sceneCharNames = chars.split(",").map(x=>x.trim().toLowerCase());
+let matchingChars = state.characters.filter(c => 
+  sceneCharNames.some(cn => cn && c.name && (cn.includes(c.name.toLowerCase()) || c.name.toLowerCase().includes(cn)))
+);
+if (!matchingChars.length && state.characters.length > 0) {
+  matchingChars = state.characters;
+}
+
+let charVisualSpecs = matchingChars.map(c => {
+  let cName = c.name || "Character";
+  let cAge = c.age ? `${c.age}` : "";
+  let cRole = c.role ? `${c.role}` : "";
+  let cDesc = c.description ? `${c.description}` : "distinctive, recognizable appearance";
+  return `${cName} (${[cAge, cRole, cDesc].filter(Boolean).join(", ")}, identical face structure, eyes, hairstyle, costume, realistic proportions)`;
+}).join("; ");
+
+let videoPrompt = `SCENE ${String(i+1).padStart(2,"0")} — ${s.duration} seconds
 Character: ${chars}
 Action: ${actionText}${dialogueText}
 Camera: ${s.camera || val("Camera Style")} | Movement: ${s.camera_movement || val("Camera Movement")} | Lighting: ${s.lighting || val("Lighting")}
 Audio: ${s.audio || val("Audio Style")}. Audio is background sound only; no musical instrument is visible.
 Transition: ${s.transition || "Smooth continuity-preserving transition."}
 Visual Style: ${stylePhrase()}, ${val("Genre")}, ${val("Setting Culture")}, ${val("Aspect Ratio")}, ${val("Video Quality")}`;
-}
 
+let photoPrompt = `SCENE ${String(i+1).padStart(2,"0")} PHOTO PROMPT: Full cinematic keyframe image, ${chars}, ${charVisualSpecs ? charVisualSpecs + ", " : ""}${actionText}, ${stylePhrase()} art style, ${val("Genre")} genre, ${val("Setting Culture")} setting, ${s.lighting || val("Lighting")} lighting, ${s.camera || val("Camera Style")} shot, ${val("Video Quality")}, highly detailed facial features, character consistency locked, 8k resolution, production stills. --ar ${val("Aspect Ratio").includes("9:16") ? "9:16" : "16:9"}`;
 
-function renderFinalPrompts(){
-const b=document.getElementById("finalPrompt");
-if(!b)return;
-
-if(!state.scenes.length || !state.lastFinal){
-b.classList.add("empty");
-b.textContent="Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။";
-return
-}
-
-b.classList.remove("empty");
-const finalText=state.lastFinal||"";
-
-b.innerHTML=state.scenes.map((s,i)=>{
-const sceneNo=i+1;
-const p=scenePrompt(s, i);
-
-return `<div class="final-scene">
-<div class="itemhead"><b>SCENE ${String(sceneNo).padStart(2,"0")} PROMPT</b><span class="pill">${s.duration}s</span></div>
-<div class="out">${esc(p)}</div>
-<button class="secondary copy" data-copyscene="${i}">📋 Copy Scene ${String(sceneNo).padStart(2,"0")} Prompt</button>
-</div>`
-}).join("");
-
-b.querySelectorAll("[data-copyscene]").forEach(e=>{
-e.onclick=()=>{
-let i=+e.dataset.copyscene;
-let p=scenePrompt(state.scenes[i], i);
-copyText(p.trim(), e)
-}
-})
+return {
+  sceneNum: i + 1,
+  duration: s.duration,
+  videoPrompt: videoPrompt,
+  photoPrompt: photoPrompt
+};
 }
 
 async function buildFinalFromScenes(){
 if(!state.scenes.length){
-state.lastFinal="";
+state.finalScenesData=[];
 renderFinalPrompts();
 return;
 }
@@ -1199,19 +1272,11 @@ state.scenes[i].action = sc.action;
 }
 });
 }
-catch} (e) {
+} catch(e) {
 console.warn("AI translation skipped, using raw scene prompts:", e);
 }
 
-getElementByIdconst title=document.("title").value.trim()||"Untitled";
-const scenesText=state.scenes.map((s,i)=>scenePrompt(s,i)).join("\n\n");
-const cleanNeg=state.negative||"low quality, blurry, distorted face, deformed hands, extra fingers, duplicate characters, identity drift, costume drift, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
-
-state.lastFinal=`Create a generator-ready ${stylePhrase()} ${val("Genre")} video for ${val("Target AI Video Model")}. Story title: ${title}. Aspect ratio: ${val("Aspect Ratio")}. Master continuity: Preserve every locked character exactly. Never change face, age, hairstyle, hair color, skin appearance, body shape, costume, armor, accessories, weapons or signature props. Preserve established location, time, relationships and unresolved story events.
-
-${scenesText}
-
-Negative Prompt: ${cleanNeg}`;
+state.finalScenesData = state.scenes.map((s,i) => buildScenePromptObject(s,i));
 
 renderFinalPrompts();
 if(statusEl) statusEl.textContent = "✓ Final AI Video Prompt အောင်မြင်စွာ ထုတ်ပြီးပါပြီ။";
@@ -1219,7 +1284,7 @@ if(statusEl) statusEl.textContent = "✓ Final AI Video Prompt အောင်�
 
 function totalScene(){
 return state.scenes.reduce((a,s)=>a+(+s.duration||0),0)
-}
+}   
 
 async function callGemini(instruction){
 let key=(document.getElementById("apiKey").value||localStorage.getItem("gemini_api_key")||"").replace(/[\u200B-\u200D\uFEFF]/g,"").trim();
@@ -1246,7 +1311,7 @@ CRITICAL SCENE RULES:
 3. action_my MUST be natural Burmese.
 4. dialogue MUST be natural Burmese.
 
-Return also: negative_prompt, thumbnail_prompt, thumbnail_text, thumbnail_negative_prompt.`;
+Return also: negative_prompt, thumbnail_prompt, thumbnail_text, thumbnail_negative_prompt, photo_prompt.`;
 
 let user=`Selected settings: ${JSON.stringify(settingsObj(),null,2)}
 Story title: ${document.getElementById("title").value.trim()}
@@ -1254,6 +1319,7 @@ Story input: ${document.getElementById("story").value.trim()}
 Current summary: ${document.getElementById("summary").value.trim()}
 Current blueprint: ${JSON.stringify(state.blueprint||{},null,2)}
 Current characters: ${JSON.stringify(state.characters,null,2)}
+Current groups/crowds: ${JSON.stringify(state.groups,null,2)}
 Current scenes: ${JSON.stringify(state.scenes,null,2)}
 Part: ${state.part}
 Instruction: ${instruction}`;
@@ -1312,16 +1378,75 @@ renderBlueprint(state.blueprint||fallbackBlueprint(text));
 }
 
 async function autoDetect(){
-let text=(document.getElementById("summary").value||document.getElementById("story").value||"").trim();
-if(!text)return alert("Story Summary / Story Input အရင်ထည့်ပါ။");
+  let text = (document.getElementById("summary").value || document.getElementById("story").value || "").trim();
+  if(!text) return alert("Story Summary / Story Input အရင်ထည့်ပါ။");
 
-try{
-let d=await callGemini("Detect ALL meaningful named characters in the story. Character names MUST be strictly in English.");
-if(Array.isArray(d.characters)&&d.characters.length){
-state.characters=d.characters.map(c=>({name:String(c.name||"Main Character").replace(/[^\x00-\x7F]/g,"").trim()||"Main Character",role:c.role||"Supporting Character",age:c.age||"",description:c.description||"",locked:true}));
-}else{state.characters=localCharacterParser(text);}
-}catch(e){state.characters=localCharacterParser(text);}
-renderChars();
+  try {
+    let promptText = `Analyze the following story text and extract entities in JSON format:
+    1. "characters": Main named individual characters ONLY. Keep original names (e.g., General ချန်းကျန်းဝူ).
+    2. "groups": ALL crowd/military/group entities (e.g., "စစ်သည် ၁၅၀", "စစ်သည် ၂၀၀", "Villagers", "Enemy Army").
+
+    Text: "${text}"
+
+    JSON Output Format:
+    {
+      "characters": [{"name": "Name", "role": "Role", "description": "Desc"}],
+      "groups": [{"name": "Group Name", "description": "Desc"}]
+    }`;
+
+    let d = await callGemini(promptText);
+
+    if (typeof d === "string") {
+      try {
+        let cleanJson = d.replace(/```json/g, "").replace(/```/g, "").trim();
+        d = JSON.parse(cleanJson);
+      } catch(e) { d = null; }
+    }
+
+    if (d && Array.isArray(d.characters) && d.characters.length) {
+      state.characters = d.characters.map(c => ({
+        name: String(c.name || "Main Character").trim(),
+        role: c.role || "Main Character",
+        description: c.description || "",
+        locked: true
+      }));
+    } else {
+      state.characters = localCharacterParser(text);
+    }
+
+    if (d && Array.isArray(d.groups) && d.groups.length) {
+      state.groups = d.groups.map(g => ({
+        name: String(g.name || "Group Entity").trim(),
+        description: g.description || ""
+      }));
+    } else {
+      state.groups = typeof localGroupParser === "function" ? localGroupParser(text) : [];
+    }
+
+  } catch(e) {
+    console.error("AutoDetect Error:", e);
+    state.characters = typeof localCharacterParser === "function" ? localCharacterParser(text) : [];
+    state.groups = typeof localGroupParser === "function" ? localGroupParser(text) : [];
+  }
+
+  renderChars();
+  if (typeof renderGroups === "function") {
+    renderGroups();
+  }
+}
+
+function localGroupParser(text) {
+  let groups = [];
+  let matches = text.match(/(စစ်သည်|တပ်ဖွဲ့|လူအုပ်|ရွာသား|ရန်သူ)[^\s,၊။]*/g);
+
+  if (matches) {
+    let uniqueGroups = [...new Set(matches)];
+    groups = uniqueGroups.map(g => ({
+      name: g,
+      description: "Auto detected crowd entity"
+    }));
+  }
+  return groups;
 }
 
 function normalizeScenes(arr){
@@ -1356,7 +1481,7 @@ lighting:val("Lighting"),
 audio:val("Audio Style"),
 transition:"Smooth continuity-preserving transition."
 }));
-state.lastFinal="";
+state.finalScenesData=[];
 state.negative="low quality, blurry, distorted face, deformed hands, extra fingers, duplicate character, inconsistent face, age drift, costume drift, wrong weapon, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
 renderScenes();
 renderFinalPrompts();
@@ -1377,7 +1502,7 @@ if(diff!==0 && state.scenes.length>0){
 let last=state.scenes.length-1;
 state.scenes[last].duration=Math.max(1,Math.min(10,state.scenes[last].duration-diff));
 }
-state.lastFinal="";
+state.finalScenesData=[];
 state.negative=d.negative_prompt||state.negative;
 state.thumb=d.thumbnail_prompt||"";
 state.thumbText=d.thumbnail_text||"";
@@ -1405,7 +1530,7 @@ try{
 let d=await callGemini("Regenerate a genuinely different creative version while preserving the exact story meaning, selected settings, locked character identities and continuity.");
 if(Array.isArray(d.scenes)){
 state.scenes=normalizeScenes(d.scenes);
-state.lastFinal="";
+state.finalScenesData=[];
 renderScenes();
 renderFinalPrompts();
 }
@@ -1419,7 +1544,7 @@ function snapshotState(){
 return{
 part:state.part,title:document.getElementById("title").value,story:document.getElementById("story").value,
 summary:state.summary,blueprint:cloneData(state.blueprint),characters:cloneData(state.characters),
-scenes:cloneData(state.scenes),lastFinal:state.lastFinal,negative:state.negative,thumb:state.thumb,
+groups:cloneData(state.groups),scenes:cloneData(state.scenes),finalScenesData:cloneData(state.finalScenesData),negative:state.negative,thumb:state.thumb,
 thumbText:state.thumbText,thumbNeg:state.thumbNeg,settings:settingsObj()
 }
 }
@@ -1433,8 +1558,10 @@ b.disabled=!(Object.keys(state.history).length>0||state.part>1);
 function restoreSnapshot(snap){
 if(!snap)return;
 state.part=snap.part;state.summary=snap.summary||"";state.blueprint=cloneData(snap.blueprint);
-state.characters=cloneData(snap.characters)||[];state.scenes=cloneData(snap.scenes)||[];
-state.lastFinal=snap.lastFinal||"";state.negative=snap.negative||"";state.thumb=snap.thumb||"";
+state.characters=cloneData(snap.characters)||[];state.groups=cloneData(snap.groups)||[];
+state.scenes=cloneData(snap.scenes)||[];
+state.finalScenesData=cloneData(snap.finalScenesData)||[];
+state.negative=snap.negative||"";state.thumb=snap.thumb||"";
 state.thumbText=snap.thumbText||"";state.thumbNeg=snap.thumbNeg||"";
 document.getElementById("title").value=snap.title||"";
 document.getElementById("story").value=snap.story||"";
@@ -1505,7 +1632,7 @@ if(d.story_summary){state.summary=d.story_summary;document.getElementById("summa
 if(d.story_blueprint){renderBlueprint(d.story_blueprint)}
 if(Array.isArray(d.characters)){state.characters=d.characters.map(c=>({...c,name:String(c.name||"Main Character").replace(/[^\x00-\x7F]/g,"").trim()||"Main Character",locked:true}))}
 if(Array.isArray(d.scenes)){state.scenes=normalizeScenes(d.scenes)}
-state.lastFinal="";
+state.finalScenesData=[];
 renderChars();renderScenes();renderExtras();renderFinalPrompts();updatePreviousButton();
 document.getElementById("finalStatus").textContent=`✓ Part ${state.part} generated. Click 'Final AI Video Prompt ထုတ်ရန်' to build prompt.`;
 }catch(e){
@@ -1557,7 +1684,6 @@ document.getElementById("previousPart").onclick=previousPart;
 document.getElementById("continue").onclick=continueStory;
 
 document.getElementById("copySummary").onclick=e=>copyText(document.getElementById("summary").value,e.currentTarget);
-document.getElementById("copyFinal").onclick=e=>copyText(state.lastFinal||document.getElementById("finalPrompt").textContent,e.currentTarget);
 document.getElementById("copyThumb").onclick=e=>copyText(state.thumb||document.getElementById("thumbPrompt").textContent,e.currentTarget);
 document.getElementById("copyThumbText").onclick=e=>copyText(state.thumbText||document.getElementById("thumbText").textContent,e.currentTarget);
 
@@ -1578,4 +1704,3 @@ updatePreviousButton();
 </script>
 </body>
 </html>
-  
