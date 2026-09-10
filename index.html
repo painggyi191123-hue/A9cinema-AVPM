@@ -661,25 +661,23 @@ button, .btn, .box-header, .label {
 // Global AudioContext နှင့် Unlock စနစ်
 let audioCtx = null;
 
-// ဖုန်းဘရောက်ဆာများတွင် အသံပိတ်ထားခြင်းကို ပထမဆုံး Click ဖြင့် ဖြုတ်ပေးရန်
-document.addEventListener('click', () => {
+function initAudio() {
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
-}, { once: true }); // တစ်ခါလုပ်ပြီးရင် ပြီးပါပြီ
+}
+
+['click', 'touchstart', 'pointerdown'].forEach(evt => {
+  document.addEventListener(evt, initAudio, { once: true });
+});
 
 function playSound(type) {
   try {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+    initAudio();
+    if (!audioCtx) return;
 
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -689,35 +687,52 @@ function playSound(type) {
     const now = audioCtx.currentTime;
 
     if (type === 'click') {
-      // 🖱️ ပုံမှန် ခလုတ်နှိပ်သံ
-      osc.frequency.setValueAtTime(600, now);
-      gain.gain.setValueAtTime(0.1, now); // အသံကျယ်အောင် အနည်းငယ်တိုးထားသည်
+      osc.type = 'sine'; // 💧 ရေစက်သံအတွက် နူးညံ့ပြီး ဝိုင်းစက်တဲ့ sine wave သုံးမည်
+      
+      // အသံကြိမ်နှုန်းကို အမြင့်ကနေ အနိမ့်ကို ရေစက်ကျသလို စက္ကန့်ပိုင်းအတွင်း လျှချမည်
+      osc.frequency.setValueAtTime(1200, now);
+      osc.frequency.exponentialRampToValueAtTime(300, now + 0.06);
+      
+      // အသံပမာဏကို 3.0 ထားပြီး ရေစက်ပျောက်သွားသလို တဖြည်းဖြည်း ငြိမ်ကျသွားစေမည်
+      gain.gain.setValueAtTime(3.0, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+      
       osc.start(now);
-      osc.stop(now + 0.05);
-    } 
+      osc.stop(now + 0.07);
+    }
+
     else if (type === 'error') {
-      // ⚠️ Error သံ
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(150, now);
       osc.frequency.setValueAtTime(100, now + 0.1);
-      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.setValueAtTime(1.0, now); // 🔊 ဒီနေရာကို တိုးထားသည် (အရင်က 0.8)
       osc.start(now);
       osc.stop(now + 0.3);
     } 
     else if (type === 'success') {
-      // ✅ အောင်မြင်သံ
       osc.type = 'sine';
       osc.frequency.setValueAtTime(440, now);
       osc.frequency.setValueAtTime(880, now + 0.1);
-      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.setValueAtTime(1.0, now); // 🔊 ဒီနေရာကို တိုးထားသည် (အရင်က 0.7)
       osc.start(now);
       osc.stop(now + 0.25);
     }
   } catch (e) {
-    console.log("Audio Context error:", e);
+    console.log("Audio play error:", e);
   }
 }
 
+// 🌐 App ထဲရှိ ခလုတ်အားလုံး နှိပ်လိုက်တိုင်း အလိုအလျောက် ကလစ်သံထွက်စေရန် (ဒီနေရာတွင် ထည့်ပါ)
+document.addEventListener('click', (e) => {
+  const targetBtn = e.target.closest('button, .btn, [role="button"]');
+  if (targetBtn) {
+    playSound('click');
+  }
+});
+
+// ==========================================
+// 🛠️ Helper Functions & API Engine (Fixed)
+// ==========================================
 function setRobotState(btnTarget, robotStatus) {
   const btn = typeof btnTarget === 'string' ? document.getElementById(btnTarget) : btnTarget;
   if (!btn) return;
@@ -728,7 +743,7 @@ function setRobotState(btnTarget, robotStatus) {
   robot.classList.remove('robot-ready', 'robot-working', 'robot-done', 'robot-error');
   robot.classList.add(`robot-${robotStatus}`);
 
-  // State အလိုက် အသံ ထွက်စေခြင်း
+  // 🔊 အောင်မြင်သံနှင့် Error သံများကိုသာ State အလိုက် ထွက်စေခြင်း (Click သံကို Global က အလိုအလျောက် ယူပါမည်)
   if (robotStatus === 'error') {
     playSound('error');
     btn.classList.remove('btn-working');
@@ -736,29 +751,7 @@ function setRobotState(btnTarget, robotStatus) {
     playSound('success');
     btn.classList.remove('btn-working');
   } else if (robotStatus === 'working') {
-    playSound('click');
     btn.classList.add('btn-working');
-  }
-}
-
-// ==========================================
-// 🛠️ Helper Functions & API Engine (Fixed)
-// ==========================================
-function setRobotState(btnTarget, robotStatus) {
-  const btn = typeof btnTarget === 'string' ? document.getElementById(btnTarget) : btnTarget;
-  if (!btn) return;
-  
-  // ခလုတ်ထဲမှာရော၊ တစ်ခုလုံးမှာပါ Robot element ကို ရှာဖွေနိုင်ရန်
-  const robot = btn.querySelector('.btn-robot') || btn.querySelector('.robot-mascot') || document.getElementById('robot');
-  if (!robot) return; // အကယ်၍ Robot element မရှိမှသာ ရပ်မည်
-
-  robot.classList.remove('robot-ready', 'robot-working', 'robot-done', 'robot-error');
-  robot.classList.add(`robot-${robotStatus}`);
-
-  if (robotStatus === 'working') {
-    btn.classList.add('btn-working');
-  } else {
-    btn.classList.remove('btn-working');
   }
 }
 
@@ -775,7 +768,7 @@ async function callGemini(promptText) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contents: [{ parts: [{ text: promptText }] }],
-      generationConfig: { responseMimeType: "application/json" } // JSON format တောင်းခံရန်
+      generationConfig: { responseMimeType: "application/json" }
     })
   });
 
@@ -788,10 +781,8 @@ async function callGemini(promptText) {
   let text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) throw new Error("AI မှ တုံ့ပြန်မှု မရရှိပါ။");
 
-  // Markdown များကို ရှင်းထုတ်ခြင်း
   text = text.replace(/```json/gi, "").replace(/```/g, "").trim();
 
-  // JSON Object သို့မဟုတ် Array အဖြစ် ပြောင်းလဲပေးခြင်း (Valid JSON မဟုတ်ပါက Error တက်မည်)
   try {
     const jsonMatch = text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
     if (jsonMatch) {
@@ -805,7 +796,6 @@ async function callGemini(promptText) {
 // ==================================================
 // 🔗 ခလုတ် ၆ခု – အပြည့်အစုံ အလုပ်လုပ်သော Logic များ (Fixed)
 // ==================================================
-
 // --- ၁။ 🧠 Create AI Story Summary & Blueprint ---
 async function makeSummary() {
   const btn = document.getElementById("summaryBtn");
@@ -2591,3 +2581,4 @@ if (typeof updatePreviousButton === "function") updatePreviousButton();
 
 </body>
 </html>
+
