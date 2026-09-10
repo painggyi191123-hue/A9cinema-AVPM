@@ -60,7 +60,6 @@ button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;
   color: #00f3ff !important;
   text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
 }
-
 label {
   color: #c084fc !important;
   font-weight: 600;
@@ -73,20 +72,6 @@ label span, .sub {
 @keyframes cyberGridMove {
   0% { background-position: 0 0, 0 0, 0 0, 0 0; }
   100% { background-position: 0 0, 0 0, 0 40px, 0 40px; }
-}
-
-body {
-  background-color: #02040a !important;
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(0, 243, 255, 0.22) 0%, transparent 65%),
-    radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.18) 0%, transparent 55%),
-    linear-gradient(rgba(0, 243, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 243, 255, 0.08) 1px, transparent 1px) !important;
-  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px !important;
-  background-attachment: fixed !important;
-  animation: cyberGridMove 6s linear infinite !important;
-  position: relative;
-  overflow-x: hidden;
 }
 
 /* Scene Final Prompt UI Styling */
@@ -107,111 +92,6 @@ body {
   align-items: center;
 }
 
-/* ========== ပြုပြင်ချက် ၁ – ပြန်ပြုပြင်: Settings ကျုံ့လျှင် Story Input မရွေ့စေ + Settings ပုံမှန်အလုပ်လုပ်စေ ========== */
-#settingsCard {
-  contain: layout;
-}
-/* အရေးကြီး – မူလအလုပ်လုပ်တဲ့အတိုင်း summary details ကို ပြန်ထား၊ အမြင့်ပိတ်ဆို့မှု မဖြစ်စေ */
-#settingsDetails {
-  overflow: visible;
-}
-#settingsDetails[open] {
-  min-height: auto;
-}
-/* Story Input အပိုင်းကို သီးခြားစီ သတ်မှတ် – Settings ပြောင်းလဲမှုကနေ လုံးဝလွတ်လပ်စေ */
-#storyInputCard {
-  position: relative;
-  transform: translateZ(0);
-}
-
-/* ========== ပြုပြင်ချက် ၂ – ခလုတ်များအတွင်း Robot Icon + အခြေအနေပြောင်းခြင်း – ထိန်းသိမ်း ========== */
-.btn-with-robot {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-}
-.btn-robot {
-  width: 55px;
-  height: 60px;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-}
-/* အဆင်သင့်အနေအထား – ရပ်နေ၊ အပြာရောင် */
-.robot-ready .robot-eye { fill: #00f0ff; }
-.robot-ready .core-pulse { fill: #00f0ff; animation: none; }
-.robot-ready .antenna-dot { fill: #ff007f; animation: none; }
-.robot-ready .arm-l, .robot-ready .arm-r { animation: none; transform: translateY(0); }
-
-/* အလုပ်လုပ်နေချိန် – လှုပ်ရှား၊ တက်ကြွ */
-.robot-working .robot-eye { fill: #ffd000; animation: eye-blink 0.6s infinite alternate !important; }
-.robot-working .core-pulse { fill: #ffd000; animation: core-glow-work 0.4s infinite alternate !important; }
-.robot-working .antenna-dot { fill: #ffd000; animation: blink-dot-work 0.5s infinite alternate !important; }
-.robot-working .arm-l { animation: arm-work-l 0.35s infinite alternate !important; }
-.robot-working .arm-r { animation: arm-work-r 0.35s infinite alternate 0.17s !important; }
-
-/* ပြီးဆုံးသွားချိန် – အစိမ်းရောင်၊ ပြုံး */
-.robot-done .robot-eye { fill: #00ff9d; }
-.robot-done .core-pulse { fill: #00ff9d; filter: drop-shadow(0 0 6px #00ff9d); animation: done-burst 0.6s ease-out forwards; }
-.robot-done .antenna-dot { fill: #00ff9d; }
-.robot-done .arm-l, .robot-done .arm-r { animation: none; transform: translateY(-2px); }
-
-@keyframes core-glow-work {
-  0% { fill: #ff9500; opacity: 0.5; }
-  100% { fill: #ffd000; opacity: 1; filter: drop-shadow(0 0 6px #ffd000); }
-}
-@keyframes blink-dot-work {
-  0% { fill: #ff5500; }
-  100% { fill: #ffd000; }
-}
-@keyframes done-burst {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.4); }
-  100% { transform: scale(1); }
-}
-</style>
-</head>
-
-<body>
-<div class="wrap">
-  
-<header class="hero-robot-header">
-  <h1 class="compact-title">AI VIDEO PROMPT MASTER</h1>
-  
-  <!-- ၂။ ခေါင်းစဉ်အောက်ရှိ Animated AI Robot -->
-  <div class="robot-status-wrapper">
-    <div class="mini-robot">
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Antenna Line & Light -->
-        <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-        <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
-        
-        <!-- Robot Head -->
-        <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
-        
-        <!-- Glowing Eyes -->
-        <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
-        <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
-        
-        <!-- Mouth / Wave Screen -->
-        <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
-        
-        <!-- Body -->
-        <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
-        
-        <!-- Chest Core Pulse -->
-        <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
-        
-        <!-- Animated Working Arms -->
-        <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
-        <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
-      </svg>
-    </div>
-    <span class="robot-text">AI PROCESSING...</span>
-  </div>
-</header>
-
-<style>
 .hero-robot-header {
   background: #050811;
   padding: 0.8rem 1rem;
@@ -336,8 +216,216 @@ body {
   0% { transform: scale(1.2); opacity: 0.8; }
   100% { transform: scale(1.5); opacity: 1; }
 }
+/* 📌 ခေါင်းစဉ်အားလုံး နေရာမယူအောင် ကျဉ်းကျဉ်းလုပ် */
+h2, h3, .card h2, .card h3, .scene-title, .section-title {
+  margin: 4px 0 6px 0 !important;  /* အပေါ်အောက် ကွာဝေးမှု အနည်းဆုံး */
+  padding: 2px 0 !important;        /* အတွင်းနေရာ ဖြုန်းတီးမှုမရှိ */
+  font-size: 14px !important;        /* စာလုံးအရွယ် သင့်တင့် */
+  line-height: 1.3 !important;       /* စာကြောင်းအမြင့် ကျဉ်း */
 }
+
+/* 📌 အထူးသဖြင့် သင့်ပုံထဲက SCENE 01 PROMTTS လို ခေါင်းစဉ်အတွက် */
+[class*="scene"], [id*="scene"], .scene-header, .prompt-title {
+  margin: 2px 0 4px 0 !important;
+  padding: 4px 8px !important;
+  min-height: auto !important;       /* အမြင့်အတင်းမတိုးစေနဲ့ */
+  line-height: 1.2 !important;
+}
+
+/* 📌 ခလုတ်/အကွက်ထဲက စာသားလည်း ကျဉ်းအောင် */
+button, .btn, .box-header, .label {
+  padding: 6px 10px !important;
+  margin: 2px !important;
+  line-height: 1.4 !important;
+}
+
+/* 📌 အကွက်ကိုယ်တိုင်လည်း နေရာမဖြုန်းအောင် */
+.card, .box, .container {
+  padding: 8px 10px !important;
+  margin: 6px 0 !important;
+}
+
+/* ========== ပြုပြင်ချက် ၁ – ပြန်ပြုပြင်: Settings ကျုံ့လျှင် Story Input မရွေ့စေ + Settings ပုံမှန်အလုပ်လုပ်စေ ========== */
+#settingsCard {
+  contain: layout;
+}
+/* အရေးကြီး – မူလအလုပ်လုပ်တဲ့အတိုင်း summary details ကို ပြန်ထား၊ အမြင့်ပိတ်ဆို့မှု မဖြစ်စေ */
+#settingsDetails {
+  overflow: visible;
+}
+#settingsDetails[open] {
+  min-height: auto;
+}
+/* Story Input အပိုင်းကို သီးခြားစီ သတ်မှတ် – Settings ပြောင်းလဲမှုကနေ လုံးဝလွတ်လပ်စေ */
+#storyInputCard {
+  position: relative;
+  transform: translateZ(0);
+}
+/* ========== ပြုပြင်ချက် ၂ – ခလုတ်များအတွင်း Robot Icon + အခြေအနေပြောင်းခြင်း – ထိန်းသိမ်း+တိုးတက် ========== */
+.btn-with-robot {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+.btn-robot {
+  width: 55px;       /* သင့်အရွယ်ထား – ကြီးချင်ရင် 60/65px တိုး */
+  height: 60px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  transform-origin: center bottom; /* ခုန်တဲ့အခါ အောက်ခြေကနေ ထွက်တယ် */
+}
+
+/* ==========================================
+   🤖 Robot Icon – အခြေအနေအားလုံး + လှုပ်ရှားမှု
+   ========================================== */
+.btn-with-robot {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  justify-content: center;
+}
+.btn-robot {
+  width: 55px;
+  height: 59px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+.btn-working .btn-text { display: none; }
+.btn-working { justify-content: center; }
+
+/* 🟦 အဆင်သင့် – ငြိမ်၊ အပြာရောင် */
+.robot-ready .robot-eye { fill: #00f0ff; }
+.robot-ready .core-pulse { fill: #00f0ff; animation: none; }
+.robot-ready .antenna-dot { fill: #ff007f; animation: none; }
+.robot-ready .arm-l, .robot-ready .arm-r { animation: none; transform: translateY(0); }
+.robot-ready { transform: translateY(0) scale(1); filter: none; }
+
+/* 🟡 အလုပ်လုပ်နေ – ခုန်၊ မှိတ်၊ လှုပ်၊ အဝါရောင် */
+.robot-working { 
+  animation: bounce-jump 0.4s infinite alternate ease-in-out;
+  filter: drop-shadow(0 0 6px #ffd000);
+}
+/* ✅ အရေးကြီး – အခြားအခြေအနေမှာ အလုပ်လုပ်နေတဲ့ animation ကို လုံးဝပိတ် */
+.robot-ready, .robot-done, {
+  animation: none !important;
+  transform: translateY(0) scale(1);
+}
+
+
+/* 🟢 ပြီးဆုံး – အစိမ်းရောင် တောက်ပ */
+.robot-done .robot-eye { fill: #34d399; animation: none; }
+.robot-done .core-pulse { fill: #34d399; animation: success-flash 0.4s 2 alternate; }
+.robot-done .antenna-dot { fill: #34d399; animation: none; }
+.robot-done .arm-l, .robot-done .arm-r { animation: none; transform: translateY(0); }
+.robot-done { transform: scale(1.1); filter: drop-shadow(0 0 8px #34d399); }
+
+/* ❌ အမှားအခြေအနေ – တစ်ကိုယ်လုံး ခေါင်းစခြေအဆုံး အနီရောင် တောက်ပပြောင်းခြင်း */
+.robot-error { 
+  animation: shake-strong 0.12s infinite alternate !important; 
+  transform-origin: center center;
+  filter: drop-shadow(0 0 15px #ff0044) !important;
+}
+
+.robot-error .robot-eye,
+.robot-error .core-pulse,
+.robot-error .antenna-dot { 
+  fill: #ff0000 !important; 
+  animation: error-blink-bright 0.18s infinite alternate !important;
+}
+
+/* ⚡ ကိုယ်ထည်၊ ခေါင်း၊ လက်၊ မျဉ်းကြောင်းများပါ ခေါင်းစခြေအဆုံး အနီရောင်ပြောင်းရန် ဖြည့်စွက်ချက် */
+.robot-error path,
+.robot-error line {
+  stroke: #ff0044 !important;
+}
+
+.robot-error circle {
+  fill: #ff0044 !important;
+  stroke: #ff0044 !important;
+}
+
+.robot-error rect {
+  fill: #3a000d !important; /* ကိုယ်ထည် နောက်ခံ အနီရင့်ရောင် */
+  stroke: #ff0044 !important;
+}
+
+/* 📌 Animation များ */
+@keyframes error-blink-bright {
+  0% { opacity: 0.5; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1.35); }
+}
+
+@keyframes error-pulse-bright {
+  0% { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.45); }
+}
+
+@keyframes shake-strong {
+  0% { transform: translateX(-5px) translateY(-3px) rotate(-3deg); }
+  100% { transform: translateX(5px) translateY(3px) rotate(3deg); }
+}
+
+  
+/* 🤖 Robot ခုန်နေမည့် Bounce Jump Animation */
+@keyframes bounce-jump {
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+  30% {
+    transform: translateY(3px) scale(1.08, 0.88); /* ခုန်ခါနီး အောက်ကို နည်းနည်းကျုံ့ */
+  }
+  75% {
+    transform: translateY(-14px) scale(0.92, 1.08); /* အပေါ်သို့ ဆန့်ပြီး ခုန်တက် */
+  }
+  100% {
+    transform: translateY(-16px) scale(1, 1); /* ထိပ်ဆုံးအမြင့်သို့ ရောက် */
+  }
+}
+  
 </style>
+</head>
+
+<body>
+<div class="wrap">
+  
+<header class="hero-robot-header">
+  <h1 class="compact-title">AI VIDEO PROMPT MASTER</h1>
+  
+  <!-- ၂။ ခေါင်းစဉ်အောက်ရှိ Animated AI Robot -->
+  <div class="robot-status-wrapper">
+    <div class="mini-robot">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Antenna Line & Light -->
+        <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
+        <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
+        
+        <!-- Robot Head -->
+        <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
+        
+        <!-- Glowing Eyes -->
+        <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+        <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+        
+        <!-- Mouth / Wave Screen -->
+        <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
+        
+        <!-- Body -->
+        <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
+        
+        <!-- Chest Core Pulse -->
+        <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
+        
+        <!-- Animated Working Arms -->
+        <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
+        <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
+      </svg>
+    </div>
+    <span class="robot-text">AI PROCESSING...</span>
+  </div>
+</header>
+
 
 <section class="card">
 <h2>🔑 Gemini API <span class="sub">(Gemini API ချိတ်ဆက်မှု)</span></h2>
@@ -348,7 +436,7 @@ body {
 <option value="gemini-3.6-flash">Gemini 3.6 Flash</option>
 <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
 <option value="gemini-3.5-flash-lite">Gemini 3.5 Flash-Lite</option>
-<option value="gemini-3.1-flash-lite" selected>Gemini 3.1 Flash-Lite</option>
+<option value="gemini-3.1-flash-lite"selected>Gemini 3.1 Flash-Lite</option>
 <option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
 </select></div>
 </div>
@@ -357,12 +445,14 @@ body {
 </section>
 
 <section class="card" id="settingsCard">
-<details open id="settingsDetails">
-<summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
-<!-- မူလအတိုင်း ပြန်ထား – settings JS က အလုပ်လုပ်နိုင်စေ -->
-<div id="settings" class="grid" style="margin-top:12px"></div>
-</details>
-<div class="collapse"><button id="collapseSettings">⌃</button></div>
+  <details open id="settingsDetails">
+    <summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
+    <!-- မူလအတိုင်း ပြန်ထား – settings JS က အလုပ်လုပ်နိုင်စေ -->
+    <div id="settings" class="grid" style="margin-top:12px"></div>
+  </details>
+  <div class="collapse">
+    <button type="button" id="collapseSettings">⌃</button>
+  </div>
 </section>
 
 <section class="card" id="storyInputCard">
@@ -370,9 +460,8 @@ body {
 <div class="field"><label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ်</span></label><input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်"></div>
 <div class="field" style="margin-top:9px"><label>Story / Rough Notes <span>ဇာတ်လမ်း / အကြမ်းဖျင်းမှတ်စု</span></label><textarea id="story" placeholder="ဇာတ်လမ်းကို မြန်မာလိုဖြစ်စေ၊ အင်္ဂလိပ်လိုဖြစ်စေ ထည့်နိုင်ပါတယ်..."></textarea></div>
 
-<!-- ========== ခလုတ် ၁ – Robot ထည့်ပြီး အခြေအနေထိန်း ========== -->
 <button class="primary btn-with-robot" id="summaryBtn" style="margin-top:9px">
-  <span class="btn-robot robot-ready">
+  <span class="btn-robot">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
       <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
@@ -386,14 +475,12 @@ body {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <!-- စာသားများပျောက်သွားစေရန် ဒီ span လေးနဲ့ ပတ်ပေးရပါမယ် -->
   <span class="btn-text-content">
     🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span>
   </span>
 </button>
 <div id="summaryStatus" class="status"></div>
-
-
+</section>
 <section class="card">
 <h2>📖 Story Summary <span class="sub">(ဇာတ်လမ်းအကျဉ်းချုပ်)</span></h2>
 <textarea id="summary" placeholder="AI Story Summary ဒီနေရာမှာ ပေါ်လာပါမယ်။ ကိုယ်တိုင်လည်း ပြင်နိုင်ပါတယ်။" style="min-height: 300px;"></textarea>
@@ -403,7 +490,7 @@ body {
 </div>
 </section>
 
-<section class="card">
+<section class="card" style="display: none;">
 <h2>🧩 Story Blueprint <span class="sub">(ဇာတ်လမ်းအခြေခံဖွဲ့စည်းပုံ)</span></h2>
 <div id="blueprint" class="out empty">Create Story Blueprint ပြီးနောက် ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
 <div class="notice" style="margin-bottom:8px">💡 <b>Tip:</b> အကွက်တစ်ခုချင်းစီကို နှိပ်၍ အသေးစိတ်အချက်အလက်များကို Pop-up ဖြင့် ကြည့်ရှုနိုင်ပါသည်။</div>
@@ -497,8 +584,11 @@ body {
 </button>
 
 <div id="finalPromptContainer">
-  <div id="finalPrompt" class="empty">Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
+  <div id="finalPrompt" class="empty">
+    Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။
+  </div>
 </div>
+
 
 <div class="row" style="margin-top:12px;">
 <button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
@@ -568,27 +658,385 @@ body {
 </div>
 
 <script>
-// ========== Robot အခြေအနေ ပြောင်းလဲပေးမည့် Function – အသစ်ထည့် ==========
-function setButtonRobotState(btnId, state) {
-  const btn = document.getElementById(btnId);
-  if (!btn) return;
-  const robot = btn.querySelector('.btn-robot');
-  if (!robot) return;
-  robot.classList.remove('robot-ready', 'robot-working', 'robot-done');
-  robot.classList.add('robot-' + state);
+// Global AudioContext နှင့် Unlock စနစ်
+let audioCtx = null;
+
+// ဖုန်းဘရောက်ဆာများတွင် အသံပိတ်ထားခြင်းကို ပထမဆုံး Click ဖြင့် ဖြုတ်ပေးရန်
+document.addEventListener('click', () => {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}, { once: true }); // တစ်ခါလုပ်ပြီးရင် ပြီးပါပြီ
+
+function playSound(type) {
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+
+    if (type === 'click') {
+      // 🖱️ ပုံမှန် ခလုတ်နှိပ်သံ
+      osc.frequency.setValueAtTime(600, now);
+      gain.gain.setValueAtTime(0.1, now); // အသံကျယ်အောင် အနည်းငယ်တိုးထားသည်
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } 
+    else if (type === 'error') {
+      // ⚠️ Error သံ
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.setValueAtTime(100, now + 0.1);
+      gain.gain.setValueAtTime(0.2, now);
+      osc.start(now);
+      osc.stop(now + 0.3);
+    } 
+    else if (type === 'success') {
+      // ✅ အောင်မြင်သံ
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, now);
+      osc.frequency.setValueAtTime(880, now + 0.1);
+      gain.gain.setValueAtTime(0.15, now);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    }
+  } catch (e) {
+    console.log("Audio Context error:", e);
+  }
 }
 
-window.copyText = function(t, btn){
-  navigator.clipboard?.writeText(String(t||"")).then(()=>{
-    let old = btn.innerText;
-    btn.innerText = "✅ Copied / ကူးပြီးပါပြီ";
-    setTimeout(()=> btn.innerText = old, 1200);
-  }).catch(()=>{
-    alert("Clipboard permission မရပါ။ Prompt ကို long-press လုပ်ပြီး copy လုပ်ပါ။");
-  });
-};
+function setRobotState(btnTarget, robotStatus) {
+  const btn = typeof btnTarget === 'string' ? document.getElementById(btnTarget) : btnTarget;
+  if (!btn) return;
+  
+  const robot = btn.querySelector('.btn-robot') || btn.querySelector('.robot-mascot') || document.getElementById('robot');
+  if (!robot) return;
 
-(function(){
+  robot.classList.remove('robot-ready', 'robot-working', 'robot-done', 'robot-error');
+  robot.classList.add(`robot-${robotStatus}`);
+
+  // State အလိုက် အသံ ထွက်စေခြင်း
+  if (robotStatus === 'error') {
+    playSound('error');
+    btn.classList.remove('btn-working');
+  } else if (robotStatus === 'done') {
+    playSound('success');
+    btn.classList.remove('btn-working');
+  } else if (robotStatus === 'working') {
+    playSound('click');
+    btn.classList.add('btn-working');
+  }
+}
+
+// ==========================================
+// 🛠️ Helper Functions & API Engine (Fixed)
+// ==========================================
+function setRobotState(btnTarget, robotStatus) {
+  const btn = typeof btnTarget === 'string' ? document.getElementById(btnTarget) : btnTarget;
+  if (!btn) return;
+  
+  // ခလုတ်ထဲမှာရော၊ တစ်ခုလုံးမှာပါ Robot element ကို ရှာဖွေနိုင်ရန်
+  const robot = btn.querySelector('.btn-robot') || btn.querySelector('.robot-mascot') || document.getElementById('robot');
+  if (!robot) return; // အကယ်၍ Robot element မရှိမှသာ ရပ်မည်
+
+  robot.classList.remove('robot-ready', 'robot-working', 'robot-done', 'robot-error');
+  robot.classList.add(`robot-${robotStatus}`);
+
+  if (robotStatus === 'working') {
+    btn.classList.add('btn-working');
+  } else {
+    btn.classList.remove('btn-working');
+  }
+}
+
+async function callGemini(promptText) {
+  const apiKey = (document.getElementById("apiKey")?.value || localStorage.getItem("gemini_api_key") || "").trim();
+  if (!apiKey) {
+    throw new Error("Gemini API Key ထည့်သွင်းထားခြင်း မရှိပါ။");
+  }
+  const model = document.getElementById("model").value || "gemini-3.1-flash-lite";
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: promptText }] }],
+      generationConfig: { responseMimeType: "application/json" } // JSON format တောင်းခံရန်
+    })
+  });
+
+  if (!response.ok) {
+    const errData = await response.json().catch(() => ({}));
+    throw new Error(errData.error?.message || `HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  let text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error("AI မှ တုံ့ပြန်မှု မရရှိပါ။");
+
+  // Markdown များကို ရှင်းထုတ်ခြင်း
+  text = text.replace(/```json/gi, "").replace(/```/g, "").trim();
+
+  // JSON Object သို့မဟုတ် Array အဖြစ် ပြောင်းလဲပေးခြင်း (Valid JSON မဟုတ်ပါက Error တက်မည်)
+  try {
+    const jsonMatch = text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+    return JSON.parse(text);
+  } catch (e) {
+    throw new Error("Gemini က valid JSON မပေးပါ။");
+  }
+}
+// ==================================================
+// 🔗 ခလုတ် ၆ခု – အပြည့်အစုံ အလုပ်လုပ်သော Logic များ (Fixed)
+// ==================================================
+
+// --- ၁။ 🧠 Create AI Story Summary & Blueprint ---
+async function makeSummary() {
+  const btn = document.getElementById("summaryBtn");
+  if (!btn) return;
+  btn.disabled = true;
+  setRobotState(btn, "working");
+  const statusEl = document.getElementById("finalStatus");
+  if (statusEl) statusEl.textContent = "⏳ Analyzing story and building blueprint...";
+
+  try {
+    const storyText = document.getElementById("story").value.trim();
+    const titleText = document.getElementById("title").value.trim();
+
+    if (!storyText) throw new Error("ကျေးဇူးပြု၍ ဇာတ်လမ်း သို့မဟုတ် မှတ်စု ထည့်သွင်းပါ။");
+
+    const prompt = `Analyze this story and create a structured summary in Myanmar language. Return JSON with key "story_summary".
+Title: ${titleText}
+Story: ${storyText}
+Genre: ${typeof val === "function" ? val("Genre") : ""}`;
+
+    const res = await callGemini(prompt);
+    // callGemini မှ Parsed Object ပြန်လာပါက story_summary ကို ထုတ်ယူမည်
+    const summaryRes = typeof res === "object" ? (res.story_summary || res.summary || JSON.stringify(res)) : res;
+    if (!summaryRes) throw new Error("Gemini မှ စာသား ပြန်မရပါ။");
+
+    state.summary = summaryRes;
+    document.getElementById("summary").value = summaryRes;
+
+    // Blueprint Generation
+    const bpPrompt = `Based on this story summary, generate a story_blueprint object with keys: "story_premise", "main_characters", "setting_world", "main_conflict", "tone_emotion".
+Summary: ${summaryRes}`;
+
+    try {
+      const bpRes = await callGemini(bpPrompt);
+      const bpData = bpRes.story_blueprint || bpRes;
+      if (bpData && typeof renderBlueprint === "function") {
+        renderBlueprint(bpData);
+      }
+    } catch (e) {
+      console.warn("Blueprint generation fallback used", e);
+    }
+
+    setRobotState(btn, "done");
+    if (statusEl) statusEl.textContent = "✅ Summary & Blueprint Created!";
+  } catch (e) {
+    setRobotState(btn, "error");
+    if (statusEl) statusEl.textContent = "⚠️ Summary/Blueprint failed: " + e.message;
+    console.error("Summary Error:", e);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// --- ၂။ 🔍 Auto Detect Characters ---
+async function autoDetect() {
+  const btn = document.getElementById("detectBtn") || document.getElementById("autoDetectChars");
+  if (!btn) return;
+  btn.disabled = true;
+  setRobotState(btn, "working");
+
+  try {
+    const contextText = document.getElementById("summary").value.trim() || document.getElementById("story").value.trim();
+    if (!contextText) throw new Error("ဇာတ်လမ်း သို့မဟုတ် Summary အရင်ထည့်ပါ။");
+
+    const prompt = `Extract characters from this story. Return ONLY a JSON array of objects with keys: "name", "role", "age", "description" (in English).
+Story: ${contextText}`;
+
+    // callGemini က JSON ကို parse လုပ်ပြီးသားဖြစ်၍ res ကို တိုက်ရိုက် စစ်ဆေးပါမည်
+    const res = await callGemini(prompt);
+    const charArray = Array.isArray(res) ? res : (res.characters || res);
+
+    if (!Array.isArray(charArray) || charArray.length === 0) {
+      throw new Error("Gemini က valid Character Array မပေးပါ။");
+    }
+
+    state.characters = charArray;
+    if (typeof renderChars === "function") renderChars();
+
+    setRobotState(btn, "done");
+  } catch (e) {
+    setRobotState(btn, "error"); // Error တက်လျှင် Robot အနီရောင် ပြမည်
+    const statusEl = document.getElementById("finalStatus");
+    if (statusEl) statusEl.textContent = "⚠️ Auto Detect failed: " + e.message;
+    console.error("Detect Error:", e);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// --- ၃။ 🎬 Generate Scenes ---
+async function generateScenes(customBtn = null) {
+  const btn = customBtn || document.getElementById("sceneBtn");
+  if (!btn) return;
+  btn.disabled = true;
+  setRobotState(btn, "working");
+
+  try {
+    const summary = document.getElementById("summary").value.trim();
+    if (!summary) throw new Error("Summary မရှိသေးပါ။");
+
+    let total = typeof durationSec === "function" ? durationSec() : 60;
+    const prompt = `Break down this story into visual scenes totaling ~${total} seconds. Each scene must be <= 10s.
+Return ONLY a valid JSON array of objects with keys: "action_my", "dialogue", "duration".
+Story Summary: ${summary}`;
+
+    const res = await callGemini(prompt);
+    const sceneArray = Array.isArray(res) ? res : (res.scenes || res);
+
+    if (!Array.isArray(sceneArray) || sceneArray.length === 0) {
+      throw new Error("Gemini က valid Scenes Array မပေးပါ။");
+    }
+
+    state.scenes = sceneArray;
+    if (typeof renderScenes === "function") renderScenes();
+    setRobotState(btn, "done");
+
+  } catch (e) {
+    setRobotState(btn, "error");
+    const statusEl = document.getElementById("finalStatus");
+    if (statusEl) statusEl.textContent = "⚠️ AI Scene generation failed: " + e.message;
+    console.error("Scenes Error:", e);
+    throw e;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// --- ၄။ ➡️ Continue Story (Part 2, 3...) ---
+async function continueStory() {
+  const btn = document.getElementById("continueBtn");
+  if (!btn) return;
+  btn.disabled = true;
+  setRobotState(btn, "working");
+
+  try {
+    const currentStory = document.getElementById("story").value.trim();
+    if (!currentStory) throw new Error("ရှေ့အပိုင်း မရှိသေးပါ။");
+
+    // Save history
+    if (!state.partsHistory) state.partsHistory = [];
+    state.partsHistory.push({
+      story: currentStory,
+      summary: state.summary,
+      scenes: [...(state.scenes || [])]
+    });
+
+    const prompt = `Write the direct continuation (Part ${state.partsHistory.length + 1}) for this story, preserving character continuity and cliffhangers:
+Previous Story: ${currentStory}`;
+
+    const res = await callGemini(prompt);
+    const nextPart = typeof res === "object" ? (res.story_continuation || res.story || JSON.stringify(res)) : res;
+    
+    if (!nextPart) throw new Error("Gemini မှ စာသား ပြန်မရပါ။");
+
+    document.getElementById("story").value = nextPart;
+
+    setRobotState(btn, "done");
+    const statusEl = document.getElementById("finalStatus");
+    if (statusEl) statusEl.textContent = `✅ Continued to Part ${state.partsHistory.length + 1}`;
+  } catch (e) {
+    setRobotState(btn, "error");
+    const statusEl = document.getElementById("finalStatus");
+    if (statusEl) statusEl.textContent = "⚠️ Continue Story failed: " + e.message;
+    console.error("Continue Error:", e);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// --- ၅။ 🔄 Regenerate Scenes ---
+async function regenerate() {
+  const btn = document.getElementById("regenBtn");
+  if (!btn) return;
+  btn.disabled = true;
+  setRobotState(btn, "working");
+
+  try {
+    await generateScenes(btn);
+    setRobotState(btn, "done");
+  } catch (e) {
+    setRobotState(btn, "error");
+    const statusEl = document.getElementById("finalStatus");
+    if (statusEl) statusEl.textContent = "⚠️ Regenerate failed: " + e.message;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// --- ၆။ ⬅️ Previous Part ---
+async function previousPart() {
+  const btn = document.getElementById("prevBtn");
+  if (!btn) return;
+  btn.disabled = true;
+  setRobotState(btn, "working");
+
+  try {
+    if (!state.partsHistory || state.partsHistory.length === 0) {
+      throw new Error("ရှေ့မှာ အပိုင်းဟောင်းများ မရှိတော့ပါ။");
+    }
+
+    const prevData = state.partsHistory.pop();
+    document.getElementById("story").value = prevData.story;
+    state.summary = prevData.summary;
+    document.getElementById("summary").value = prevData.summary;
+    state.scenes = prevData.scenes;
+    if (typeof renderScenes === "function") renderScenes();
+
+    setRobotState(btn, "done");
+    const statusEl = document.getElementById("finalStatus");
+    if (statusEl) statusEl.textContent = "✅ Loaded previous part";
+  } catch (e) {
+    setRobotState(btn, "error");
+    const statusEl = document.getElementById("finalStatus");
+    if (statusEl) statusEl.textContent = "⚠️ Previous Part failed: " + e.message;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ==================================================
+// 🚀 Event Listener Bindings
+// ==================================================
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("summaryBtn")?.addEventListener("click", makeSummary);
+  document.getElementById("detectBtn")?.addEventListener("click", autoDetect);
+  document.getElementById("autoDetectChars")?.addEventListener("click", autoDetect);
+  document.getElementById("sceneBtn")?.addEventListener("click", generateScenes);
+  document.getElementById("continueBtn")?.addEventListener("click", continueStory);
+  document.getElementById("regenBtn")?.addEventListener("click", regenerate);
+  document.getElementById("prevBtn")?.addEventListener("click", previousPart);
+});
 
 // ==========================================
 // ⚠️ အရေးကြီး – မူလ Video Settings ဖန်တီးတဲ့ ကုဒ်ကို လုံးဝပြန်ထားပြီး ထိခိုက်မှုမရှိအော
@@ -1541,12 +1989,14 @@ function safeJsonParse(rawStr) {
   }
 }
 
-async function callGemini(instruction){
-let key=(document.getElementById("apiKey").value||localStorage.getItem("gemini_api_key")||"").replace(/[\u200B-\u200D\uFEFF]/g,"").trim();
-if(!key)throw Error("Gemini API key မထည့်ရသေးပါ။");
+async function callGemini(instruction) {
+  let key = (document.getElementById("apiKey").value || localStorage.getItem("gemini_api_key") || "")
+    .replace(/[\u200B-\u200D\uFEFF]/g, "")
+    .trim();
+  if (!key) throw Error("Gemini API key မထည့်ရသေးပါ။");
 
-let model=document.getElementById("model").value;
-let system=`You are AI Video Prompt Master V4.3. Return strictly valid JSON with no markdown wrapping or conversational text.
+  let model = document.getElementById("model").value;
+  let system = `You are AI Video Prompt Master V4.3. Return strictly valid JSON with no markdown wrapping or conversational text.
 
 For story_summary:
 write a natural, human-readable Burmese story synopsis/draft.
@@ -1568,33 +2018,49 @@ CRITICAL SCENE RULES:
 
 Return also: negative_prompt, thumbnail_prompt, thumbnail_text, thumbnail_negative_prompt, photo_prompt.`;
 
-let user=`Selected settings: ${JSON.stringify(settingsObj(),null,2)}
-Story title: ${document.getElementById("title").value.trim()}
-Story input: ${document.getElementById("story").value.trim()}
-Current summary: ${document.getElementById("summary").value.trim()}
-Current blueprint: ${JSON.stringify(state.blueprint||{},null,2)}
-Current characters: ${JSON.stringify(state.characters,null,2)}
-Current groups/crowds: ${JSON.stringify(state.groups,null,2)}
-Current scenes: ${JSON.stringify(state.scenes,null,2)}
-Part: ${state.part}
+  let user = `Selected settings: ${JSON.stringify(typeof settingsObj === "function" ? settingsObj() : {}, null, 2)}
+Story title: ${document.getElementById("title")?.value.trim() || ""}
+Story input: ${document.getElementById("story")?.value.trim() || ""}
+Current summary: ${document.getElementById("summary")?.value.trim() || ""}
+Current blueprint: ${JSON.stringify(state.blueprint || {}, null, 2)}
+Current characters: ${JSON.stringify(state.characters || [], null, 2)}
+Current groups/crowds: ${JSON.stringify(state.groups || [], null, 2)}
+Current scenes: ${JSON.stringify(state.scenes || [], null, 2)}
+Part: ${state.part || 1}
 Instruction: ${instruction}`;
 
-let r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{
-method:"POST",
-headers:{"Content-Type":"application/json","x-goog-api-key":key},
-body:JSON.stringify({contents:[{parts:[{text:system+"\n\n"+user}]}],generationConfig:{responseMimeType:"application/json"}})
-});
+  let r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: system + "\n\n" + user }] }],
+      generationConfig: { responseMimeType: "application/json" }
+    })
+  });
 
-if(!r.ok){throw Error("Gemini API "+r.status+" — "+(await r.text()).slice(0,500));}
-let d=await r.json();
-let t=d.candidates?.[0]?.content?.parts?.[0]?.text||"";
-if(!t)throw Error("Gemini response မရပါ။");
+  // ⚡ 1. HTTP 429 Rate Limit Error တိကျစွာ ဖမ်းယူခြင်း
+  if (!r.ok) {
+    let errText = await r.text();
+    if (r.status === 429 || errText.includes("RESOURCE_EXHAUSTED")) {
+      const waitMatch = errText.match(/retry in ([\d\.]+)s/);
+      const waitSec = waitMatch ? Math.ceil(parseFloat(waitMatch[1])) : 40;
+      throw Error(`API အသုံးများလွန်း၍ ခေတ္တပိတ်သွားပါသည်။ စက္ကန့် ${waitSec} ခန့် စောင့်ပြီးမှ ပြန်နှိပ်ပါ။`);
+    }
+    throw Error("Gemini API " + r.status + " — " + errText.slice(0, 300));
+  }
 
-t=t.replace(/```json/gi,"").replace(/```/g,"").trim();
-let jsonStart=t.indexOf("{"),jsonEnd=t.lastIndexOf("}");
-if(jsonStart!==-1 && jsonEnd!==-1 && jsonEnd>jsonStart){t=t.substring(jsonStart,jsonEnd+1);}
-  // သင့် မူရင်း Code အောက်ဆုံးနား
-  t = t.substring(jsonStart, jsonEnd + 1);
+  let d = await r.json();
+  let t = d.candidates?.[0]?.content?.parts?.[0]?.text || "";
+  if (!t) throw Error("Gemini response မရပါ။");
+
+  // ⚡ 2. Clean Markdown blocks
+  t = t.replace(/```json/gi, "").replace(/```/g, "").trim();
+
+  // ⚡ 3. Object {...} သို့မဟုတ် Array [...] နှစ်မျိုးလုံးကို ပါးနပ်စွာ သန့်စင်ထုတ်ယူခြင်း
+  const jsonMatch = t.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+  if (jsonMatch) {
+    t = jsonMatch[0];
+  }
 
   try {
     return JSON.parse(t);
@@ -1748,35 +2214,48 @@ renderScenes();
 renderFinalPrompts();
 document.getElementById("finalStatus").textContent="✓ Scenes generated locally. Click 'Final AI Video Prompt ထုတ်ရန်' to build prompt.";
 }
-
 async function generateScenes(){
-if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim()){return alert("Story Input / Summary ထည့်ပါ။");}
-let total=durationSec(),btn=document.getElementById("sceneBtn");
-btn.disabled=true;btn.innerHTML="⏳ Generating Scenes...";
+  if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim()){
+    return alert("Story Input / Summary ထည့်ပါ။");
+  }
+  let total=durationSec(), btn=document.getElementById("sceneBtn");
 
-try{
-let d=await callGemini(`Generate the complete progressive scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}.`);
-if(!Array.isArray(d.scenes)||!d.scenes.length){throw Error("No scenes returned");}
-state.scenes=normalizeScenes(d.scenes);
-let diff=totalScene()-total;
-if(diff!==0 && state.scenes.length>0){
-let last=state.scenes.length-1;
-state.scenes[last].duration=Math.max(1,Math.min(10,state.scenes[last].duration-diff));
-}
-state.finalScenesData=[];
-state.negative=d.negative_prompt||state.negative;
-state.thumb=d.thumbnail_prompt||"";
-state.thumbText=d.thumbnail_text||"";
-state.thumbNeg=d.thumbnail_negative_prompt||"";
-renderScenes();
-renderExtras();
-renderFinalPrompts();
-document.getElementById("finalStatus").textContent="✓ Scenes generated. Edit action/dialogue then click 'Final AI Video Prompt ထုတ်ရန်' below.";
-}catch(e){
-generateScenesLocal();
-document.getElementById("finalStatus").textContent="⚠️ AI Scene generation failed; local scene planner used. "+e.message;
-}
-btn.disabled=false;btn.innerHTML='🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span>';
+  // ✅ မူလခလုတ်အကြောင်းအရာကို သိမ်းထား
+  if (!btn.dataset.originalHtml) {
+    btn.dataset.originalHtml = btn.innerHTML;
+  }
+
+  btn.disabled = true;
+  setRobotState(btn, "working"); // အလုပ်လုပ်နေချိန် – အဝါရောင် လှုပ်ရှား
+
+  try{
+    let d=await callGemini(`Generate the complete progressive scene plan for the current story. Requested total duration is ${total} seconds. Each scene MUST be 10 seconds or less and all scene durations MUST sum exactly to ${total}.`);
+    if(!Array.isArray(d.scenes)||!d.scenes.length){throw Error("No scenes returned");}
+    state.scenes=normalizeScenes(d.scenes);
+    let diff=totalScene()-total;
+    if(diff!==0 && state.scenes.length>0){
+      let last=state.scenes.length-1;
+      state.scenes[last].duration=Math.max(1,Math.min(10,state.scenes[last].duration-diff));
+    }
+    state.finalScenesData=[];
+    state.negative=d.negative_prompt||state.negative;
+    state.thumb=d.thumbnail_prompt||"";
+    state.thumbText=d.thumbnail_text||"";
+    state.thumbNeg=d.thumbnail_negative_prompt||"";
+    renderScenes();
+    renderExtras();
+    renderFinalPrompts();
+    document.getElementById("finalStatus").textContent="✓ Scenes generated. Edit action/dialogue then click 'Final AI Video Prompt ထုတ်ရန်' below.";
+
+    setRobotState(btn, "done"); // ✅ အောင်မြင်သွားရင် အစိမ်းရောင်ပြောင်း – ဒီလိုင်းထည့်ပါ
+
+  }catch(e){
+    generateScenesLocal();
+    document.getElementById("finalStatus").textContent="⚠️ AI Scene generation failed; local scene planner used. "+e.message;
+
+    setRobotState(btn, "error"); // ✅ အမှားရင် အနီရောင်မှိတ် – ဒီလိုင်းထည့်ပါ
+    btn.disabled = false; // နောက်ထပ်နှိပ်လို့ရအောင် ဖွင့်ပေးထား
+  }
 }
 
 function renderExtras(){
@@ -1915,71 +2394,200 @@ if(storedApiKey){
 document.getElementById("apiKey").value=storedApiKey;
 document.getElementById("apiStatus").textContent="✓ Local API key loaded."
 }
+// ==================================================
+// 🔗 ခလုတ် Event Handlers များ (ထပ်နေသည်များကို ပေါင်းစည်းထားခြင်း)
+// ==================================================
 
-document.getElementById("testApi").onclick=async()=>{
-document.getElementById("apiStatus").textContent="⏳ Testing...";
-try{
-await callGemini("Return a JSON object with test:true only.");
-document.getElementById("apiStatus").textContent="✓ Gemini API connected.";
-}catch(e){document.getElementById("apiStatus").textContent="❌ "+e.message;}
-};
-
-document.getElementById("summaryBtn").onclick=makeSummary;
-document.getElementById("blueprintBtn").onclick=makeBlueprint;
-document.getElementById("autoDetectChars").onclick=autoDetect;
-document.getElementById("sceneBtn").onclick=generateScenes;
-document.getElementById("addCharBtn").onclick=()=>{
-state.characters.push({name:"Character",role:"Supporting Character",age:"",description:"",locked:true});
-renderChars();
-openCharacterModal(state.characters.length-1)
+// ၁။ API Testing Button
+const testApiBtn = document.getElementById("testApi");
+if (testApiBtn) {
+  testApiBtn.onclick = async () => {
+    const statusEl = document.getElementById("apiStatus");
+    if (statusEl) statusEl.textContent = "⏳ Testing...";
+    try {
+      await callGemini("Return a JSON object with test:true only.");
+      if (statusEl) statusEl.textContent = "✓ Gemini API connected.";
+    } catch (e) {
+      if (statusEl) statusEl.textContent = "❌ " + e.message;
+    }
+  };
 }
-  
-document.getElementById("buildFinalBtn").onclick = async () => {
-  try {
-    syncSceneEdits();
-    setButtonRobotState("buildFinalBtn", "working");
 
-    // ✅ မြန်မာစာသားများကို အင်္ဂလိပ်သို့ အလိုအလျောက်ဘာသာပြန်ပြီး Prompt တွေတည်ဆောက်
-    state.finalScenesData = await Promise.all(
-      state.scenes.map((s, idx) => buildScenePromptObject(s, idx))
-    );
-
-    // ✅ UI သို့ Prompt အားလုံး ပြသပေးမယ့် အဓိကလုပ်ဆောင်ချက်
-    renderFinalPrompts();
-
-    // အခြေအနေ ပြီးဆုံးအောင် ပြောင်းပေး
-    setButtonRobotState("buildFinalBtn", "done");
-    document.getElementById("finalStatus").textContent = "✓ Final AI Video Prompt အောင်မြင်စွာ ထုတ်ပြီးပါပြီ။";
-
-  } catch (err) {
-    console.error("Prompt ထုတ်ရာတွင် အမှားအယွင်း –", err);
-    document.getElementById("finalStatus").textContent = "⚠️ အမှား – " + err.message;
-    setButtonRobotState("buildFinalBtn", "done");
-  }
-};
-
-document.getElementById("regen").onclick=regenerate;
-document.getElementById("previousPart").onclick=previousPart;
-document.getElementById("continue").onclick=continueStory;
-
-document.getElementById("copySummary").onclick=e=>copyText(document.getElementById("summary").value,e.currentTarget);
-document.getElementById("copyThumb").onclick=e=>copyText(state.thumb||document.getElementById("thumbPrompt").textContent,e.currentTarget);
-document.getElementById("copyThumbText").onclick=e=>copyText(state.thumbText||document.getElementById("thumbText").textContent,e.currentTarget);
-
-document.getElementById("collapseSettings").onclick=()=>{
-let d=document.getElementById("settingsDetails");
-if(d){
-d.open=!d.open;
-let collapseBtn=document.getElementById("collapseSettings");
-if(collapseBtn){collapseBtn.textContent=d.open?"⌃":"⌄";}
+// ၂။ Summary / Blueprint Button
+const summaryBtn = document.getElementById("summaryBtn") || document.getElementById("blueprintBtn");
+if (summaryBtn) {
+  summaryBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      if (typeof makeSummary === "function") await makeSummary();
+      setRobotState(this, "done");
+    } catch (err) {
+      console.error("Summary Error:", err);
+      setRobotState(this, "error");
+    }
+  };
 }
-};
 
-renderChars();
-renderExtras();
-updatePreviousButton();
+// ၃။ Auto Detect Characters Button
+const detectBtn = document.getElementById("autoDetectChars") || document.getElementById("detectBtn");
+if (detectBtn) {
+  detectBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      if (typeof autoDetect === "function") await autoDetect();
+      setRobotState(this, "done");
+    } catch (err) {
+      console.error("Detect Error:", err);
+      setRobotState(this, "error");
+    }
+  };
+}
 
-})();
+// ၄။ Generate Scenes Button
+const sceneBtn = document.getElementById("sceneBtn");
+if (sceneBtn) {
+  sceneBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      if (typeof generateScenes === "function") await generateScenes();
+      setRobotState(this, "done");
+    } catch (err) {
+      console.error("Scenes Error:", err);
+      setRobotState(this, "error");
+    }
+  };
+}
+
+// ၅။ Add Character Button
+const addCharBtn = document.getElementById("addCharBtn");
+if (addCharBtn) {
+  addCharBtn.onclick = () => {
+    state.characters.push({ name: "Character", role: "Supporting Character", age: "", description: "", locked: true });
+    renderChars();
+    if (typeof openCharacterModal === "function") openCharacterModal(state.characters.length - 1);
+  };
+}
+
+// ၆။ Final AI Video Prompt Button
+const buildFinalBtn = document.getElementById("buildFinalBtn");
+if (buildFinalBtn) {
+  buildFinalBtn.onclick = async function () {
+    try {
+      if (typeof syncSceneEdits === "function") syncSceneEdits();
+      setRobotState(this, "working");
+
+      if (typeof buildScenePromptObject === "function") {
+        state.finalScenesData = await Promise.all(
+          state.scenes.map((s, idx) => buildScenePromptObject(s, idx))
+        );
+      }
+
+      if (typeof renderFinalPrompts === "function") renderFinalPrompts();
+      setRobotState(this, "done");
+      const statusEl = document.getElementById("finalStatus");
+      if (statusEl) statusEl.textContent = "✓ Final AI Video Prompt အောင်မြင်စွာ ထုတ်ပြီးပါပြီ။";
+    } catch (err) {
+      console.error("Prompt Error:", err);
+      const statusEl = document.getElementById("finalStatus");
+      if (statusEl) statusEl.textContent = "⚠️ အမှား – " + err.message;
+      setRobotState(this, "error");
+    }
+  };
+}
+
+// ၇။ Continue Story Button (ID နှစ်မျိုးစလုံး စစ်ဆေးပေးထားသည်)
+const continueBtn = document.getElementById("continue") || document.getElementById("continueBtn");
+if (continueBtn) {
+  continueBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      if (typeof continueStory === "function") await continueStory();
+      setRobotState(this, "done");
+    } catch (err) {
+      console.error("Continue Error:", err);
+      setRobotState(this, "error");
+    }
+  };
+}
+
+// ၈။ Regenerate Button
+const regenBtn = document.getElementById("regen") || document.getElementById("regenBtn");
+if (regenBtn) {
+  regenBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      if (typeof regenerate === "function") await regenerate();
+      setRobotState(this, "done");
+    } catch (err) {
+      console.error("Regenerate Error:", err);
+      setRobotState(this, "error");
+    }
+  };
+}
+
+// ၉။ Previous Parts Button
+const prevBtn = document.getElementById("previousPart") || document.getElementById("prevBtn");
+if (prevBtn) {
+  prevBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      if (typeof previousPart === "function") await previousPart();
+      setRobotState(this, "done");
+    } catch (err) {
+      console.error("Previous Error:", err);
+      setRobotState(this, "error");
+    }
+  };
+}
+
+// ==================================================
+// 📌 Copy Buttons & UI Initializations
+// ==================================================
+const copySummaryBtn = document.getElementById("copySummary");
+if (copySummaryBtn) copySummaryBtn.onclick = e => copyText(document.getElementById("summary")?.value || "", e.currentTarget);
+
+const copyThumbBtn = document.getElementById("copyThumb");
+if (copyThumbBtn) copyThumbBtn.onclick = e => copyText(state.thumb || document.getElementById("thumbPrompt")?.textContent || "", e.currentTarget);
+
+const copyThumbTextBtn = document.getElementById("copyThumbText");
+if (copyThumbTextBtn) copyThumbTextBtn.onclick = e => copyText(state.thumbText || document.getElementById("thumbText")?.textContent || "", e.currentTarget);
+
+const collapseSettingsBtn = document.getElementById("collapseSettings");
+if (collapseSettingsBtn) {
+  collapseSettingsBtn.onclick = (e) => {
+    e.preventDefault();
+
+    let d = document.getElementById("settingsDetails");
+    let card = document.getElementById("settingsCard");
+
+    if (d && card) {
+      // ⚡ ၁။ Settings Card ရဲ့ မျက်နှာပြင်ပေါ်က အကွာအဝေး (Top position) ကို မှတ်ယူမည်
+      const cardTopPos = card.getBoundingClientRect().top + window.scrollY;
+
+      // ⚡ ၂။ Details ကို ပိတ်/ဖွင့် လုပ်မည်
+      d.open = !d.open;
+      collapseSettingsBtn.textContent = d.open ? "⌃" : "⌄";
+
+      // ⚡ ၃။ အောက်ကို ခုန်ဆင်းမသွားဘဲ Settings Card အစနေရာမှာပဲ Screen ကို အသေ ထိန်းထားမည်
+      window.scrollTo({
+        top: cardTopPos - 10, // Top offset အနည်းငယ် ချန်ထားမည်
+        behavior: 'instant'   // ဇတ်ခနဲ ခုန်မသွားစေရန်
+      });
+    }
+  };
+}
+
+// ✅ စတင်ချိန် – ခလုတ်အားလုံးကို ပုံမှန်အခြေအနေ သတ်မှတ်ပေး
+document.querySelectorAll(".btn-with-robot").forEach(btn => {
+  const robot = btn.querySelector(".btn-robot");
+  if (robot) robot.classList.add("robot-ready");
+});
+
+if (typeof renderChars === "function") renderChars();
+if (typeof renderExtras === "function") renderExtras();
+if (typeof updatePreviousButton === "function") updatePreviousButton();
+
 </script>
+
 </body>
 </html>
