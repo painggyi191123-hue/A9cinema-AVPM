@@ -587,6 +587,10 @@ button, .btn, .box-header, .label {
   <div id="finalPrompt" class="empty">
     Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။
   </div>
+
+  <button class="secondary" id="copyFinalBtn" style="margin-top:9px;">
+    📋 Copy Final Prompt
+  </button>
 </div>
 
 
@@ -2542,6 +2546,13 @@ if (copyThumbBtn) copyThumbBtn.onclick = e => copyText(state.thumb || document.g
 const copyThumbTextBtn = document.getElementById("copyThumbText");
 if (copyThumbTextBtn) copyThumbTextBtn.onclick = e => copyText(state.thumbText || document.getElementById("thumbText")?.textContent || "", e.currentTarget);
 
+const copyFinalBtn = document.getElementById("copyFinalBtn");
+if (copyFinalBtn) {
+  copyFinalBtn.onclick = e => {
+    const finalPrompt = document.getElementById("finalPrompt");
+    copyText(finalPrompt?.textContent || "", e.currentTarget);
+  };
+}
 const collapseSettingsBtn = document.getElementById("collapseSettings");
 if (collapseSettingsBtn) {
   collapseSettingsBtn.onclick = (e) => {
