@@ -609,31 +609,56 @@ button, .btn, .box-header, .label {
 
 <script>
 // ==========================================
-// 📋 Copy Text Helper Function (အသစ်ထည့်)
+// 📋 Copy Text Helper Function (Fixed for file:// too)
 // ==========================================
-async function copyText(text, btnElement = null) {
+function copyText(text, btnElement = null) {
   if (!text || !String(text).trim()) {
     console.warn("Copy လုပ်ရန် စာသား မရှိပါ");
     return;
   }
   const cleanText = String(text).trim();
 
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(cleanText);
+  // ✅ Fallback (file:// အတွက်) — အရင်သုံး
+  function fallbackCopy() {
+    const textarea = document.createElement("textarea");
+    textarea.value = cleanText;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "0";
+    textarea.style.left = "0";
+    textarea.style.width = "2em";
+    textarea.style.height = "2em";
+    textarea.style.padding = "0";
+    textarea.style.border = "none";
+    textarea.style.outline = "none";
+    textarea.style.boxShadow = "none";
+    textarea.style.background = "transparent";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+
+    // iOS Safari အတွက်
+    if (navigator.userAgent.match(/ipad|iphone/i)) {
+      const range = document.createRange();
+      range.selectNodeContents(textarea);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      textarea.setSelectionRange(0, 999999);
     } else {
-      const textarea = document.createElement("textarea");
-      textarea.value = cleanText;
-      textarea.style.position = "fixed";
-      textarea.style.left = "-9999px";
-      textarea.style.top = "0";
-      document.body.appendChild(textarea);
-      textarea.focus();
       textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
     }
 
+    let success = false;
+    try {
+      success = document.execCommand("copy");
+    } catch (err) {
+      success = false;
+    }
+    document.body.removeChild(textarea);
+    return success;
+  }
+
+  function showSuccess() {
     if (btnElement) {
       const originalHTML = btnElement.innerHTML;
       btnElement.innerHTML = "✓ Copied!";
@@ -644,12 +669,24 @@ async function copyText(text, btnElement = null) {
       }, 1500);
     }
     console.log("✓ Copied to clipboard");
-  } catch (err) {
-    console.error("Copy failed:", err);
+  }
+
+  // ✅ file:// + browser အားလုံးအတွက် fallback အရင်သုံး
+  if (fallbackCopy()) {
+    showSuccess();
+    return;
+  }
+
+  // ✅ Clipboard API ကို နောက်ဆုံးမှ ကြိုးစား
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(cleanText).then(showSuccess).catch(err => {
+      console.error("Clipboard API failed:", err);
+      alert("Copy လုပ်မရပါ။ စာသားကို ကိုယ်တိုင်ရွေးပြီး ကူးပါ။");
+    });
+  } else {
     alert("Copy လုပ်မရပါ။ စာသားကို ကိုယ်တိုင်ရွေးပြီး ကူးပါ။");
   }
 }
-// Global အနေနဲ့ ရရှိစေရန် (inline onclick အတွက်)
 window.copyText = copyText;
 
 // ==========================================
@@ -1213,46 +1250,45 @@ function localGroupParser(text) {
 
 // 🎯 SCENE အလိုက် Photo Prompt + Video Prompt ခွဲခြားပြသပေးသည့် Function
 function renderFinalPrompts(){
-const el = document.getElementById("finalPrompt");
-if(!el) return;
+  const el = document.getElementById("finalPrompt");
+  if(!el) return;
 
-if(!state.finalScenesData || !state.finalScenesData.length){
-  el.className = "empty";
-  el.textContent = "Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။";
-  return;
-}
+  if(!state.finalScenesData || !state.finalScenesData.length){
+    el.className = "empty";
+    el.textContent = "Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။";
+    return;
+  }
 
-el.className = "";
-let title = document.getElementById("title").value.trim() || "Untitled";
-let cleanNeg = state.negative || "low quality, blurry, distorted face, deformed hands, extra fingers, duplicate characters, identity drift, costume drift, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
+  el.className = "";
+  let title = document.getElementById("title").value.trim() || "Untitled";
+  let cleanNeg = state.negative || "low quality, blurry, distorted face, deformed hands, extra fingers, duplicate characters, identity drift, costume drift, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
 
-let masterHeader = `Create a generator-ready ${stylePhrase()} ${val("Genre")} video for ${val("Target AI Video Model")}. Story title: ${title}. Aspect ratio: ${val("Aspect Ratio")}. Master continuity: Preserve every locked character exactly. Never change face, age, hairstyle, hair color, skin appearance, body shape, costume, armor, accessories, weapons or signature props. Preserve established location, time, relationships and unresolved story events.`;
+  let masterHeader = `Create a generator-ready ${stylePhrase()} ${val("Genre")} video for ${val("Target AI Video Model")}. Story title: ${title}. Aspect ratio: ${val("Aspect Ratio")}. Master continuity: Preserve every locked character exactly. Never change face, age, hairstyle, hair color, skin appearance, body shape, costume, armor, accessories, weapons or signature props. Preserve established location, time, relationships and unresolved story events.`;
 
-let html = ``;
+  let html = ``;
 
-state.finalScenesData.forEach((item, i) => {
-  let sNum = String(i + 1).padStart(2, "0");
-  html += `
-  <div class="final-scene-card">
-    <div class="final-prompt-title">
-      <span>🎬 SCENE ${sNum} PROMPTS</span>
-      <span class="pill">${item.duration}s</span>
+  state.finalScenesData.forEach((item, i) => {
+    let sNum = String(i + 1).padStart(2, "0");
+    html += `
+    <div class="final-scene-card">
+      <div class="final-prompt-title">
+        <span>🎬 SCENE ${sNum} PROMPTS</span>
+        <span class="pill">${item.duration}s</span>
+      </div>
+
+      <label style="color:#00f3ff !important; margin-top:4px; display:block;">🎥 Scene ${sNum} Video Prompt:</label>
+      <div class="out" id="vid_prompt_${i}" style="margin-top:4px;">${esc(item.videoPrompt)}</div>
+      <button class="secondary copy" data-copy-target="vid_prompt_${i}">📋 Copy Scene ${sNum} Video Prompt</button>
+
+      <label style="color:#00ff9d !important; margin-top:12px; display:block;">📸 Scene ${sNum} Photo Prompt:</label>
+      <div class="out" id="photo_prompt_${i}" style="margin-top:4px;">${esc(item.photoPrompt)}</div>
+      <button class="secondary copy" data-copy-target="photo_prompt_${i}">📋 Copy Scene ${sNum} Photo Prompt</button>
     </div>
+    `;
+  });
 
-    <label style="color:#00f3ff !important; margin-top:4px; display:block;">🎥 Scene ${sNum} Video Prompt:</label>
-    <div class="out" id="vid_prompt_${i}" style="margin-top:4px;">${esc(item.videoPrompt)}</div>
-    <button class="secondary copy" onclick="copyText(document.getElementById('vid_prompt_${i}').textContent, this)">📋 Copy Scene ${sNum} Video Prompt</button>
-
-    <label style="color:#00ff9d !important; margin-top:12px; display:block;">📸 Scene ${sNum} Photo Prompt:</label>
-    <div class="out" id="photo_prompt_${i}" style="margin-top:4px;">${esc(item.photoPrompt)}</div>
-    <button class="secondary copy" onclick="copyText(document.getElementById('photo_prompt_${i}').textContent, this)">📋 Copy Scene ${sNum} Photo Prompt</button>
-  </div>
-  `;
-});
-
-el.innerHTML = html;
+  el.innerHTML = html;
 }
-
 function renderChars(){
 const b=document.getElementById("charactersContainer");
 if(!b)return;
@@ -1351,23 +1387,33 @@ return `Full character design sheet, ${age} ${name}, ${role}, ${description}, ${
 }
 
 function renderRefs(){
-const b=document.getElementById("refs");
-if(!b)return;
-if(!state.characters.length){
-b.innerHTML='<span class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။';
-return
-}
-b.innerHTML=state.characters.map((c,i)=>
-`<div class="item">
-<b>${esc(c.name||"Character "+(i+1))}</b>
-<textarea id="ref_${i}" readonly style="margin-top:7px;min-height:300px">${esc(refPrompt(c))}</textarea>
-<button class="secondary copy" data-copyref="${i}">📋 Copy Prompt</button>
-</div>`
-).join("");
+  const b = document.getElementById("refs");
+  if(!b) return;
+  if(!state.characters.length){
+    b.innerHTML = '<span class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။';
+    return;
+  }
 
-b.querySelectorAll("[data-copyref]").forEach(e=>{
-e.onclick=()=>copyText(document.getElementById("ref_"+e.dataset.copyref).value,e)
-})
+  b.innerHTML = state.characters.map((c,i) =>
+    `<div class="item">
+      <b>${esc(c.name||"Character "+(i+1))}</b>
+      <textarea id="ref_${i}" readonly style="margin-top:7px;min-height:300px">${esc(refPrompt(c))}</textarea>
+      <button class="secondary copy" data-copyref="${i}">📋 Copy Prompt</button>
+    </div>`
+  ).join("");
+
+  // ✅ onmousedown/onclick နှစ်မျိုးလုံး bind
+  b.querySelectorAll("[data-copyref]").forEach(btn => {
+    btn.onclick = (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const idx = btn.dataset.copyref;
+      const refEl = document.getElementById("ref_" + idx);
+      if (refEl) {
+        copyText(refEl.value, btn);
+      }
+    };
+  });
 }
 
 function fallbackBlueprint(summary){
