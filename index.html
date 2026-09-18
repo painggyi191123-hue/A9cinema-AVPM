@@ -4,118 +4,104 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070b18">
-<title>AI Video Prompt Master V4.3</title>
+<title>AI Video Prompt Master V5.0</title>
 <style>
-:root{--bg:#050816;--card:#0c1428;--card2:#101b34;--line:#28385d;--text:#f3f6ff;--muted:#9eacd0;--a:#8b5cf6;--b:#22d3ee;--ok:#34d399;--bad:#fb7185}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
+/* ============================================================
+   🎨 AI VIDEO PROMPT MASTER V5.0
+   Cyberpunk Theme + Workflow (Episode/Script/Photo)
+   ============================================================ */
+:root{
+  --bg:#050816;
+  --card:#0c1428;
+  --card2:#101b34;
+  --line:#28385d;
+  --text:#f3f6ff;
+  --muted:#9eacd0;
+  --neon-cyan:#00f3ff;
+  --neon-purple:#c084fc;
+  --neon-pink:#ff007f;
+  --neon-green:#00ff9d;
+  --warn:#fbbf24;
+  --bad:#fb7185;
+  --ok:#34d399;
+  --a:#8b5cf6;
+  --b:#22d3ee;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
 body {
   margin: 0;
   background-color: #030468;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 60%),
-    linear-gradient(rgba(34, 211, 238, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 211, 238, 0.015) 1px, transparent 1px);
-  background-size: 100% 100%, 40px 40px, 40px 40px;
+    radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 80% 90%, rgba(192, 132, 252, 0.06) 0%, transparent 55%),
+    linear-gradient(rgba(34, 211, 238, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
   color: var(--text);
   font-family: system-ui, -apple-system, "Noto Sans Myanmar", "Noto Sans", sans-serif;
-}
-.wrap{width:min(860px,100%);margin:auto;padding:12px 10px 70px}.hero{text-align:center;padding:18px 8px}.badge{display:inline-block;border:1px solid #3b4e7e;border-radius:99px;padding:5px 11px;color:#b9f2ff;font-size:11px}.hero h1{font-size:28px;margin:8px 0;background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9);-webkit-background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:13px;line-height:1.6}
-.card {
-background: linear-gradient(135deg, rgba(10, 18, 38, 0.88), rgba(5, 10, 22, 0.96));
-border: 1px solid rgba(34, 211, 238, 0.28);
-border-radius: 10px;
-padding: 14px;
-margin: 11px 0;
-box-shadow: 0 0 25px rgba(0, 0, 0, 0.85), inset 0 0 15px rgba(34, 211, 238, 0.03);
-position: relative;
-}
-.card::before {
-content: "";
-position: absolute;
-top: -1px; left: -1px;
-width: 6px; height: 6px;
-border-top: 2px solid var(--b);
-border-left: 2px solid var(--b);
-}
-.card::after {
-content: "";
-position: absolute;
-bottom: -1px; right: -1px;
-width: 6px; height: 6px;
-border-bottom: 2px solid var(--b);
-border-right: 2px solid var(--b);
+  animation: bgShift 20s ease-in-out infinite;
 }
 
-input,textarea,select{width:100%;border:1px solid #2b3c62;background:#070d1c;color:var(--text);border-radius:11px;padding:11px;font:inherit;outline:none}textarea{min-height:120px;resize:vertical;line-height:1.55}input:focus,textarea:focus,select:focus{border-color:var(--b);box-shadow:0 0 0 2px #22d3ee18}
-button{border:1px solid #35476f;border-radius:12px;padding:11px 13px;color:#fff;background:#182544;font-weight:800;font-size:13px;cursor:pointer}.primary{width:100%;background:linear-gradient(100deg,#7c3aed,#2563eb,#06b6d4);border:0}.secondary{background:#151f38}.danger{background:#251727;border-color:#613247}.copy{width:100%;margin-top:8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:9px}
-.notice{padding:10px;border-radius:12px;background:#0a1930;border:1px solid #244a70;color:#bdd7ff;font-size:12px;line-height:1.55}.status{font-size:12px;color:#9fb0d8;margin-top:8px;line-height:1.5}.out{white-space:pre-wrap;word-break:break-word;background:#040814;border:1px solid #293a60;border-radius:13px;padding:12px;line-height:1.6;font-size:12px;max-height:600px;overflow:auto}.empty{color:#7f8dad;font-size:12px}.item{border:1px solid #26385d;background:#091226;border-radius:14px;padding:11px;margin:9px 0}.itemhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.pill{font-size:10px;color:#bcefff;background:#122544;border:1px solid #29476d;border-radius:99px;padding:4px 7px}.dual{position:relative}.dual button{width:100%;text-align:left;min-height:52px;background:#070d1c}.en{display:block;font-weight:800}.mm{display:block;color:var(--muted);font-size:11px;margin-top:3px}.menu{position:absolute;z-index:100;left:0;right:0;top:calc(100% + 5px);background:#0a1225;border:1px solid #344a76;border-radius:12px;padding:5px;max-height:280px;overflow:auto;box-shadow:0 20px 45px #000a}.menu button{border:0;background:transparent;margin:1px 0}.menu button:hover,.menu button.active{background:#172746}.hidden{display:none}.collapse{text-align:center;margin-top:8px}.collapse button{width:44px;height:44px;border-radius:50%;font-size:20px}.sticky{position:sticky;bottom:8px;z-index:80}.tiny{font-size:11px;color:var(--muted)}.lock{display:flex;gap:8px;align-items:center;font-size:12px;margin-top:8px}
-.bp-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.char-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.bp-card{background:linear-gradient(145deg,#0c1428,#080e1c);border:1px solid #26385d;border-radius:8px;padding:5px 6px;display:flex;flex-direction:column;justify-content:space-between;min-height:65px;cursor:pointer;min-width:0;transition:border-color 0.2s}.bp-card:hover{border-color:var(--b)}.bp-card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:2px;margin-bottom:2px}.bp-card-title{font-weight:800;font-size:9px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bp-card-sub{font-size:8px;color:var(--muted);white-space:nowrap}.bp-card-text{font-size:9px;line-height:1.3;color:#bcefff;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.char-card{background:linear-gradient(145deg,#0c1428,#080e1c);border:1px solid #26385d;border-radius:8px;padding:5px 4px;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:72px;cursor:pointer;justify-content:space-between;min-width:0;overflow:hidden;transition:border-color 0.2s}.char-card:hover{border-color:var(--b)}.char-card-title{font-weight:800;font-size:9px;color:#fff;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.char-card-sub{font-size:8px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}
-.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(2,4,10,0.85);z-index:999;display:flex;align-items:center;justify-content:center;padding:12px;backdrop-filter:blur(4px)}.modal-overlay.hidden{display:none}.modal-box{background:linear-gradient(180deg,#101b34,#080e1c);border:1px solid #35476f;border-radius:18px;padding:16px;width:min(520px,100%);box-shadow:0 25px 50px #000c}.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #28385d;padding-bottom:8px;margin-bottom:10px}.modal-header h3{margin:0;font-size:16px;color:#fff}.final-scene{border:1px solid #26385d;background:#091226;border-radius:14px;padding:11px;margin:9px 0}.final-scene .out{max-height:none;margin-top:8px}
-@media(max-width:560px){.grid{grid-template-columns:1fr}.row3{grid-template-columns:1fr 1fr}.wrap{padding-left:6px;padding-right:6px}.hero h1{font-size:24px}}
-
-.card h2 {font-size: 16px;margin: 0 0 8px 0;}
-.card summary {font-size: 16px;}
-.card h2, .card h3, .card summary b, .card summary {
-  color: #00f3ff !important;
-  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-}
-label {
-  color: #c084fc !important;
-  font-weight: 600;
+@keyframes bgShift {
+  0%, 100% { background-position: 50% 0%, 80% 90%, 0 0, 0 0; }
+  50% { background-position: 50% 5%, 75% 85%, 0 20px, 20px 0; }
 }
 
-label span, .sub {
-  color: #00ff9d !important;
-}
+.wrap{width:min(860px,100%);margin:auto;padding:12px 10px 70px}
 
-@keyframes cyberGridMove {
-  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-  100% { background-position: 0 0, 0 0, 0 40px, 0 40px; }
-}
-
-/* Scene Final Prompt UI Styling */
-.final-scene-card {
-  border: 1px solid #28385d;
-  background: #091226;
-  border-radius: 12px;
-  padding: 12px;
-  margin: 12px 0;
-}
-.final-prompt-title {
-  font-size: 14px;
-  font-weight: bold;
-  color: #00f3ff;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+/* ============ HERO HEADER ============ */
 .hero-robot-header {
-  background: #050811;
-  padding: 0.8rem 1rem;
+  background: linear-gradient(180deg, #050811 0%, #070c1a 100%);
+  padding: 0.9rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  border-bottom: 1px solid rgba(0, 240, 255, 0.25);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  gap: 6px;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 14px;
+  margin: 8px 0 16px;
+  box-shadow:
+    0 0 25px rgba(0, 240, 255, 0.15),
+    inset 0 0 20px rgba(0, 240, 255, 0.05);
   font-family: 'Inter', system-ui, sans-serif;
   overflow: hidden;
+  position: relative;
+}
+
+.hero-robot-header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  animation: scanline 3s linear infinite;
+}
+
+@keyframes scanline {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 .hero-robot-header .compact-title {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 800;
   white-space: nowrap;
   margin: 0;
-  letter-spacing: 1.5px;
-  background: linear-gradient(90deg, #ffffff 0%, #00f0ff 50%, #7000ff 100%);
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #ffffff 0%, #00f0ff 40%, #c084fc 70%, #ff007f 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.5));
+  animation: titleGlow 4s linear infinite;
+}
+
+@keyframes titleGlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
 .robot-status-wrapper {
@@ -125,57 +111,55 @@ label span, .sub {
 }
 
 .mini-robot {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   animation: robot-float 2s infinite ease-in-out;
+  filter: drop-shadow(0 0 6px var(--neon-cyan));
 }
 
 .robot-text {
   font-size: 0.65rem;
   font-weight: 700;
-  color: #00f0ff;
+  color: var(--neon-cyan);
   letter-spacing: 2px;
-  opacity: 0.85;
+  opacity: 0.9;
+  text-shadow: 0 0 8px var(--neon-cyan);
+  animation: textPulse 2s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
 }
 
 @keyframes robot-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+  50% { transform: translateY(-4px); }
 }
 
-.antenna-dot {
-  animation: blink-dot 1s infinite alternate;
-}
+.antenna-dot { animation: blink-dot 1s infinite alternate; }
 
 @keyframes blink-dot {
-  0% { fill: #ff007f; filter: drop-shadow(0 0 2px #ff007f); }
-  100% { fill: #00f0ff; filter: drop-shadow(0 0 6px #00f0ff); }
+  0% { fill: var(--neon-pink); filter: drop-shadow(0 0 3px var(--neon-pink)); }
+  100% { fill: var(--neon-cyan); filter: drop-shadow(0 0 8px var(--neon-cyan)); }
 }
 
-.robot-eye {
-  animation: eye-blink 3s infinite;
-}
+.robot-eye { animation: eye-blink 3s infinite; }
 
 @keyframes eye-blink {
   0%, 90%, 100% { transform: scaleY(1); }
   95% { transform: scaleY(0.1); }
 }
 
-.core-pulse {
-  animation: core-glow 0.8s infinite alternate;
-}
+.core-pulse { animation: core-glow 0.8s infinite alternate; }
 
 @keyframes core-glow {
-  0% { fill: #00f0ff; opacity: 0.4; }
-  100% { fill: #ff007f; opacity: 1; filter: drop-shadow(0 0 4px #ff007f); }
+  0% { fill: var(--neon-cyan); opacity: 0.4; }
+  100% { fill: var(--neon-pink); opacity: 1; filter: drop-shadow(0 0 6px var(--neon-pink)); }
 }
 
-.arm-l {
-  animation: arm-work-l 0.5s infinite alternate;
-}
-.arm-r {
-  animation: arm-work-r 0.5s infinite alternate 0.25s;
-}
+.arm-l { animation: arm-work-l 0.5s infinite alternate; }
+.arm-r { animation: arm-work-r 0.5s infinite alternate 0.25s; }
 
 @keyframes arm-work-l {
   0% { transform: translateY(0); }
@@ -186,81 +170,553 @@ label span, .sub {
   100% { transform: translateY(0); }
 }
 
-@media (max-width: 480px) {
-  .hero-robot-header .compact-title {
-    font-size: 1rem;
-  }
-  .mini-robot {
-    width: 34px;
-    height: 39px;
-  }
-}
-/* ခလုတ်အလုပ်လုပ်ချိန် စာဖျောက်ပြီး Robot အလယ်ပို့မယ့် Logic */
-.btn-working .btn-text-content {
-  display: none !important;
-}
-
-.btn-working {
-  justify-content: center !important;
-}
-
-.btn-working .canvas-robot {
-  transform: scale(1.4);
-  animation: robotPulse 0.8s infinite alternate ease-in-out;
-}
-
-.btn-done .canvas-robot {
-  filter: drop-shadow(0 0 8px #10b981) hue-rotate(90deg);
-}
-
-@keyframes robotPulse {
-  0% { transform: scale(1.2); opacity: 0.8; }
-  100% { transform: scale(1.5); opacity: 1; }
-}
-/* 📌 ခေါင်းစဉ်အားလုံး နေရာမယူအောင် ကျဉ်းကျဉ်းလုပ် */
-h2, h3, .card h2, .card h3, .scene-title, .section-title {
-  margin: 4px 0 6px 0 !important;
-  padding: 2px 0 !important;
-  font-size: 14px !important;
-  line-height: 1.3 !important;
-}
-
-/* 📌 အထူးသဖြင့် သင့်ပုံထဲက SCENE 01 PROMTTS လို ခေါင်းစဉ်အတွက် */
-[class*="scene"], [id*="scene"], .scene-header, .prompt-title {
-  margin: 2px 0 4px 0 !important;
-  padding: 4px 8px !important;
-  min-height: auto !important;
-  line-height: 1.2 !important;
-}
-
-/* 📌 ခလုတ်/အကွက်ထဲက စာသားလည်း ကျဉ်းအောင် */
-button, .btn, .box-header, .label {
-  padding: 6px 10px !important;
-  margin: 2px !important;
-  line-height: 1.4 !important;
-}
-
-/* 📌 အကွက်ကိုယ်တိုင်လည်း နေရာမဖြုန်းအောင် */
-.card, .box, .container {
-  padding: 8px 10px !important;
-  margin: 6px 0 !important;
-}
-
-/* ========== ပြုပြင်ချက် ၁ – ပြန်ပြုပြင်: Settings ကျုံ့လျှင် Story Input မရွေ့စေ + Settings ပုံမှန်အလုပ်လုပ်စေ ========== */
-#settingsCard {
-  contain: layout;
-}
-#settingsDetails {
-  overflow: visible;
-}
-#settingsDetails[open] {
-  min-height: auto;
-}
-#storyInputCard {
+/* ============ CARD ============ */
+.card {
+  background: linear-gradient(135deg, rgba(10, 18, 38, 0.92), rgba(5, 10, 22, 0.98));
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  border-radius: 12px;
+  padding: 14px;
+  margin: 12px 0;
+  box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.85),
+    0 0 15px rgba(0, 243, 255, 0.08),
+    inset 0 0 20px rgba(0, 243, 255, 0.03);
   position: relative;
-  transform: translateZ(0);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
-/* ========== ပြုပြင်ချက် ၂ – ခလုတ်များအတွင်း Robot Icon + အခြေအနေပြောင်းခြင်း ========== */
+
+.card:hover {
+  border-color: rgba(0, 243, 255, 0.5);
+  box-shadow:
+    0 0 30px rgba(0, 0, 0, 0.9),
+    0 0 25px rgba(0, 243, 255, 0.15),
+    inset 0 0 25px rgba(0, 243, 255, 0.05);
+}
+
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  width: 8px; height: 8px;
+  border-color: var(--neon-cyan);
+  filter: drop-shadow(0 0 4px var(--neon-cyan));
+}
+
+.card::before {
+  top: -1px; left: -1px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.card::after {
+  bottom: -1px; right: -1px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+/* ============ INPUTS ============ */
+input,textarea,select{
+  width:100%;
+  border:1px solid #2b3c62;
+  background:#070d1c;
+  color:var(--text);
+  border-radius:11px;
+  padding:11px;
+  font:inherit;
+  outline:none;
+  transition: all 0.25s ease;
+}
+
+textarea{min-height:120px;resize:vertical;line-height:1.55}
+
+input:focus,textarea:focus,select:focus{
+  border-color:var(--neon-cyan);
+  box-shadow:
+    0 0 0 2px rgba(0, 243, 255, 0.15),
+    0 0 15px rgba(0, 243, 255, 0.2);
+}
+
+/* ============ BUTTONS ============ */
+button{
+  border:1px solid #35476f;
+  border-radius:12px;
+  padding:11px 13px;
+  color:#fff;
+  background:#182544;
+  font-weight:800;
+  font-size:13px;
+  cursor:pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button:not(:disabled):hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary{
+  width:100%;
+  background:linear-gradient(100deg,#7c3aed,#2563eb,#06b6d4);
+  border:0;
+  animation: subtlePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(124, 58, 237, 0.3); }
+  50% { box-shadow: 0 0 22px rgba(124, 58, 237, 0.55); }
+}
+
+.primary:not(:disabled):hover {
+  box-shadow: 0 0 28px rgba(124, 58, 237, 0.75);
+  transform: translateY(-1px);
+  animation-play-state: paused;
+}
+  
+.secondary{background:#151f38}
+.danger{background:#251727;border-color:#613247}
+.copy{width:100%;margin-top:8px}
+
+/* ============ GRID LAYOUTS ============ */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:9px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+
+/* ============ NOTICE / STATUS ============ */
+.notice{
+  padding:10px;
+  border-radius:12px;
+  background:#0a1930;
+  border:1px solid #244a70;
+  color:#bdd7ff;
+  font-size:12px;
+  line-height:1.55;
+}
+
+.status{
+  font-size:12px;
+  color:#9fb0d8;
+  margin-top:8px;
+  line-height:1.5;
+}
+
+/* ============ OUTPUT BOX ============ */
+.out{
+  white-space:pre-wrap;
+  word-break:break-word;
+  background:#040814;
+  border:1px solid #293a60;
+  border-radius:13px;
+  padding:12px;
+  line-height:1.6;
+  font-size:12px;
+  max-height:600px;
+  overflow:auto;
+}
+
+.out::-webkit-scrollbar { width: 8px; height: 8px; }
+.out::-webkit-scrollbar-track { background: #0a1225; border-radius: 4px; }
+.out::-webkit-scrollbar-thumb { background: #28385d; border-radius: 4px; }
+.out::-webkit-scrollbar-thumb:hover { background: var(--neon-cyan); }
+
+.empty{color:#7f8dad;font-size:12px}
+
+/* ============ ITEM / SCENE CARD ============ */
+.item{
+  border:1px solid #26385d;
+  background:#091226;
+  border-radius:14px;
+  padding:12px;
+  margin:10px 0;
+  transition: border-color 0.3s ease;
+}
+
+.item:hover { border-color: rgba(0, 243, 255, 0.4); }
+
+.itemhead{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+  flex-wrap: wrap;
+}
+
+.pill{
+  font-size:10px;
+  color:#bcefff;
+  background:#122544;
+  border:1px solid #29476d;
+  border-radius:99px;
+  padding:4px 8px;
+  transition: all 0.2s ease;
+}
+
+/* ============ DUAL DROPDOWN ============ */
+.dual{position:relative}
+
+.dual button{
+  width:100%;
+  text-align:left;
+  min-height:52px;
+  background:#070d1c;
+}
+
+.en{display:block;font-weight:800}
+.mm{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+
+.menu{
+  position:absolute;
+  z-index:100;
+  left:0;right:0;
+  top:calc(100% + 5px);
+  background:#0a1225;
+  border:1px solid #344a76;
+  border-radius:12px;
+  padding:5px;
+  max-height:280px;
+  overflow:auto;
+  box-shadow: 0 20px 45px #000a, 0 0 20px rgba(0, 243, 255, 0.15);
+}
+
+.menu button{
+  border:0;
+  background:transparent;
+  margin:1px 0;
+}
+
+.menu button:hover,
+.menu button.active{
+  background:#172746;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.hidden{display:none}
+
+/* ============ COLLAPSE ============ */
+.collapse{text-align:center;margin-top:8px}
+
+.collapse button{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  font-size:20px;
+}
+
+.sticky{position:sticky;bottom:8px;z-index:80}
+.tiny{font-size:11px;color:var(--muted)}
+
+.lock{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  font-size:12px;
+  margin-top:8px;
+}
+
+/* ============ BLUEPRINT / CHARACTER GRID ============ */
+.bp-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:4px;
+}
+
+.char-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:4px;
+}
+
+.bp-card{
+  background:linear-gradient(145deg,#0c1428,#080e1c);
+  border:1px solid #26385d;
+  border-radius:8px;
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:65px;
+  cursor:pointer;
+  min-width:0;
+  transition: all 0.2s ease;
+}
+
+.bp-card:hover{
+  border-color:var(--neon-cyan);
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.bp-card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:2px;
+  margin-bottom:2px;
+}
+
+.bp-card-title{
+  font-weight:800;
+  font-size:9px;
+  color:#fff;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.bp-card-sub{font-size:8px;color:var(--muted);white-space:nowrap}
+
+.bp-card-text{
+  font-size:9px;
+  line-height:1.3;
+  color:#bcefff;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+
+/* ============ CHARACTER CARD ============ */
+.char-card{
+  background:linear-gradient(145deg,#0c1428,#080e1c);
+  border:1px solid #26385d;
+  border-radius:8px;
+  padding:6px 4px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  min-height:72px;
+  cursor:pointer;
+  justify-content:space-between;
+  min-width:0;
+  overflow:hidden;
+  transition: all 0.2s ease;
+}
+
+.char-card:hover{
+  border-color:var(--neon-cyan);
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.char-card-title{
+  font-weight:800;
+  font-size:9px;
+  color:#fff;
+  margin-top:2px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  width:100%;
+}
+
+.char-card-sub{
+  font-size:8px;
+  color:var(--muted);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  width:100%;
+}
+
+/* ============ MODAL ============ */
+.modal-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(2,4,10,0.85);
+  z-index:999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px;
+  backdrop-filter:blur(6px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-overlay.hidden{display:none}
+
+.modal-box{
+  background:linear-gradient(180deg,#101b34,#080e1c);
+  border:1px solid #35476f;
+  border-radius:18px;
+  padding:16px;
+  width:min(520px,100%);
+  box-shadow:
+    0 25px 50px #000c,
+    0 0 40px rgba(0, 243, 255, 0.15);
+  animation: modalSlide 0.25s ease;
+}
+
+@keyframes modalSlide {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #28385d;
+  padding-bottom:8px;
+  margin-bottom:10px;
+}
+
+.modal-header h3{
+  margin:0;
+  font-size:16px;
+  color:#fff;
+}
+
+/* ============ FINAL SCENE CARD ============ */
+.final-scene{
+  border:1px solid #26385d;
+  background:#091226;
+  border-radius:14px;
+  padding:11px;
+  margin:9px 0;
+}
+
+.final-scene .out{max-height:none;margin-top:8px}
+
+.final-scene-card {
+  border: 1px solid #28385d;
+  background: linear-gradient(145deg, #091226, #0a1830);
+  border-radius: 14px;
+  padding: 12px;
+  margin: 12px 0;
+  transition: border-color 0.3s ease;
+}
+
+.final-scene-card:hover {
+  border-color: rgba(0, 243, 255, 0.4);
+}
+
+.final-prompt-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--neon-cyan);
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+}
+
+/* ============ WORKFLOW CARD (Episode/Script/Photo) ============ */
+.workflow-note{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.5;
+  margin:4px 0 8px;
+}
+
+.workflow-card{
+  border:1px solid #26385d;
+  background:linear-gradient(145deg,#091226,#0a1830);
+  border-radius:12px;
+  padding:12px;
+  margin:10px 0;
+  transition: border-color 0.3s ease;
+}
+
+.workflow-card:hover{
+  border-color: rgba(0, 243, 255, 0.4);
+}
+
+.workflow-card h3{
+  color:var(--neon-cyan) !important;
+  font-size:13px !important;
+  margin:0 0 8px !important;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+}
+
+/* 📝 Structure Grid — 10 fields */
+.script-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.script-field label{
+  font-size:11px !important;
+  display:block;
+  margin-bottom:4px;
+  color:var(--neon-purple) !important;
+  font-weight:600;
+}
+
+.script-field textarea{
+  min-height:72px;
+  font-size:12px;
+  background:#060d1c;
+}
+
+.script-field.full{
+  grid-column: 1 / -1;
+}
+
+.photo-prompt-box{
+  min-height:200px !important;
+  font-size:12px;
+}
+
+/* Structure icon markers */
+.structure-icon {
+  display: inline-block;
+  margin-right: 4px;
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+/* ============ SCENE DURATION PROGRESS BAR ============ */
+.duration-bar-wrap {
+  width: 100%;
+  height: 6px;
+  background: #0a1225;
+  border-radius: 3px;
+  margin-top: 6px;
+  overflow: hidden;
+  border: 1px solid #1a2745;
+}
+
+.duration-bar {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease, background 0.3s ease;
+  background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+  box-shadow: 0 0 8px currentColor;
+}
+
+.duration-bar.warn {
+  background: linear-gradient(90deg, var(--warn), #f97316);
+}
+
+.duration-bar.danger {
+  background: linear-gradient(90deg, var(--bad), #dc2626);
+  animation: barPulse 1s ease-in-out infinite;
+}
+
+@keyframes barPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ============ ROBOT STATE ANIMATIONS ============ */
 .btn-with-robot {
   display: inline-flex;
   align-items: center;
@@ -268,45 +724,48 @@ button, .btn, .box-header, .label {
   position: relative;
   justify-content: center;
 }
+
 .btn-robot {
   width: 55px;
   height: 59px;
   flex-shrink: 0;
   transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-.btn-working .btn-text { display: none; }
-.btn-working { justify-content: center; }
 
-/* 🟦 အဆင်သင့် – ငြိမ်၊ အပြာရောင် */
-.robot-ready .robot-eye { fill: #00f0ff; }
-.robot-ready .core-pulse { fill: #00f0ff; animation: none; }
-.robot-ready .antenna-dot { fill: #ff007f; animation: none; }
+.btn-working .btn-text-content,
+.btn-working .btn-text { display: none !important; }
+
+.btn-working { justify-content: center !important; }
+
+.robot-ready .robot-eye { fill: var(--neon-cyan); }
+.robot-ready .core-pulse { fill: var(--neon-cyan); animation: none; }
+.robot-ready .antenna-dot { fill: var(--neon-pink); animation: none; }
 .robot-ready .arm-l, .robot-ready .arm-r { animation: none; transform: translateY(0); }
 .robot-ready { transform: translateY(0) scale(1); filter: none; }
 
-/* 🟡 အလုပ်လုပ်နေ – ခုန်၊ မှိတ်၊ လှုပ်၊ အဝါရောင် */
 .robot-working {
   animation: bounce-jump 0.4s infinite alternate ease-in-out;
-  filter: drop-shadow(0 0 6px #ffd000);
+  filter: drop-shadow(0 0 8px var(--warn));
 }
-/* ✅ အရေးကြီး – အခြားအခြေအနေမှာ အလုပ်လုပ်နေတဲ့ animation ကို လုံးဝပိတ် */
+
 .robot-ready, .robot-done {
   animation: none !important;
   transform: translateY(0) scale(1);
 }
 
-/* 🟢 ပြီးဆုံး – အစိမ်းရောင် တောက်ပ */
-.robot-done .robot-eye { fill: #34d399; animation: none; }
-.robot-done .core-pulse { fill: #34d399; animation: success-flash 0.4s 2 alternate; }
-.robot-done .antenna-dot { fill: #34d399; animation: none; }
+.robot-done .robot-eye { fill: var(--neon-green); animation: none; }
+.robot-done .core-pulse { fill: var(--neon-green); animation: success-flash 0.4s 2 alternate; }
+.robot-done .antenna-dot { fill: var(--neon-green); animation: none; }
 .robot-done .arm-l, .robot-done .arm-r { animation: none; transform: translateY(0); }
-.robot-done { transform: scale(1.1); filter: drop-shadow(0 0 8px #34d399); }
+.robot-done { transform: scale(1.1); filter: drop-shadow(0 0 12px var(--neon-green)); }
 
-/* ❌ အမှားအခြေအနေ */
 .robot-error {
   animation: shake-strong 0.12s infinite alternate !important;
   transform-origin: center center;
-  filter: drop-shadow(0 0 15px #ff0044) !important;
+  filter: drop-shadow(0 0 18px #ff0044) !important;
 }
 
 .robot-error .robot-eye,
@@ -317,28 +776,13 @@ button, .btn, .box-header, .label {
 }
 
 .robot-error path,
-.robot-error line {
-  stroke: #ff0044 !important;
-}
-
-.robot-error circle {
-  fill: #ff0044 !important;
-  stroke: #ff0044 !important;
-}
-
-.robot-error rect {
-  fill: #3a000d !important;
-  stroke: #ff0044 !important;
-}
+.robot-error line { stroke: #ff0044 !important; }
+.robot-error circle { fill: #ff0044 !important; stroke: #ff0044 !important; }
+.robot-error rect { fill: #3a000d !important; stroke: #ff0044 !important; }
 
 @keyframes error-blink-bright {
   0% { opacity: 0.5; transform: scale(0.85); }
   100% { opacity: 1; transform: scale(1.35); }
-}
-
-@keyframes error-pulse-bright {
-  0% { opacity: 0.6; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1.45); }
 }
 
 @keyframes shake-strong {
@@ -352,9 +796,117 @@ button, .btn, .box-header, .label {
   75% { transform: translateY(-14px) scale(0.92, 1.08); }
   100% { transform: translateY(-16px) scale(1, 1); }
 }
+
+@keyframes robotPulse {
+  0% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 1; }
+}
+
+@keyframes success-flash {
+  0% { opacity: 0.3; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.3); }
+}
+
+/* ============ TYPOGRAPHY ============ */
+.card h2, .card h3, .card summary b, .card summary {
+  color: var(--neon-cyan) !important;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.card h2 { font-size: 16px; margin: 0 0 8px 0; }
+.card summary { font-size: 16px; }
+.card h3 { font-size: 14px; }
+
+label {
+  color: var(--neon-purple) !important;
+  font-weight: 600;
+}
+
+label span, .sub {
+  color: var(--neon-green) !important;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+h2, h3, .card h2, .card h3, .scene-title, .section-title {
+  margin: 4px 0 6px 0 !important;
+  padding: 2px 0 !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+}
+
+button, .btn, .box-header, .label {
+  padding: 6px 10px !important;
+  margin: 2px !important;
+  line-height: 1.4 !important;
+}
+
+.card, .box, .container {
+  padding: 8px 10px !important;
+  margin: 6px 0 !important;
+}
+
+/* ============ SETTINGS FIX ============ */
+#settingsCard { contain: layout; }
+#settingsDetails { overflow: visible; }
+#settingsDetails[open] { min-height: auto; }
+#storyInputCard { position: relative; transform: translateZ(0); }
+
+/* ============ RETRY COUNTDOWN BADGE ============ */
+.retry-badge {
+  display: inline-block;
+  background: linear-gradient(90deg, #dc2626, #f97316);
+  color: #fff;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+  margin-left: 6px;
+  animation: retryPulse 1s ease-in-out infinite;
+}
+
+@keyframes retryPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ============ BATCH EXPORT BAR ============ */
+.batch-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding: 8px;
+  background: #060b1c;
+  border-radius: 10px;
+  border: 1px solid #1e3054;
+}
+
+.batch-bar button {
+  flex: 1;
+  min-width: 120px;
+  font-size: 11px;
+  padding: 8px !important;
+}
+
+/* ============ MOBILE ============ */
+@media(max-width:560px){
+  .grid{grid-template-columns:1fr}
+  .row3{grid-template-columns:1fr 1fr}
+  .wrap{padding-left:6px;padding-right:6px}
+  .hero-robot-header .compact-title { font-size: 1.05rem; letter-spacing: 1px; }
+  .mini-robot { width: 34px; height: 39px; }
+  .bp-grid, .char-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .batch-bar button { min-width: 90px; }
+  .script-grid { grid-template-columns: 1fr; }
+}
+
+@media(max-width:400px){
+  .bp-grid, .char-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .row3 { grid-template-columns: 1fr; }
+}
 </style>
 </head>
-
 <body>
 <div class="wrap">
 
@@ -379,23 +931,34 @@ button, .btn, .box-header, .label {
   </div>
 </header>
 
+<!-- ============ API CARD ============ -->
 <section class="card">
 <h2>🔑 Gemini API <span class="sub">(Gemini API ချိတ်ဆက်မှု)</span></h2>
 <div class="grid">
-<div class="field"><label>API Key ထည့်ရန်</label><input id="apiKey" type="password" placeholder="Paste Gemini API key"></div>
-<div class="field"><label>Gemini Model</label><select id="model">
-<option value="gemini-3.7-flash">Gemini 3.7 Flash</option>
-<option value="gemini-3.6-flash">Gemini 3.6 Flash</option>
-<option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
-<option value="gemini-3.5-flash-lite">Gemini 3.5 Flash-Lite</option>
-<option value="gemini-3.1-flash-lite"selected>Gemini 3.1 Flash-Lite</option>
-<option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
-</select></div>
+  <div class="field">
+    <label>API Key ထည့်ရန်</label>
+    <input id="apiKey" type="password" placeholder="Paste Gemini API key">
+  </div>
+  <div class="field">
+    <label>Gemini Model</label>
+    <select id="model">
+      <option value="gemini-3.7-flash">Gemini 3.7 Flash</option>
+      <option value="gemini-3.6-flash">Gemini 3.6 Flash</option>
+      <option value="gemini-3.5-flash">Gemini 3.5 Flash</option>
+      <option value="gemini-3.5-flash-lite" selected>Gemini 3.5 Flash-Lite</option>
+      <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash-Lite</option>
+      <option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
+    </select>
+  </div>
 </div>
-<div class="row"><button id="saveApi">💾 Save API Key</button><button id="testApi">🔌 Test API</button></div>
+<div class="row">
+  <button id="saveApi">💾 Save API Key</button>
+  <button id="testApi">🔌 Test API</button>
+</div>
 <div id="apiStatus" class="status">API key is stored locally on this device only.</div>
 </section>
 
+<!-- ============ SETTINGS CARD ============ -->
 <section class="card" id="settingsCard">
   <details open id="settingsDetails">
     <summary><b>⚙️ Video Settings</b> <span class="sub">(ဗီဒီယို သတ်မှတ်ချက်များ)</span></summary>
@@ -406,53 +969,19 @@ button, .btn, .box-header, .label {
   </div>
 </section>
 
+<!-- ============ STORY INPUT ============ -->
 <section class="card" id="storyInputCard">
 <h2>📝 Story Input <span class="sub">(ဇာတ်လမ်းထည့်ရန်)</span></h2>
-<div class="field"><label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ်</span></label><input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်"></div>
-<div class="field" style="margin-top:9px"><label>Story / Rough Notes <span>ဇာတ်လမ်း / အကြမ်းဖျင်းမှတ်စု</span></label><textarea id="story" placeholder="ဇာတ်လမ်းကို မြန်မာလိုဖြစ်စေ၊ အင်္ဂလိပ်လိုဖြစ်စေ ထည့်နိုင်ပါတယ်..."></textarea></div>
+<div class="field">
+  <label>Story Title / Idea <span>ဇာတ်လမ်းခေါင်းစဉ်</span></label>
+  <input id="title" placeholder="ဥပမာ - နေမင်းနဲ့ သဇင်">
+</div>
+<div class="field" style="margin-top:9px">
+  <label>Story / Rough Notes <span>ဇာတ်လမ်း / အကြမ်းဖျင်းမှတ်စု</span></label>
+  <textarea id="story" placeholder="ဇာတ်လမ်းကို မြန်မာလိုဖြစ်စေ၊ အင်္ဂလိပ်လိုဖြစ်စေ ထည့်နိုင်ပါတယ်..."></textarea>
+</div>
 
 <button class="primary btn-with-robot" id="summaryBtn" style="margin-top:9px">
-  <span class="btn-robot">
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
-      <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
-      <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
-      <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
-      <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
-      <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
-      <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
-      <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
-    </svg>
-  </span>
-  <span class="btn-text-content">
-    🧠 Create AI Story Summary & Blueprint<br><span style="font-size:11px">ဇာတ်လမ်းကို ဖတ်ရလွယ်တဲ့ Summary နှင့် Blueprint အဖြစ် အလိုအလျောက် ဖန်တီးရန်</span>
-  </span>
-</button>
-<div id="summaryStatus" class="status"></div>
-</section>
-
-<section class="card">
-<h2>📖 Story Summary <span class="sub">(ဇာတ်လမ်းအကျဉ်းချုပ်)</span></h2>
-<textarea id="summary" placeholder="AI Story Summary ဒီနေရာမှာ ပေါ်လာပါမယ်။ ကိုယ်တိုင်လည်း ပြင်နိုင်ပါတယ်။" style="min-height: 300px;"></textarea>
-<div style="display:none;">
-<button class="copy" id="copySummary">📋 Copy Summary<br><span class="sub">Summary ကို ကူးယူရန်</span></button>
-<button id="blueprintBtn">🧩 Create Story Blueprint<br><span class="sub">ဇာတ်လမ်းဖွဲ့စည်းပုံ ဖန်တီးရန်</span></button>
-</div>
-</section>
-
-<section class="card" style="display: none;">
-<h2>🧩 Story Blueprint <span class="sub">(ဇာတ်လမ်းအခြေခံဖွဲ့စည်းပုံ)</span></h2>
-<div id="blueprint" class="out empty">Create Story Blueprint ပြီးနောက် ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
-<div class="notice" style="margin-bottom:8px">💡 <b>Tip:</b> အကွက်တစ်ခုချင်းစီကို နှိပ်၍ အသေးစိတ်အချက်အလက်များကို Pop-up ဖြင့် ကြည့်ရှုနိုင်ပါသည်။</div>
-</section>
-
-<section class="card">
-<h2>👥 Character Studio</h2>
-<div id="charactersContainer"></div>
-<div class="row" style="margin-top: 12px;">
-<button id="autoDetectChars" class="btn-with-robot" style="padding: 6px 9px; font-size: 11px;">
   <span class="btn-robot robot-ready">
     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
@@ -467,29 +996,101 @@ button, .btn, .box-header, .label {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>🤖 Auto Detect Characters<br><span class="sub" style="font-size: 9px;">AI ဖြင့် အလိုအလျောက်ရှာရန်</span></span>
+  <span class="btn-text-content">
+    🧠 ဇာတ်လမ်း Summary နှင့် Blueprint ဖန်တီးရန်<br><span style="font-size:11px">AI ဖြင့် Story Summary နှင့် Blueprint ဖန်တီးရန်</span>
+  </span>
 </button>
-<button id="addCharBtn" style="padding: 6px 9px; font-size: 11px;">＋ Add Character<br><span class="sub" style="font-size: 9px;">ကိုယ်တိုင်ထည့်ရန်</span></button>
+<div id="summaryStatus" class="status"></div>
+</section>
+
+<!-- ============ STORY SUMMARY ============ -->
+<section class="card">
+<h2>📖 Story Summary <span class="sub">(ဇာတ်လမ်းအကျဉ်းချုပ်)</span></h2>
+<textarea id="summary" placeholder="AI Story Summary ဒီနေရာမှာ ပေါ်လာပါမယ်။ ကိုယ်တိုင်လည်း ပြင်နိုင်ပါတယ်။" style="min-height: 300px;"></textarea>
+<div style="display:none;">
+  <button class="copy" id="copySummary">📋 Copy Summary</button>
+  <button id="blueprintBtn">🧩 Create Story Blueprint</button>
+</div>
+</section>
+
+<!-- ============ BLUEPRINT ============ -->
+<section class="card" style="display: none;">
+<h2>🧩 Story Blueprint <span class="sub">(ဇာတ်လမ်းအခြေခံဖွဲ့စည်းပုံ)</span></h2>
+<div id="blueprint" class="out empty">Create Story Blueprint ပြီးနောက် ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
+<div class="notice" style="margin-bottom:8px">💡 <b>Tip:</b> အကွက်တစ်ခုချင်းစီကို နှိပ်၍ အသေးစိတ်အချက်အလက်များကို Pop-up ဖြင့် ကြည့်ရှုနိုင်ပါသည်။</div>
+</section>
+
+<!-- ============ EPISODE STRUCTURE ============ -->
+<section class="card" id="episodeStructureCard">
+<h2>📺 Episode Structure <span class="sub">(အပိုင်းလိုက် ဇာတ်လမ်းဖွဲ့စည်းပုံ)</span></h2>
+<div class="workflow-note">Summary / Blueprint ကိုအခြေခံပြီး Episode တစ်ပိုင်းချင်းစီရဲ့ Story Purpose, Conflict, Turning Point နဲ့ Ending ကို သတ်မှတ်ပေးမယ့် အလွှာပါ။</div>
+<button class="primary btn-with-robot" id="episodeBtn">
+  <span class="btn-robot robot-ready">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
+      <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
+      <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+      <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+      <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
+      <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
+      <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
+      <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
+      <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
+    </svg>
+  </span>
+  <span>📺 Episode Structure ဖန်တီးရန်<br><span style="font-size:11px">အပိုင်းလိုက် ဇာတ်လမ်းဖွဲ့စည်းပုံ ဖန်တီးရန်</span></span>
+</button>
+<div id="episodeStatus" class="status"></div>
+<div id="episodeStructure" style="margin-top:9px"></div>
+</section>
+
+<!-- ============ CHARACTER STUDIO ============ -->
+<section class="card">
+<h2>👥 Character Studio <span class="sub">(ဇာတ်ကောင် စီမံခန့်ခွဲမှု)</span></h2>
+<div id="charactersContainer"></div>
+<div class="row" style="margin-top: 12px;">
+  <button id="autoDetectChars" class="btn-with-robot" style="padding: 6px 9px; font-size: 11px;">
+    <span class="btn-robot robot-ready">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
+        <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
+        <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
+        <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+        <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+        <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
+        <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
+        <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
+        <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
+        <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
+      </svg>
+    </span>
+    <span>🤖 ဇာတ်ကောင် အလိုအလျောက်ရှာရန်<br><span class="sub" style="font-size: 9px;">AI ဖြင့် ရှာဖွေရန်</span></span>
+  </button>
+  <button id="addCharBtn" style="padding: 6px 9px; font-size: 11px;">
+    ＋ ဇာတ်ကောင် ထည့်ရန်<br><span class="sub" style="font-size: 9px;">ကိုယ်တိုင်ထည့်ရန်</span>
+  </button>
 </div>
 <div style="margin-top: 15px; border-top: 1px dashed rgba(0, 243, 255, 0.3); padding-top: 10px;">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <label style="color: #c084fc !important; font-size:12px;">👥 Character Group / Crowd</label>
-    <button type="button" onclick="addGroupInput()" style="font-size: 10px; padding: 3px 8px;">
-      + Add Group
-    </button>
+    <label style="color: #c084fc !important; font-size:12px;">👥 ဇာတ်ကောင် အုပ်စု / လူအုပ်</label>
+    <button type="button" onclick="addGroupInput()" style="font-size: 10px; padding: 3px 8px;">+ အုပ်စု ထည့်ရန်</button>
   </div>
   <div id="group-list"></div>
 </div>
 </section>
 
-<section class="card">
-<h2>🖼️ Character Reference Image Prompts <span class="sub">(ဇာတ်ကောင်ရည်ညွှန်းပုံ Prompt များ - English Only)</span></h2>
+<!-- ============ CHARACTER REFERENCE PROMPTS ============ -->
+<!-- ============ CHARACTER REFERENCE PROMPTS (Hidden — later use) ============ -->
+<section class="card" id="characterRefsCard" style="display:none">
+<h2>🖼️ ဇာတ်ကောင် ရည်ညွှန်းပုံ Prompt</h2>
 <div id="refs" class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။</div>
 </section>
 
+<!-- ============ SCENE GENERATION ============ -->
 <section class="card">
-<h2>🎞️ Scene Generation <span class="sub">(ဇာတ်ဝင်ခန်းဖန်တီးခြင်း)</span></h2>
-<div class="notice">🎭 <b>Dialogue + Action:</b> Generate Scenes နှိပ်ပြီးနောက် ဇာတ်ဝင်ခန်းတစ်ခန်းချင်းစီရဲ့ <b>Action</b> နှင့် <b>Dialogue</b> ကို ဒီနေရာမှာ ကိုယ်တိုင်ပြင်နိုင်ပါတယ်။</div>
+<h2>🎞️ ဇာတ်ဝင်ခန်း ဖန်တီးခြင်း <span class="sub">(Scene Generation)</span></h2>
+<div class="notice">🎭 <b>Dialogue + Action:</b> ဇာတ်ဝင်ခန်း ဖန်တီးပြီးနောက် ဇာတ်ဝင်ခန်းတစ်ခန်းချင်းစီရဲ့ <b>Action</b> နှင့် <b>Dialogue</b> ကို ဒီနေရာမှာ ကိုယ်တိုင်ပြင်နိုင်ပါတယ်။</div>
 
 <button class="primary btn-with-robot" id="sceneBtn" style="margin-top:9px">
   <span class="btn-robot robot-ready">
@@ -506,13 +1107,78 @@ button, .btn, .box-header, .label {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>🎬 Generate Scenes<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်</span></span>
+  <span>🎬 ဇာတ်ဝင်ခန်းများ ဖန်တီးရန်<br><span style="font-size:11px">Scene တွေ AI ဖြင့် ဖန်တီးရန်</span></span>
 </button>
 <div id="scenes" style="margin-top:9px"></div>
 </section>
 
+<!-- ============ SCRIPT STRUCTURE (10 FIELDS) ============ -->
+<section class="card" id="scriptStructureCard">
+<h2>📝 Script Structure <span class="sub">(Production Script / ၁၀ ချက် ဖွဲ့စည်းပုံ)</span></h2>
+<div class="workflow-note">
+🎯 <b>ဇာတ်ဝင်ခန်း ဖန်တီးပြီးနောက်</b> — Scene တစ်ခန်းချင်းစီကို အောက်ပါ အချက် ၁၀ ချက်နဲ့ ဖြည့်ပါ။<br>
+📸 <b>Photo Prompt ထုတ်တဲ့အခါ</b> — ဒီ ၁၀ ချက်လုံးကို အခြေခံပြီး ထုတ်ပေးမှာ ဖြစ်ပါတယ်။
+</div>
+<button class="primary btn-with-robot" id="scriptBtn">
+  <span class="btn-robot robot-ready">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
+      <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
+      <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+      <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+      <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
+      <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
+      <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
+      <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
+      <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
+    </svg>
+  </span>
+  <span>📝 Script Structure ဖန်တီးရန်<br><span style="font-size:11px">Scene တစ်ခန်းချင်းစီအတွက် အချက် ၁၀ ချက် ဖန်တီးရန်</span></span>
+</button>
+<div id="scriptStatus" class="status"></div>
+<div id="scriptStructure" style="margin-top:9px"></div>
+</section>
+
+<!-- ============ SCENE-BY-SCENE PHOTO PROMPTS ============ -->
+<section class="card" id="scenePhotoCard">
+<h2>🎨 Scene-by-Scene Photo Prompts <span class="sub">(ဇာတ်ဝင်ခန်းတစ်ခန်းချင်း Photo Prompt)</span></h2>
+<div class="workflow-note">
+🎨 <b>Script Structure ၁၀ ချက်</b> + <b>Locked Character</b> ကို အခြေခံပြီး Scene တစ်ခန်းချင်း Keyframe Photo Prompt ဖန်တီးပေးမယ်။<br>
+✏️ ထွက်လာတဲ့ Photo Prompt ကို <b>ထပ်ပြင်</b> လို့ရပါတယ်။
+</div>
+<button class="primary btn-with-robot" id="photoBtn">
+  <span class="btn-robot robot-ready">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
+      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
+      <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
+      <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+      <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+      <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
+      <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
+      <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
+      <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
+      <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
+    </svg>
+  </span>
+  <span>🎨 Scene Photo Prompts ဖန်တီးရန်<br><span style="font-size:11px">Structure ၁၀ ချက် အခြေခံပြီး Photo Prompt ထုတ်ရန်</span></span>
+</button>
+<div id="photoStatus" class="status"></div>
+<div id="photoPrompts" style="margin-top:9px"></div>
+</section>
+
+<!-- ============ FINAL AI VIDEO PROMPT ============ -->
 <section class="card">
-<h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံးအသုံးပြုရန် Prompt)</span></h2>
+<h2>🔥 Final AI Video Prompt <span class="sub">(နောက်ဆုံး Video Prompt)</span></h2>
+<div class="workflow-note">🎬 <b>Photo Prompt (ပြင်ထားတာ)</b> + <b>Script Structure</b> ကို အခြေခံပြီး Scene တစ်ခန်းချင်းစီအတွက် Final Video Prompt ထုတ်ပေးမယ်။</div>
+
+<!-- 🆕 Batch Export Bar -->
+<div id="batchBar" class="batch-bar">
+  <button id="copyAllPhotoBtn" class="secondary">📋 Photo အားလုံး Copy</button>
+  <button id="copyAllVideoBtn" class="secondary">📋 Video အားလုံး Copy</button>
+  <button id="downloadAllBtn" class="secondary">💾 အားလုံး Download (.txt)</button>
+</div>
 
 <button class="primary btn-with-robot" id="buildFinalBtn" style="margin-bottom:9px;">
   <span class="btn-robot robot-ready">
@@ -529,39 +1195,33 @@ button, .btn, .box-header, .label {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">ဇာတ်ဝင်ခန်းများမှ ကိုယ်ပြင်ထားသော Action/Dialogue အတိုင်း Final Prompt ဖန်တီးရန်</span></span>
+  <span>⚡ Final AI Video Prompt ထုတ်ရန်<br><span style="font-size:11px">Photo Prompt + Script အခြေခံပြီး Final Video Prompt ဖန်တီးရန်</span></span>
 </button>
 
 <div id="finalPromptContainer">
-  <div id="finalPrompt" class="empty">
-    Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။
-  </div>
-
-  <button class="secondary" id="copyFinalBtn" style="margin-top:9px;">
-    📋 Copy Final Prompt
-  </button>
+  <div id="finalPrompt" class="empty">Final AI Video Prompt ဒီနေရာမှာ ပေါ်လာပါမယ်။</div>
 </div>
 
 <div class="row" style="margin-top:12px;">
-<button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
+  <button id="previousPart" disabled>📚 Previous Parts<br><span class="sub">အရင် Part များကို ရွေးရန်</span></button>
 
-<button id="continue" class="btn-with-robot">
-  <span class="btn-robot robot-ready">
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
-      <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
-      <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
-      <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
-      <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
-      <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
-      <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
-      <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
-      <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
-    </svg>
-  </span>
-  <span>➕ Continue Story<br><span class="sub">Part 2 / 3 / 4...</span></span>
-</button>
+  <button id="continue" class="btn-with-robot">
+    <span class="btn-robot robot-ready">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="32" y1="14" x2="32" y2="6" stroke="#00f0ff" stroke-width="2"/>
+        <circle cx="32" cy="5" r="3" fill="#ff007f" class="antenna-dot"/>
+        <rect x="18" y="14" width="28" height="20" rx="6" fill="#0a101f" stroke="#00f0ff" stroke-width="2"/>
+        <circle cx="26" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+        <circle cx="38" cy="24" r="3" fill="#00f0ff" class="robot-eye"/>
+        <path d="M26 30H38" stroke="#7000ff" stroke-width="2" stroke-linecap="round"/>
+        <rect x="22" y="38" width="20" height="16" rx="4" fill="#0a101f" stroke="#7000ff" stroke-width="2"/>
+        <circle cx="32" cy="46" r="3" fill="#00f0ff" class="core-pulse"/>
+        <path d="M14 42Q20 44 21 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-l"/>
+        <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
+      </svg>
+    </span>
+    <span>➕ ဇာတ်လမ်း ဆက်ရန်<br><span class="sub">Part 2 / 3 / 4...</span></span>
+  </button>
 </div>
 
 <button id="regen" class="btn-with-robot" style="width:100%;margin-top:8px;">
@@ -579,14 +1239,15 @@ button, .btn, .box-header, .label {
       <path d="M50 42Q44 44 43 48" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" class="arm-r"/>
     </svg>
   </span>
-  <span>🔄 Regenerate<br><span class="sub">Version အသစ်</span></span>
+  <span>🔄 ပြန်ဖန်တီးရန်<br><span class="sub">Version အသစ်</span></span>
 </button>
 
 <div id="finalStatus" class="status"></div>
 </section>
 
+<!-- ============ THUMBNAIL PROMPT ============ -->
 <section class="card">
-<h2>🖼️ Thumbnail Prompt</h2>
+<h2>🖼️ Thumbnail Prompt <span class="sub">(ပုံနှိပ် Prompt)</span></h2>
 <div id="thumbPrompt" class="out empty">Thumbnail Prompt ပေါ်လာပါမယ်။</div>
 <button class="secondary copy" id="copyThumb">📋 Copy Thumbnail Prompt</button>
 <h3>📝 Thumbnail Text စာသား</h3>
@@ -596,20 +1257,22 @@ button, .btn, .box-header, .label {
 
 </div>
 
+<!-- ============ MODAL ============ -->
 <div id="modalOverlay" class="modal-overlay hidden">
-<div class="modal-box">
-<div class="modal-header">
-<h3 id="modalTitle">Details</h3>
-<button id="modalClose" class="secondary" style="padding:4px 10px;width:auto;border-radius:8px;">✕</button>
-</div>
-<div id="modalBody" style="margin-top:10px;max-height:65vh;overflow-y:auto;padding-right:4px"></div>
-<div id="modalFooter" style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end;"></div>
-</div>
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modalTitle">Details</h3>
+      <button id="modalClose" class="secondary" style="padding:4px 10px;width:auto;border-radius:8px;">✕</button>
+    </div>
+    <div id="modalBody" style="margin-top:10px;max-height:65vh;overflow-y:auto;padding-right:4px"></div>
+    <div id="modalFooter" style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end;"></div>
+  </div>
 </div>
 
-<script>
+<!-- ============ SCRIPT START ============ -->
+<script>  
 // ==========================================
-// 📋 Copy Text Helper Function (Fixed for file:// too)
+// 📋 Copy Text Helper (file:// supported)
 // ==========================================
 function copyText(text, btnElement = null) {
   if (!text || !String(text).trim()) {
@@ -618,7 +1281,6 @@ function copyText(text, btnElement = null) {
   }
   const cleanText = String(text).trim();
 
-  // ✅ Fallback (file:// အတွက်) — အရင်သုံး
   function fallbackCopy() {
     const textarea = document.createElement("textarea");
     textarea.value = cleanText;
@@ -636,7 +1298,6 @@ function copyText(text, btnElement = null) {
     textarea.style.opacity = "0";
     document.body.appendChild(textarea);
 
-    // iOS Safari အတွက်
     if (navigator.userAgent.match(/ipad|iphone/i)) {
       const range = document.createRange();
       range.selectNodeContents(textarea);
@@ -671,13 +1332,11 @@ function copyText(text, btnElement = null) {
     console.log("✓ Copied to clipboard");
   }
 
-  // ✅ file:// + browser အားလုံးအတွက် fallback အရင်သုံး
   if (fallbackCopy()) {
     showSuccess();
     return;
   }
 
-  // ✅ Clipboard API ကို နောက်ဆုံးမှ ကြိုးစား
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(cleanText).then(showSuccess).catch(err => {
       console.error("Clipboard API failed:", err);
@@ -749,7 +1408,6 @@ function playSound(type) {
   }
 }
 
-// 🌐 App ထဲရှိ ခလုတ်အားလုံး နှိပ်လိုက်တိုင်း အလိုအလျောက် ကလစ်သံထွက်စေရန်
 document.addEventListener('click', (e) => {
   const targetBtn = e.target.closest('button, .btn, [role="button"]');
   if (targetBtn && !targetBtn.classList.contains('copy') && !targetBtn.classList.contains('secondary')) {
@@ -758,7 +1416,7 @@ document.addEventListener('click', (e) => {
 });
 
 // ==========================================
-// 🛠️ Helper – Robot State Setter
+// 🛠️ Robot State Setter
 // ==========================================
 function setRobotState(btnTarget, robotStatus) {
   const btn = typeof btnTarget === 'string' ? document.getElementById(btnTarget) : btnTarget;
@@ -782,7 +1440,7 @@ function setRobotState(btnTarget, robotStatus) {
 }
 
 // ==========================================
-// 🛠️ JSON Repair Helper
+// 🛠️ JSON Helpers
 // ==========================================
 function repairJsonString(jsonStr) {
   return jsonStr
@@ -795,9 +1453,6 @@ function repairJsonString(jsonStr) {
     .replace(/,\s*([\]}])/g, "$1");
 }
 
-// ==========================================
-// 🛠️ Safe JSON Parse Helper
-// ==========================================
 function safeJsonParse(rawStr) {
   if (!rawStr || typeof rawStr !== "string") throw new Error("Empty or non-string input");
 
@@ -829,7 +1484,7 @@ function safeJsonParse(rawStr) {
 }
 
 // ==========================================
-// 🔌 Gemini API Engine (single, robust version)
+// 🔌 Gemini API Engine (header auth)
 // ==========================================
 async function callGemini(instruction) {
   let key = (document.getElementById("apiKey").value || localStorage.getItem("gemini_api_key") || "")
@@ -838,7 +1493,7 @@ async function callGemini(instruction) {
   if (!key) throw Error("Gemini API key မထည့်ရသေးပါ။");
 
   let model = document.getElementById("model").value;
-  let system = `You are AI Video Prompt Master V4.3. Return strictly valid JSON with no markdown wrapping or conversational text.
+  let system = `You are AI Video Prompt Master V5.0. Return strictly valid JSON with no markdown wrapping or conversational text.
 
 For story_summary:
 write a natural, human-readable Burmese story synopsis/draft.
@@ -847,7 +1502,12 @@ For story_blueprint use keys:
 story_premise, main_characters, supporting_characters, setting_world, main_conflict, story_goal, story_direction, tone_emotion, important_details, continuity_anchors.
 
 For characters return an array of objects with name, role, age, description.
-Character names MUST be strictly in English romanized letters.
+- "name" MUST BE strictly in English romanized letters (e.g. "Niu Tou", "Nay Min").
+- "role" can be in English or Myanmar.
+- "age" can be a number or range.
+- "description" MUST BE IN NATURAL BURMESE (မြန်မာလို).
+- The description MUST include ALL physical appearance details from the story: head shape, face type, horns, animal features, body type, hair, clothing, weapons, distinctive features.
+- If the story says a character has "နွားခေါင်းနဲ့လူ" (bull head with human body), you MUST include this fantasy element in the description. Do NOT translate the name "နွားခေါင်းနဲ့လူ" literally — describe it.
 
 For scenes return an array of objects with:
 scene_number, duration_seconds, character, action, action_my, dialogue, camera, camera_movement, lighting, audio, transition.
@@ -859,7 +1519,6 @@ CRITICAL SCENE RULES:
 4. dialogue MUST be natural Burmese.
 
 Return also: negative_prompt, thumbnail_prompt, thumbnail_text, thumbnail_negative_prompt, photo_prompt.`;
-
   let user = `Selected settings: ${JSON.stringify(typeof settingsObj === "function" ? settingsObj() : {}, null, 2)}
 Story title: ${document.getElementById("title")?.value.trim() || ""}
 Story input: ${document.getElementById("story")?.value.trim() || ""}
@@ -867,13 +1526,19 @@ Current summary: ${document.getElementById("summary")?.value.trim() || ""}
 Current blueprint: ${JSON.stringify(state.blueprint || {}, null, 2)}
 Current characters: ${JSON.stringify(state.characters || [], null, 2)}
 Current groups/crowds: ${JSON.stringify(state.groups || [], null, 2)}
+Current episode structure: ${JSON.stringify(state.episodes || [], null, 2)}
+Current production scripts: ${JSON.stringify(state.productionScripts || [], null, 2)}
+Current scene photo prompts: ${JSON.stringify(state.scenePhotoPrompts || [], null, 2)}
 Current scenes: ${JSON.stringify(state.scenes || [], null, 2)}
 Part: ${state.part || 1}
 Instruction: ${instruction}`;
 
   let r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": key
+    },
     body: JSON.stringify({
       contents: [{ parts: [{ text: system + "\n\n" + user }] }],
       generationConfig: { responseMimeType: "application/json" }
@@ -882,10 +1547,12 @@ Instruction: ${instruction}`;
 
   if (!r.ok) {
     let errText = await r.text();
+
     if (r.status === 429 || errText.includes("RESOURCE_EXHAUSTED")) {
-      const waitMatch = errText.match(/retry in ([\d\.]+)s/);
+      const waitMatch = errText.match(/retry in ([\d\.]+)s/i);
       const waitSec = waitMatch ? Math.ceil(parseFloat(waitMatch[1])) : 40;
-      throw Error(`API အသုံးများလွန်း၍ ခေတ္တပိတ်သွားပါသည်။ စက္ကန့် ${waitSec} ခန့် စောင့်ပြီးမှ ပြန်နှိပ်ပါ။`);
+      startRetryCountdown(waitSec);
+      throw Error(`API အသုံးများလွန်း၍ ခေတ္တပိတ်သွားပါသည်။ စက္ကန့် ${waitSec} ခန့် စောင့်ပါ။`);
     }
     throw Error("Gemini API " + r.status + " — " + errText.slice(0, 300));
   }
@@ -897,9 +1564,7 @@ Instruction: ${instruction}`;
   t = t.replace(/```json/gi, "").replace(/```/g, "").trim();
 
   const jsonMatch = t.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
-  if (jsonMatch) {
-    t = jsonMatch[0];
-  }
+  if (jsonMatch) t = jsonMatch[0];
 
   try {
     return JSON.parse(t);
@@ -913,7 +1578,43 @@ Instruction: ${instruction}`;
 }
 
 // ==========================================
-// 🌐 Global State
+// 🆕 Retry Countdown Badge
+// ==========================================
+let retryTimer = null;
+
+function startRetryCountdown(seconds) {
+  const old = document.getElementById("retryBadge");
+  if (old) old.remove();
+  if (retryTimer) clearInterval(retryTimer);
+
+  const badge = document.createElement("span");
+  badge.id = "retryBadge";
+  badge.className = "retry-badge";
+  badge.textContent = `⏳ ${seconds}s အတွင်း ပြန်ကြိုးစားပါ`;
+
+  const statusEl = document.getElementById("finalStatus") || document.getElementById("apiStatus");
+  if (statusEl) {
+    statusEl.innerHTML = "";
+    statusEl.appendChild(badge);
+  }
+
+  let remaining = seconds;
+  retryTimer = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(retryTimer);
+      retryTimer = null;
+      badge.textContent = "✓ အသင့်ဖြစ်ပါပြီ — ခလုတ်နှိပ်ပါ";
+      badge.style.background = "linear-gradient(90deg, #34d399, #22d3ee)";
+      setTimeout(() => badge.remove(), 3000);
+    } else {
+      badge.textContent = `⏳ ${remaining}s အတွင်း ပြန်ကြိုးစားပါ`;
+    }
+  }, 1000);
+}
+
+// ==========================================
+// 🌐 Global Options
 // ==========================================
 const opts={
 "Character Consistency":[["AI Generated Character","AI ဖြင့် ဖန်တီးထားသော ဇာတ်ကောင်"],["Real Human","လူသားအစစ်ပုံစံ"],["Myanmar Character","မြန်မာဇာတ်ကောင်"],["Chinese Character","တရုတ်ဇာတ်ကောင်"],["Korean Character","ကိုရီးယားဇာတ်ကောင်"],["Japanese Character","ဂျပန်ဇာတ်ကောင်"],["Custom Character","ကိုယ်တိုင်သတ်မှတ်မည့် ဇာတ်ကောင်"]],
@@ -936,18 +1637,18 @@ const opts={
 
 const defaults={
 "Character Consistency":"AI Generated Character",
-"Art Style":"Cinematic Realistic",
-"Genre":"Drama",
+"Art Style":"Chinese Donghua",
+"Genre":"Action",
 "Audio Style":"Character Speaking",
-"Language":"English",
+"Language":"Myanmar",
 "Setting Culture":"Myanmar",
 "Naming Style":"Modern Myanmar",
-"Duration":"1 Minute",
+"Duration":"2 Minutes",
 "Aspect Ratio":"9:16 Vertical",
 "Camera Style":"Cinematic",
 "Camera Movement":"Smooth Cinematic Movement",
 "Lighting":"Dramatic Lighting",
-"Video Quality":"4K",
+"Video Quality":"Full HD",
 "Scene Mode":"Multiple Shots",
 "Target AI Video Model":"Flow",
 "Prompt Output Language":"English"
@@ -984,7 +1685,10 @@ negative:"",
 thumb:"",
 thumbText:"",
 thumbNeg:"",
-history:{}
+history:{},
+episodes:[],
+productionScripts:[],
+scenePhotoPrompts:[]
 };
 
 function esc(v){
@@ -1112,8 +1816,10 @@ let x={};
 Object.keys(opts).forEach(k=>x[k]=val(k));
 return x
 }
-
-/* 👥 Character Group / Crowd Logic */
+  
+// ==========================================
+// 👥 Group / Crowd
+// ==========================================
 window.addGroupInput = function(name="", desc=""){
   state.groups.push({ name: name, description: desc });
   renderGroups();
@@ -1124,7 +1830,7 @@ function renderGroups() {
   if (!gContainer) return;
 
   if (!state.groups || !state.groups.length) {
-    gContainer.innerHTML = '<div class="empty" style="margin-top:8px; font-size:11px; color:var(--muted)">Crowd/Group မရှိသေးပါ။</div>';
+    gContainer.innerHTML = '<div class="empty" style="margin-top:8px; font-size:11px; color:var(--muted)">အုပ်စု/လူအုပ် မရှိသေးပါ။</div>';
     return;
   }
 
@@ -1139,7 +1845,7 @@ function renderGroups() {
           <div class="char-card-title" style="font-size:11px; font-weight:bold; margin: 4px 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
             ${esc(g.name || "Group " + (i+1))}
           </div>
-          <div style="font-size:8px; color:var(--muted);">Tap</div>
+          <div style="font-size:8px; color:var(--muted);">နှိပ်ပါ</div>
         </div>
       `).join("")}
     </div>
@@ -1164,16 +1870,16 @@ function openGroupModal(index) {
 
   modal.innerHTML = `
     <div style="background: #1e1e2d; border: 1px solid rgba(0, 243, 255, 0.3); padding: 16px; border-radius: 8px; width: 300px; color: #fff;">
-      <h3 style="margin-top:0; font-size:14px; color:#c084fc;">👥 Edit Group (#G${index + 1})</h3>
-      <label style="font-size:10px;">Group Name (အမည်):</label>
+      <h3 style="margin-top:0; font-size:14px; color:#c084fc;">👥 အုပ်စု ပြင်ရန် (#G${index + 1})</h3>
+      <label style="font-size:10px;">အုပ်စု အမည်:</label>
       <input type="text" id="modalGroupName" value="${esc(group.name)}" style="width:100%; margin: 4px 0 10px 0; padding:6px; background:#12121a; border:1px solid #333; color:#fff; border-radius:4px; font-size:12px;">
-      <label style="font-size:10px;">Description (အသေးစိတ်):</label>
+      <label style="font-size:10px;">အသေးစိတ်:</label>
       <textarea id="modalGroupDesc" style="width:100%; height:50px; margin: 4px 0 10px 0; padding:6px; background:#12121a; border:1px solid #333; color:#fff; border-radius:4px; font-size:11px;">${esc(group.description || "")}</textarea>
       <div style="display:flex; justify-content:space-between; margin-top:10px;">
-        <button id="btnGroupDelete" type="button" style="background:#ff4d4d; color:#fff; border:none; padding:6px 12px; border-radius:4px; font-size:11px; cursor:pointer;">🗑 Delete</button>
+        <button id="btnGroupDelete" type="button" style="background:#ff4d4d; color:#fff; border:none; padding:6px 12px; border-radius:4px; font-size:11px; cursor:pointer;">🗑 ဖျက်ရန်</button>
         <div>
-          <button id="btnGroupCancel" type="button" style="background:#444; color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; margin-right:5px; cursor:pointer;">Cancel</button>
-          <button id="btnGroupSave" type="button" style="background:#00f3ff; color:#000; font-weight:bold; border:none; padding:6px 12px; border-radius:4px; font-size:11px; cursor:pointer;">Save</button>
+          <button id="btnGroupCancel" type="button" style="background:#444; color:#fff; border:none; padding:6px 10px; border-radius:4px; font-size:11px; margin-right:5px; cursor:pointer;">မလုပ်တော့ပါ</button>
+          <button id="btnGroupSave" type="button" style="background:#00f3ff; color:#000; font-weight:bold; border:none; padding:6px 12px; border-radius:4px; font-size:11px; cursor:pointer;">သိမ်းရန်</button>
         </div>
       </div>
     </div>
@@ -1202,13 +1908,16 @@ function saveGroup(index) {
 }
 
 function deleteGroup(index) {
-  if (confirm("ဒီ Group ကို ဖျက်ရန် သေချာပါသလား?")) {
+  if (confirm("ဒီ အုပ်စုကို ဖျက်ရန် သေချာပါသလား?")) {
     state.groups.splice(index, 1);
     renderGroups();
     closeGroupModal();
   }
 }
 
+// ==========================================
+// 🧑 Character Parser
+// ==========================================
 function localCharacterParser(text){
 let found=[],
 seen=new Set(),
@@ -1248,7 +1957,9 @@ function localGroupParser(text) {
   return groups;
 }
 
-// 🎯 SCENE အလိုက် Photo Prompt + Video Prompt ခွဲခြားပြသပေးသည့် Function
+// ==========================================
+// 🎬 Final Prompts Renderer
+// ==========================================
 function renderFinalPrompts(){
   const el = document.getElementById("finalPrompt");
   if(!el) return;
@@ -1261,40 +1972,61 @@ function renderFinalPrompts(){
 
   el.className = "";
   let title = document.getElementById("title").value.trim() || "Untitled";
-  let cleanNeg = state.negative || "low quality, blurry, distorted face, deformed hands, extra fingers, duplicate characters, identity drift, costume drift, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
 
   let masterHeader = `Create a generator-ready ${stylePhrase()} ${val("Genre")} video for ${val("Target AI Video Model")}. Story title: ${title}. Aspect ratio: ${val("Aspect Ratio")}. Master continuity: Preserve every locked character exactly. Never change face, age, hairstyle, hair color, skin appearance, body shape, costume, armor, accessories, weapons or signature props. Preserve established location, time, relationships and unresolved story events.`;
 
-  let html = ``;
-
-  state.finalScenesData.forEach((item, i) => {
-    let sNum = String(i + 1).padStart(2, "0");
-    html += `
-    <div class="final-scene-card">
-      <div class="final-prompt-title">
-        <span>🎬 SCENE ${sNum} PROMPTS</span>
-        <span class="pill">${item.duration}s</span>
-      </div>
-
-      <label style="color:#00f3ff !important; margin-top:4px; display:block;">🎥 Scene ${sNum} Video Prompt:</label>
-      <div class="out" id="vid_prompt_${i}" style="margin-top:4px;">${esc(item.videoPrompt)}</div>
-      <button class="secondary copy" data-copy-target="vid_prompt_${i}">📋 Copy Scene ${sNum} Video Prompt</button>
-
-      <label style="color:#00ff9d !important; margin-top:12px; display:block;">📸 Scene ${sNum} Photo Prompt:</label>
-      <div class="out" id="photo_prompt_${i}" style="margin-top:4px;">${esc(item.photoPrompt)}</div>
-      <button class="secondary copy" data-copy-target="photo_prompt_${i}">📋 Copy Scene ${sNum} Photo Prompt</button>
+  let html = `
+    <div class="out" style="margin-bottom:12px;border-color:var(--neon-cyan);background:#061028;">
+      <b style="color:var(--neon-cyan)">🎬 MASTER HEADER (အဓိက ခေါင်းစီး)</b>
+      <div style="margin-top:6px;font-size:11px;line-height:1.6">${esc(masterHeader)}</div>
     </div>
-    `;
-  });
+    <button class="secondary copy" data-copy-master="1" style="margin-bottom:12px">📋 Master Header Copy လုပ်ရန်</button>
+  `;
 
+state.finalScenesData.forEach((item, i) => {
+  let sNum = String(i + 1).padStart(2, "0");
+  html += `
+  <div class="final-scene-card">
+    <div class="final-prompt-title">
+      <span>🎬 SCENE ${sNum} VIDEO PROMPT</span>
+      <span class="pill">${item.duration}s</span>
+    </div>
+
+    <label style="color:#00f3ff !important; margin-top:4px; display:block;">🎥 Scene ${sNum} Video Prompt (English):</label>
+    <div class="out" id="vid_prompt_${i}" style="margin-top:4px;">${esc(item.videoPrompt)}</div>
+    <button class="secondary copy" data-copy-target="vid_prompt_${i}">📋 Scene ${sNum} Video Prompt Copy</button>
+  </div>
+  `;
+});
   el.innerHTML = html;
+
+  const masterBtn = el.querySelector('[data-copy-master]');
+  if (masterBtn) {
+    masterBtn.onclick = (ev) => {
+      ev.preventDefault();
+      copyText(masterHeader, masterBtn);
+    };
+  }
+
+  el.querySelectorAll('[data-copy-target]').forEach(btn => {
+    btn.onclick = (ev) => {
+      ev.preventDefault();
+      const targetId = btn.dataset.copyTarget;
+      const src = document.getElementById(targetId);
+      if (src) copyText(src.textContent, btn);
+    };
+  });
 }
+
+// ==========================================
+// 👥 Characters Renderer
+// ==========================================
 function renderChars(){
 const b=document.getElementById("charactersContainer");
 if(!b)return;
 
 if(!state.characters.length){
-b.innerHTML='<div class="empty" style="margin-top:10px">Character မရှိသေးပါ။ Auto Detect သို့မဟုတ် Add Character ကိုနှိပ်ပါ။</div>';
+b.innerHTML='<div class="empty" style="margin-top:10px">ဇာတ်ကောင် မရှိသေးပါ။ Auto Detect သို့မဟုတ် Add Character ကိုနှိပ်ပါ။</div>';
 renderRefs();
 renderGroups();
 return
@@ -1312,7 +2044,7 @@ ${state.characters.map((c,i)=>
 <div class="char-card-title">${esc(c.name||"Char "+(i+1))}</div>
 <div class="char-card-sub">${esc(c.role||"Role")}</div>
 </div>
-<div style="font-size:8px;color:var(--muted)">Tap</div>
+<div style="font-size:8px;color:var(--muted)">နှိပ်ပါ</div>
 </div>`
 ).join("")}
 </div>`;
@@ -1332,9 +2064,9 @@ let bodyHtml=`
 <div class="field" style="margin-top:8px"><label>Role <span>အခန်းကဏ္ဍ</span></label><input id="m_role" value="${esc(c.role)}"></div>
 <div class="field" style="margin-top:8px"><label>Age <span>အသက်</span></label><input id="m_age" value="${esc(c.age)}"></div>
 <div class="field" style="margin-top:8px"><label>Description <span>ဇာတ်ကောင်ဖော်ပြချက် (English Recommended)</span></label><textarea id="m_desc" style="min-height:90px">${esc(c.description)}</textarea></div>
-<div class="lock"><input type="checkbox" id="m_lock" ${c.locked?"checked":""}> 🔒 Lock Character <span class="sub">(ဇာတ်ကောင်တည်ငြိမ်မှု)</span></div>`;
+<div class="lock"><input type="checkbox" id="m_lock" ${c.locked?"checked":""}> 🔒 ဇာတ်ကောင် လော့ခ်ချရန်</div>`;
 
-openModal(`Character #${i+1}: ${esc(c.name||"Unnamed")}`, bodyHtml, `<button class="danger" id="m_del" style="margin-right:auto;">🗑 Delete</button><button class="primary" id="m_save" style="width:auto;padding:9px 18px;">💾 Save</button>`);
+openModal(`ဇာတ်ကောင် #${i+1}: ${esc(c.name||"Unnamed")}`, bodyHtml, `<button class="danger" id="m_del" style="margin-right:auto;">🗑 ဖျက်ရန်</button><button class="primary" id="m_save" style="width:auto;padding:9px 18px;">💾 သိမ်းရန်</button>`);
 
 document.getElementById("m_save").onclick=()=>{
 state.characters[i].name=document.getElementById("m_name").value.replace(/[^\x00-\x7F]/g,"").trim()||"Character";
@@ -1349,7 +2081,7 @@ renderFinalPrompts();
 };
 
 document.getElementById("m_del").onclick=()=>{
-if(confirm("ဒီဇာတ်ကောင်ကို ဖျက်မှာ သေချာပါသလား?")){
+if(confirm("ဒီ ဇာတ်ကောင်ကို ဖျက်မှာ သေချာပါသလား?")){
 state.characters.splice(i,1);
 closeModal();
 renderChars();
@@ -1373,49 +2105,70 @@ return({
 })[s]||s
 }
 
-function refPrompt(c){
-const englishOnly=v=>String(v||"").replace(/[^\x00-\x7F]/g," ").replace(/\s+/g," ").trim();
-const name=englishOnly(c.name)||"Main Character";
-const age=englishOnly(c.age)||"age appropriate";
-const role=englishOnly(c.role)||"story character";
-const description=englishOnly(c.description)||"distinctive, recognizable appearance";
-const genre=englishOnly(val("Genre"))||"Drama";
-const culture=englishOnly(val("Setting Culture"))||"Modern World";
-const style=englishOnly(stylePhrase())||"cinematic realistic live-action";
+// ==========================================
+// 🖼️ Character Reference Prompt
+// ==========================================
 
-return `Full character design sheet, ${age} ${name}, ${role}, ${description}, ${style} character art, ${genre} genre, ${culture} cultural setting. Maintain a highly detailed, consistent, recognizable character identity and realistic proportions appropriate to the selected art style. Include full-body front view, left 3/4 view, right 3/4 view, left side profile, right side profile, full-body back view, close-up face shots, costume and accessory detail insets, and important item/prop detail insets. Show all views as ONE professional production-ready character reference/model sheet with clearly separated views. Keep the EXACT SAME character in every view: identical face structure, eyes, eyebrows, nose, lips, jawline, skin appearance, age, hairstyle, hairline, hair color, body proportions, physique, clothing, costume colors, accessories, footwear, weapons and signature props. Preserve the same appearance across every angle without redesigning or reinterpreting the character. Consistent lighting, clean neutral background, clear silhouette, highly detailed textures, professional character design presentation. IDENTITY LOCK: exact character identity must remain unchanged across all views and future scenes, no identity drift, no age drift, no facial-feature changes, no hairstyle drift, no costume drift, no accessory drift, no body-proportion drift, no random variations. NO WATERMARK, NO LOGO, NO BRANDING, NO SIGNATURE, NO COPYRIGHT TEXT, NO EXTRA TEXT, NO RANDOM LETTERS, NO LABELS, NO CAPTIONS, NO TYPOGRAPHY anywhere in the image. --ar 1:1 --style raw;`
+async function refPrompt(c){
+  const name = (c.name || "Main Character").replace(/[^\x00-\x7F]/g, "").trim() || "Main Character";
+  const age = (c.age || "age appropriate").toString().trim();
+  const role = (c.role || "story character").toString().trim();
+
+  // Description: Myanmar → English translate
+  let description = (c.description || "").trim();
+  if (description && hasBurmeseText(description)) {
+    const translated = await translateToEnglish(description);
+    if (translated && !hasBurmeseText(translated)) {
+      description = translated;
+    }
+  }
+  description = description || "distinctive, recognizable appearance";
+
+  const genre = (val("Genre") || "Drama").replace(/[^\x00-\x7F]/g, "").trim() || "Drama";
+  const culture = (val("Setting Culture") || "Modern World").replace(/[^\x00-\x7F]/g, "").trim() || "Modern World";
+  const style = stylePhrase() || "cinematic realistic live-action";
+
+  return `Full character design sheet, ${age} ${name}, ${role}, ${description}, ${style} character art, ${genre} genre, ${culture} cultural setting. Maintain a highly detailed, consistent, recognizable character identity. Include full-body front view, left 3/4 view, right 3/4 view, side profiles, back view, close-up face shots, costume and accessory detail insets. Keep the EXACT SAME character in every view: identical face, eyes, nose, lips, jawline, skin, age, hairstyle, hair color, body proportions, physique, clothing, costume colors, accessories, footwear, weapons and signature props. IDENTITY LOCK: no identity drift, no age drift, no costume drift. NO WATERMARK, NO LOGO, NO TEXT anywhere. --ar 1:1 --style raw;`;
 }
-
-function renderRefs(){
+ 
+async function renderRefs(){
   const b = document.getElementById("refs");
   if(!b) return;
   if(!state.characters.length){
-    b.innerHTML = '<span class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။';
+    b.innerHTML = '<span class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။</span>';
     return;
   }
 
-  b.innerHTML = state.characters.map((c,i) =>
+  b.innerHTML = '<div class="empty">⏳ Reference Prompt များ ဖန်တီးနေပါသည်...</div>';
+
+  const prompts = [];
+  for (let i = 0; i < state.characters.length; i++) {
+    const c = state.characters[i];
+    const p = await refPrompt(c);
+    prompts.push({ c, p, i });
+  }
+
+  b.innerHTML = prompts.map(({c, p, i}) =>
     `<div class="item">
       <b>${esc(c.name||"Character "+(i+1))}</b>
-      <textarea id="ref_${i}" readonly style="margin-top:7px;min-height:300px">${esc(refPrompt(c))}</textarea>
+      <textarea id="ref_${i}" readonly style="margin-top:7px;min-height:300px">${esc(p)}</textarea>
       <button class="secondary copy" data-copyref="${i}">📋 Copy Prompt</button>
     </div>`
   ).join("");
 
-  // ✅ onmousedown/onclick နှစ်မျိုးလုံး bind
   b.querySelectorAll("[data-copyref]").forEach(btn => {
     btn.onclick = (ev) => {
       ev.preventDefault();
       ev.stopPropagation();
       const idx = btn.dataset.copyref;
       const refEl = document.getElementById("ref_" + idx);
-      if (refEl) {
-        copyText(refEl.value, btn);
-      }
+      if (refEl) copyText(refEl.value, btn);
     };
   });
 }
-
+// ==========================================
+// 🧩 Blueprint
+// ==========================================
 function fallbackBlueprint(summary){
 return{
 story_premise:summary,
@@ -1464,6 +2217,9 @@ openModal(item[0]+" ("+item[1]+")", `<div style="font-size:13px;line-height:1.6;
 })
 }
 
+// ==========================================
+// ⏱️ Duration Helpers
+// ==========================================
 function plan(total){
 let remain=total,out=[],i=0;
 while(remain>0){
@@ -1483,31 +2239,38 @@ return out
 function estDuration(action, dialogue) {
   let actLen = (action || "").replace(/\s+/g, "").length;
   let diaLen = (dialogue || "").replace(/\s+/g, "").length;
-  let sec = Math.round((diaLen / 10) + (actLen / 20));
+  let sec = Math.round((diaLen / 12) + (actLen / 25));
   return Math.max(sec, 2);
 }
 
+// ==========================================
+// 🎬 Scenes Renderer (with Duration Bar)
+// ==========================================
 function renderScenes(){
 const b=document.getElementById("scenes");
 if(!b)return;
 
 if(!state.scenes.length){
-b.innerHTML='<span class="empty">Generate Scenes ပြီးနောက် Action နှင့် Dialogue တွေ ပေါ်လာပါမယ်။';
+b.innerHTML='<span class="empty">ဇာတ်ဝင်ခန်း ဖန်တီးပြီးနောက် Action နှင့် Dialogue တွေ ပေါ်လာပါမယ်။</span>';
 return;
 }
 
 b.innerHTML=state.scenes.map((s,i)=>{
 let est = estDuration(s.action_my || s.action, s.dialogue);
-let warnStyle = est > 10 ? "background:#fb7185;color:#fff;" : "";
-let warnText = est > 10 ? " ⚠️ (10s ထက် ကျော်နေပါသည်)" : "";
+let pct = Math.min(100, Math.round((est / 10) * 100));
+let barClass = est > 10 ? "danger" : (est > 7 ? "warn" : "");
+let warnText = est > 10 ? " ⚠️ 10s ကျော်နေသည်" : "";
 
 return `<div class="item">
 <div class="itemhead">
   <b>SCENE ${String(i+1).padStart(2,"0")}</b>
   <div>
-    <span class="pill" id="est_${i}" style="${warnStyle}">⏱️ ခန့်မှန်း: ~${est}s${warnText}</span>
+    <span class="pill" id="est_${i}">⏱️ ~${est}s${warnText}</span>
     <span class="pill">${s.duration}s Max</span>
   </div>
+</div>
+<div class="duration-bar-wrap">
+  <div class="duration-bar ${barClass}" id="bar_${i}" style="width:${pct}%"></div>
 </div>
 <div class="field" style="margin-top:8px">
 <label>Action <span>ဇာတ်ဝင်ခန်း လှုပ်ရှားမှု</span></label>
@@ -1517,7 +2280,7 @@ return `<div class="item">
 <label>Dialogue <span>စကားပြောစာသား</span></label>
 <textarea data-si="${i}" data-sk="dialogue" style="min-height:85px">${esc(s.dialogue||"")}</textarea>
 </div>
-<button class="danger copy" data-delete-scene="${i}" style="margin-top:8px">🗑️ Delete Scene ${String(i+1).padStart(2,"0")}</button>
+<button class="danger copy" data-delete-scene="${i}" style="margin-top:8px">🗑️ Scene ${String(i+1).padStart(2,"0")} ဖျက်ရန်</button>
 </div>`
 }).join("");
 
@@ -1530,15 +2293,20 @@ state.scenes[i][key]=e.value;
 state.finalScenesData=[];
 
 let est = estDuration(state.scenes[i].action_my || state.scenes[i].action, state.scenes[i].dialogue);
+let pct = Math.min(100, Math.round((est / 10) * 100));
+let barClass = est > 10 ? "danger" : (est > 7 ? "warn" : "");
+
 let estEl = document.getElementById("est_" + i);
 if(estEl){
-  if(est > 10){
-    estEl.style.cssText = "background:#fb7185;color:#fff;";
-    estEl.textContent = `⏱️ ခန့်မှန်း: ~${est}s ⚠️ (10s ထက် ကျော်နေပါသည်)`;
-  } else {
-    estEl.style.cssText = "";
-    estEl.textContent = `⏱️ ခန့်မှန်း: ~${est}s`;
-  }
+  estEl.textContent = est > 10
+    ? `⏱️ ~${est}s ⚠️ 10s ကျော်နေသည်`
+    : `⏱️ ~${est}s`;
+}
+
+let barEl = document.getElementById("bar_" + i);
+if(barEl){
+  barEl.style.width = pct + "%";
+  barEl.className = "duration-bar " + barClass;
 }
 }
 }
@@ -1556,25 +2324,27 @@ renderFinalPrompts();
 })
 }
 
+// ==========================================
+// 🌐 Translation Helpers
+// ==========================================
 function hasBurmeseText(text) {
   return /[\u1000-\u109F]/.test(text);
 }
-
 async function translateToEnglish(text) {
   if (!text || !text.trim()) return "";
   if (!hasBurmeseText(text)) return text;
 
   const apiKey = (document.getElementById("apiKey")?.value || localStorage.getItem("gemini_api_key") || "").trim();
-  if (!apiKey) {
-    console.warn("⚠️ API Key မရှိပါ – အင်္ဂလိပ်အရန်စာသားသုံးမည်");
-    return "Character performs actions in the scene";
-  }
+  if (!apiKey) return text; // ← Fallback ဖျက် — မူရင်းစာ ပြန်
 
   try {
     const model = document.getElementById("model").value;
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey
+      },
       body: JSON.stringify({
         contents: [{
           parts: [{
@@ -1586,40 +2356,121 @@ async function translateToEnglish(text) {
 
     const data = await response.json();
     if (data.error) {
-      console.warn("❌ API Error:", data.error.message);
-      return "Character moves and interacts in the environment";
+      console.warn("translateToEnglish API error:", data.error.message);
+      return text; // ← မူရင်းစာ ပြန်
     }
     if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
       const result = data.candidates[0].content.parts[0].text.trim();
-      if (hasBurmeseText(result)) {
-        console.warn("⚠️ ဘာသာပြန်မအောင်မြင် – မြန်မာပါနေဆဲ");
-        return "Character acts within the scene";
-      }
+      if (hasBurmeseText(result)) return text; // ← မူရင်းစာ ပြန်
       return result;
     }
-    return "Character performs actions in the scene";
+    return text; // ← မူရင်းစာ ပြန်
   } catch (error) {
-    console.warn("❌ ဘာသာပြန် ချိတ်ဆက်မှုအမှား:", error);
-    return "Character performs actions in the scene";
+    console.warn("translateToEnglish error:", error);
+    return text; // ← မူရင်းစာ ပြန်
   }
 }
+async function batchTranslateSceneFields(script) {
+  // Collect all Myanmar fields
+  const fields = {
+    scene: script.scene || "",
+    location: script.location || "",
+    action: script.action || "",
+    emotion: script.emotion || "",
+    dialogue: script.dialogue || "",
+    camera: script.camera || "",
+    lighting: script.lighting || "",
+    sfx: script.sfx || "",
+    atmosphere: script.atmosphere || ""
+  };
 
+  // Find which fields have Myanmar text
+  const needsTranslation = {};
+  Object.entries(fields).forEach(([k, v]) => {
+    if (v && hasBurmeseText(v)) {
+      needsTranslation[k] = v;
+    }
+  });
+
+  // If nothing to translate, return as-is
+  if (Object.keys(needsTranslation).length === 0) {
+    return fields;
+  }
+
+  const apiKey = (document.getElementById("apiKey")?.value || localStorage.getItem("gemini_api_key") || "").trim();
+  if (!apiKey) return fields; // No API — return original
+
+  try {
+    const model = document.getElementById("model").value;
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `Translate each of the following fields from Myanmar to clear, natural English suitable for AI video generation prompts.
+
+Return ONLY a valid JSON object with the SAME keys, containing the English translations.
+Do NOT change any key names. Do NOT add any extra text.
+
+INPUT:
+${JSON.stringify(needsTranslation, null, 2)}`
+          }]
+        }],
+        generationConfig: { responseMimeType: "application/json" }
+      })
+    });
+
+    if (!res.ok) {
+      console.warn("batchTranslateSceneFields: API", res.status);
+      return fields; // Fail → return original
+    }
+
+    const data = await res.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    if (!text) return fields;
+
+    let parsed;
+    try {
+      parsed = JSON.parse(text.replace(/```json/gi, "").replace(/```/g, "").trim());
+    } catch (e) {
+      console.warn("batchTranslateSceneFields: JSON parse failed");
+      return fields;
+    }
+
+    // Merge translated fields back
+    Object.keys(needsTranslation).forEach(k => {
+      if (parsed[k] && typeof parsed[k] === "string" && !hasBurmeseText(parsed[k])) {
+        fields[k] = parsed[k];
+      }
+    });
+
+    return fields;
+  } catch (e) {
+    console.warn("batchTranslateSceneFields error:", e);
+    return fields;
+  }
+}
+  
 async function translateToTargetLanguage(text, targetLangName) {
   if (!text || !text.trim()) return "";
 
   const apiKey = (document.getElementById("apiKey")?.value || localStorage.getItem("gemini_api_key") || "").trim();
-  if (!apiKey) {
-    console.warn("⚠️ API Key မရှိပါ – မူလစာသားပဲ ပြန်ပေးမယ်");
-    return text;
-  }
+  if (!apiKey) return text;
 
   try {
     const model = document.getElementById("model").value;
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey
+      },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: `Translate ONLY the dialogue text into natural, accurate ${targetLangName}. Keep the exact same meaning. Output ONLY the translated text, nothing else. NO Myanmar words allowed at all. Text: ${text}` }] }]
+        contents: [{ parts: [{ text: `Translate ONLY the dialogue text into natural, accurate ${targetLangName}. Output ONLY the translated text, nothing else. Text: ${text}` }] }]
       })
     });
 
@@ -1627,14 +2478,9 @@ async function translateToTargetLanguage(text, targetLangName) {
     const data = await res.json();
     const result = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
-    if (!result || hasBurmeseText(result)) {
-      console.warn(`⚠️ ${targetLangName} ဘာသာပြန်မအောင်မြင် – မြန်မာစာပါနေ/ဗလီဖြစ်နေ`);
-      return `[${targetLangName}]`;
-    }
+    if (!result || hasBurmeseText(result)) return `[${targetLangName}]`;
     return result;
-
   } catch (err) {
-    console.error("❌ အမှား:", err);
     return `[${targetLangName}]`;
   }
 }
@@ -1653,82 +2499,787 @@ function syncSceneEdits() {
   state.finalScenesData = [];
 }
 
-async function buildScenePromptObject(s, i) {
-  const chars = (s.characters || []).join(", ") || "Main character";
-  const charVisualSpecs = typeof getSelectedCharacterVisualSpecs === "function"
-    ? getSelectedCharacterVisualSpecs(s.characters)
-    : "";
-
-  const rawMyanmarAction = s.action_my?.trim() || "";
-  let englishAction = "";
-
-  if (rawMyanmarAction) {
-    englishAction = await translateToEnglish(rawMyanmarAction);
-  } else {
-    englishAction = s.action?.trim() || "";
+// ==========================================
+// 📺 Episode Structure
+// ==========================================
+function renderEpisodeStructure(){
+  const el=document.getElementById("episodeStructure");
+  if(!el)return;
+  if(!state.episodes?.length){
+    el.innerHTML='<div class="empty">Episode Structure မရှိသေးပါ။ Generate ကိုနှိပ်ပါ။</div>';
+    return;
   }
+  el.innerHTML=state.episodes.map((ep,i)=>`
+    <div class="workflow-card">
+      <h3>📺 အပိုင်း ${String(i+1).padStart(2,"0")} — ${esc(ep.title||"Untitled")}</h3>
+      <div class="script-grid">
+        ${workflowInput(i,"episode","Story Purpose","ဇာတ်လမ်းရည်ရွယ်ချက်","story_purpose",ep.story_purpose)}
+        ${workflowInput(i,"episode","Main Conflict","အဓိကပြဿနာ","main_conflict",ep.main_conflict)}
+        ${workflowInput(i,"episode","Key Events","အဓိကဖြစ်ရပ်များ","key_events",ep.key_events)}
+        ${workflowInput(i,"episode","Turning Point","အလှည့်အပြောင်း","turning_point",ep.turning_point)}
+      </div>
+      <div class="script-field full" style="margin-top:7px">
+        ${workflowInput(i,"episode","Ending / Hook","အဆုံးသတ် / Hook","ending_hook",ep.ending_hook)}
+      </div>
+      <button class="danger copy" data-delete-episode="${i}" style="margin-top:8px">🗑️ အပိုင်း ${String(i+1).padStart(2,"0")} ဖျက်ရန်</button>
+    </div>`).join("");
 
-  if (hasBurmeseText(englishAction) || !englishAction) {
-    englishAction = "Character moves and acts in the scene";
+  // 🆕 + Add Episode button
+  el.innerHTML += `
+    <button class="primary" id="addEpisodeBtn" style="margin-top:10px">
+      ➕ အပိုင်း အသစ် ထည့်ရန်
+    </button>
+  `;
+
+  bindWorkflowInputs();
+
+  // Bind delete episode
+  el.querySelectorAll("[data-delete-episode]").forEach(btn=>{
+    btn.onclick = ()=>{
+      const i = +btn.dataset.deleteEpisode;
+      if(!confirm(`အပိုင်း ${String(i+1).padStart(2,"0")} ကို ဖျက်မှာ သေချာပါသလား?`)) return;
+      state.episodes.splice(i, 1);
+      renderEpisodeStructure();
+    };
+  });
+
+  // Bind add episode
+  const addBtn = document.getElementById("addEpisodeBtn");
+  if(addBtn){
+    addBtn.onclick = ()=>{
+      state.episodes.push({
+        episode_number: state.episodes.length + 1,
+        title: `အပိုင်း ${state.episodes.length + 1}`,
+        story_purpose: "",
+        main_conflict: "",
+        key_events: "",
+        turning_point: "",
+        ending_hook: ""
+      });
+      renderEpisodeStructure();
+    };
   }
+}
+async function translateToMyanmar(text) {
+  if (!text || !text.trim()) return "";
+  if (hasBurmeseText(text)) return text;
 
-  const selectedLang = typeof val === "function" ? val("Language") : "Myanmar";
-  let dialogueText = "";
+  const apiKey = (document.getElementById("apiKey")?.value || localStorage.getItem("gemini_api_key") || "").trim();
+  if (!apiKey) return text;
 
-  if (s.dialogue && s.dialogue.trim()) {
-    switch(selectedLang) {
-      case "Myanmar":
-      default:
-        dialogueText = `, character says speaking in Myanmar language: "${s.dialogue.trim()}"`;
-        break;
+  try {
+    const model = document.getElementById("model").value;
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `Translate the following text into natural, fluent Burmese (မြန်မာလို). Keep the meaning exact. Output ONLY the Burmese translation, nothing else. NO English words allowed.\n\nText: ${text}`
+          }]
+        }]
+      })
+    });
 
-      case "English":
-        const enDlg = await translateToTargetLanguage(s.dialogue.trim(), "English");
-        dialogueText = `, character says: "${enDlg}"`;
-        break;
+    if (!res.ok) throw new Error(`API Error: ${res.status}`);
+    const data = await res.json();
+    const result = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
-      case "Chinese":
-        const zhDlg = await translateToTargetLanguage(s.dialogue.trim(), "Chinese");
-        dialogueText = `, character says speaking in Chinese: "${zhDlg}"`;
-        break;
+    if (!result) return text;
+    // If result still has English (no Myanmar), keep original
+    if (!hasBurmeseText(result)) return text;
+    return result;
+  } catch (err) {
+    console.warn("translateToMyanmar error:", err);
+    return text;
+  }
+}
+async function autoTranslateEpisodeAll(){
+  if(!state.episodes?.length) return;
 
-      case "Korean":
-        const koDlg = await translateToTargetLanguage(s.dialogue.trim(), "Korean");
-        dialogueText = `, character says speaking in Korean: "${koDlg}"`;
-        break;
+  for(let i=0;i<state.episodes.length;i++){
+    const ep = state.episodes[i];
+    const fields = ["title","story_purpose","main_conflict","key_events","turning_point","ending_hook"];
+    for(const key of fields){
+      const v = ep[key]?.trim() || "";
+      if(!v) continue;
+      if(hasBurmeseText(v)) continue; // မြန်မာဖြစ်ပြီးသား
+      if(!/[a-zA-Z]/.test(v)) continue;
 
-      case "Japanese":
-        const jaDlg = await translateToTargetLanguage(s.dialogue.trim(), "Japanese");
-        dialogueText = `, character says speaking in Japanese: "${jaDlg}"`;
-        break;
-
-      case "Thai":
-        const thDlg = await translateToTargetLanguage(s.dialogue.trim(), "Thai");
-        dialogueText = `, character says speaking in Thai: "${thDlg}"`;
-        break;
-
-      case "Vietnamese":
-        const viDlg = await translateToTargetLanguage(s.dialogue.trim(), "Vietnamese");
-        dialogueText = `, character says speaking in Vietnamese: "${viDlg}"`;
-        break;
-
-      case "No Dialogue":
-        dialogueText = "";
-        break;
+      // English → Myanmar
+      const my = await translateToMyanmar(v);
+      if(my) ep[key] = my;
     }
   }
+}
+async function autoFillEmptyEpisodeFields(){
+  if(!state.episodes?.length) return;
 
-  let videoPrompt = `High quality video sequence, ${chars}, ${charVisualSpecs ? charVisualSpecs + ", " : ""}${englishAction}${dialogueText}, ${typeof stylePhrase === "function" ? stylePhrase() : ""} style, ${typeof val === "function" ? val("Genre") : ""} genre, ${typeof val === "function" ? val("Setting Culture") : ""} culture, ${s.lighting || (typeof val === "function" ? val("Lighting") : "")}, ${s.camera || (typeof val === "function" ? val("Camera Style") : "")}, ${typeof val === "function" ? val("Video Quality") : ""}, 8k resolution, cinematic lighting, 60fps.`;
+  // Empty fields တွေ ရှိလား စစ်
+  const fields = ["story_purpose","main_conflict","key_events","turning_point","ending_hook"];
+  let hasEmpty = false;
+  for(const ep of state.episodes){
+    for(const key of fields){
+      if(!ep[key] || !ep[key].trim()){ hasEmpty = true; break; }
+    }
+    if(hasEmpty) break;
+  }
+  if(!hasEmpty) return;
 
-  let photoPrompt = `Full cinematic keyframe image, ${chars}, ${charVisualSpecs ? charVisualSpecs + ", " : ""}${englishAction}, ${typeof stylePhrase === "function" ? stylePhrase() : ""} art style, ${typeof val === "function" ? val("Genre") : ""} genre, ${typeof val === "function" ? val("Setting Culture") : ""} setting, ${s.lighting || (typeof val === "function" ? val("Lighting") : "")} lighting, ${s.camera || (typeof val === "function" ? val("Camera Style") : "")} shot, ${typeof val === "function" ? val("Video Quality") : ""}, highly detailed facial features, character consistency locked, 8k resolution, production stills. --ar ${(typeof val === "function" && val("Aspect Ratio") && val("Aspect Ratio").includes("16:9")) ? "16:9" : "9:16"}`;
+  try{
+    const d = await callGemini(`Fill in the EMPTY fields only. Do NOT change any field that already has content.
 
-  return {
-    videoPrompt,
-    photoPrompt,
-    duration: s.duration || 5
+CURRENT EPISODES:
+${JSON.stringify(state.episodes, null, 2)}
+
+CRITICAL RULES:
+- ALL text MUST BE IN NATURAL BURMESE.
+- Fill "turning_point" and "ending_hook" if they are empty.
+- Fill other empty fields too.
+- Keep all existing non-empty fields EXACTLY as they are.
+- Be consistent with the story.
+
+Return ONLY JSON:
+{"episodes":[{"episode_number":1,"title":"","story_purpose":"","main_conflict":"","key_events":"","turning_point":"","ending_hook":""}]}`);
+
+    if(Array.isArray(d.episodes)){
+      d.episodes.forEach((newEp, i)=>{
+        if(!state.episodes[i]) return;
+        const fields = ["title","story_purpose","main_conflict","key_events","turning_point","ending_hook"];
+        fields.forEach(key=>{
+          const cur = state.episodes[i][key]?.trim() || "";
+          const nv = String(newEp[key]||"").trim();
+          // Only fill if current is empty
+          if(!cur && nv){
+            state.episodes[i][key] = nv;
+          }
+        });
+      });
+    }
+  }catch(e){
+    console.warn("Auto-fill empty episode fields failed:", e);
+  }
+}
+async function generateEpisodeStructure(){
+  const summary=document.getElementById("summary")?.value.trim()||"";
+  const story=document.getElementById("story")?.value.trim()||"";
+  const blueprint=state.blueprint||{};
+  if(!summary&&!story)return alert("Story Summary / Story Input အရင်ထည့်ပါ။");
+  const status=document.getElementById("episodeStatus");
+  if(status)status.textContent="⏳ Episode Structure ဖန်တီးနေပါတယ်...";
+  try{
+    const d=await callGemini(`Create a practical Episode Structure for the current story. Use the current summary and blueprint as the source.
+
+CRITICAL RULES:
+- ALL text fields MUST BE IN NATURAL BURMESE (မြန်မာလို).
+- "title" = Episode အမည် (မြန်မာလို).
+- "story_purpose" = ဇာတ်လမ်းရည်ရွယ်ချက် (မြန်မာလို).
+- "main_conflict" = အဓိကပြဿနာ (မြန်မာလို).
+- "key_events" = အဓိကဖြစ်ရပ်များ (မြန်မာလို).
+- "turning_point" = အလှည့်အပြောင်း (မြန်မာလို).
+- "ending_hook" = အဆုံးသတ် / Hook (မြန်မာလို).
+- NO English words allowed in any field.
+- If this is one short standalone video, create one episode.
+- Do not invent unrelated story events.
+
+Return ONLY JSON:
+{"episodes":[{"episode_number":1,"title":"","story_purpose":"","main_conflict":"","key_events":"","turning_point":"","ending_hook":""}]}`);
+
+    state.episodes=Array.isArray(d.episodes)?d.episodes.map((e,i)=>({
+      episode_number:i+1,
+      title:String(e.title||`အပိုင်း ${i+1}`),
+      story_purpose:String(e.story_purpose||""),
+      main_conflict:String(e.main_conflict||""),
+      key_events:String(e.key_events||""),
+      turning_point:String(e.turning_point||""),
+      ending_hook:String(e.ending_hook||"")
+    })):[];
+
+    if(!state.episodes.length)throw Error("Episode Structure မရပါ။");
+
+    // 🆕 Auto-translate any English that slipped through + auto-fill empty fields
+    if(status)status.textContent="⏳ မြန်မာလို ပြန်ဘာသာပြန်နေပါတယ်...";
+    await autoTranslateEpisodeAll();
+    if(status)status.textContent="⏳ Empty field များ ဖြည့်နေပါတယ်...";
+    await autoFillEmptyEpisodeFields();
+
+  }catch(e){
+    state.episodes=[{
+      episode_number:1,
+      title:document.getElementById("title")?.value.trim()||"အပိုင်း ၁",
+      story_purpose:summary||story,
+      main_conflict:blueprint.main_conflict||"",
+      key_events:blueprint.story_direction||"",
+      turning_point:"",
+      ending_hook:""
+    }];
+    if(status)status.textContent="⚠️ AI Episode Structure မရသဖြင့် fallback သုံးထားပါသည်။";
+  }
+  renderEpisodeStructure();
+  if(status && !status.textContent.startsWith("⚠️"))status.textContent="✓ Episode Structure အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ။ ပြင်လိုပါက textarea တွင် တိုက်ရိုက်ပြင်နိုင်ပါသည်။";
+}
+// ==========================================
+// 📝 Script Structure — 10 Fields (မြန်မာ)
+// ==========================================
+function workflowInput(i,type,en,mm,key,value){
+  return `<div class="script-field">
+    <label>${mm} <span class="sub">(${en})</span></label>
+    <textarea data-wf-type="${type}" data-wf-index="${i}" data-wf-key="${key}">${esc(value||"")}</textarea>
+  </div>`;
+}
+
+function bindWorkflowInputs(){
+  document.querySelectorAll("[data-wf-type]").forEach(el=>{
+    el.oninput=()=>{
+      const i=+el.dataset.wfIndex,key=el.dataset.wfKey,type=el.dataset.wfType;
+      if(type==="episode" && state.episodes[i]) state.episodes[i][key]=el.value;
+      if(type==="script" && state.productionScripts[i]) state.productionScripts[i][key]=el.value;
+      if(type==="photo" && state.scenePhotoPrompts[i]) state.scenePhotoPrompts[i][key]=el.value;
+      state.finalScenesData=[];
+    };
+
+    // 🆕 onblur — English ပါလာရင် auto translate မြန်မာလို
+    el.onblur = async ()=>{
+      const i=+el.dataset.wfIndex,key=el.dataset.wfKey,type=el.dataset.wfType;
+      const val = el.value.trim();
+      if(!val) return;
+      // English text (no Myanmar) + contains Latin letters
+      if(hasBurmeseText(val)) return;
+      if(!/[a-zA-Z]/.test(val)) return;
+
+      // Translate to Myanmar
+      const my = await translateToMyanmar(val);
+      if(my && my !== val){
+        el.value = my;
+        if(type==="episode" && state.episodes[i]) state.episodes[i][key]=my;
+        if(type==="script" && state.productionScripts[i]) state.productionScripts[i][key]=my;
+        if(type==="photo" && state.scenePhotoPrompts[i]) state.scenePhotoPrompts[i][key]=my;
+      }
+    };
+  });
+}
+function renderScriptStructure(){
+  const el=document.getElementById("scriptStructure");
+  if(!el)return;
+  if(!state.productionScripts?.length){
+    el.innerHTML='<div class="empty">Script Structure မရှိသေးပါ။ Generate Script Structure ကိုနှိပ်ပါ။</div>';
+    return;
+  }
+  el.innerHTML=state.productionScripts.map((s,i)=>`
+    <div class="workflow-card">
+      <h3>🎬 SCENE ${String(i+1).padStart(2,"0")} <span class="pill">${s.duration||state.scenes[i]?.duration||5}s</span></h3>
+      <div class="script-grid">
+        ${workflowInput(i,"script","🎬 Scene","🎬 ဇာတ်ဝင်ခန်း","scene",s.scene)}
+        ${workflowInput(i,"script","📍 Location / Environment","📍 နေရာ / ပတ်ဝန်းကျင်","location",s.location)}
+        ${workflowInput(i,"script","👤 Participants","👤 ပါဝင်သူများ","participants",s.participants)}
+        ${workflowInput(i,"script","🎭 Action","🎭 လုပ်ဆောင်ချက်","action",s.action)}
+        ${workflowInput(i,"script","😮 Emotion","😮 မျက်နှာအမူအရာ","emotion",s.emotion)}
+        ${workflowInput(i,"script","📝 Dialogue","📝 စကားပြော","dialogue",s.dialogue)}
+        ${workflowInput(i,"script","📷 Camera","📷 ကင်မရာ","camera",s.camera)}
+        ${workflowInput(i,"script","💡 Lighting","💡 အလင်းအရောင်","lighting",s.lighting)}
+        ${workflowInput(i,"script","🔊 SFX","🔊 အသံအကျိုးသက်ရောက်မှု","sfx",s.sfx)}
+        ${workflowInput(i,"script","🌫️ Atmosphere","🌫️ အငွေ့အသက်","atmosphere",s.atmosphere)}
+      </div>
+      <div class="script-field full" style="margin-top:7px">
+        ${workflowInput(i,"script","⏱️ Duration","⏱️ ကြာချိန်","duration",s.duration)}
+      </div>
+    </div>`).join("");
+  bindWorkflowInputs();
+}
+
+async function generateProductionScript(){
+  if(!state.scenes?.length)return alert("Scene Generation ကို အရင်လုပ်ပါ။");
+  syncSceneEdits();
+  const status=document.getElementById("scriptStatus");
+  if(status)status.textContent="⏳ Scene များအတွက် Script Structure (၁၀ ချက်) ဖန်တီးနေပါတယ်...";
+  try{
+    const d=await callGemini(`Create a production script for EVERY current scene. Use ONLY the current edited scenes and locked character information.
+Return ONLY JSON: {"production_script":[
+{"scene_number":1,"scene":"","location":"","participants":"","action":"","emotion":"","dialogue":"","camera":"","lighting":"","sfx":"","atmosphere":"","duration":5}
+]}.
+CRITICAL RULES:
+- ALL text fields MUST BE IN NATURAL BURMESE (မြန်မာလို).
+- "scene" = scene name/title in Burmese.
+- "location" = WHERE this happens in Burmese.
+- "participants" = who appears in Burmese.
+- "action" = WHAT happens in Burmese.
+- "emotion" = facial expression in Burmese.
+- "dialogue" = actual dialogue in Burmese.
+- "camera" = camera description in Burmese.
+- "lighting" = lighting description in Burmese.
+- "sfx" = sound effects in Burmese.
+- "atmosphere" = mood/atmosphere in Burmese.
+- "duration" must be a number (seconds), max 10.
+Preserve exact scene meaning and locked character identity.`);
+    const arr=d.production_script||d.scripts||d.scenes;
+    if(!Array.isArray(arr)||!arr.length)throw Error("Script Structure မရပါ။");
+    state.productionScripts=state.scenes.map((scene,i)=>{
+      const x=arr[i]||{};
+      return {
+        scene_number:i+1,
+        scene:String(x.scene||""),
+        location:String(x.location||""),
+        participants:String(x.participants||scene.character||""),
+        action:String(x.action||scene.action_my||scene.action||""),
+        emotion:String(x.emotion||""),
+        dialogue:String(x.dialogue||scene.dialogue||""),
+        camera:String(x.camera||scene.camera||val("Camera Style")),
+        lighting:String(x.lighting||scene.lighting||val("Lighting")),
+        sfx:String(x.sfx||scene.audio||val("Audio Style")),
+        atmosphere:String(x.atmosphere||""),
+        duration:Math.min(10,Math.max(1,+x.duration||+scene.duration||5))
+      };
+    });
+  }catch(e){
+    state.productionScripts=state.scenes.map((scene,i)=>({
+      scene_number:i+1,
+      scene:`ဇာတ်ဝင်ခန်း ${i+1}`,
+      location:val("Setting Culture"),
+      participants:scene.character||"",
+      action:scene.action_my||scene.action||"",
+      emotion:"",
+      dialogue:scene.dialogue||"",
+      camera:scene.camera||val("Camera Style"),
+      lighting:scene.lighting||val("Lighting"),
+      sfx:scene.audio||val("Audio Style"),
+      atmosphere:"",
+      duration:scene.duration||5
+    }));
+    if(status)status.textContent="⚠️ AI Script Structure မရသဖြင့် Scene data ကို fallback သုံးထားပါသည်။";
+  }
+  renderScriptStructure();
+  if(status && !status.textContent.startsWith("⚠️"))status.textContent="✓ Script Structure အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ။";
+}
+
+// ==========================================
+// 🎨 Scene Photo Prompts — မြန်မာ + English (၂ မျိုး)
+// ==========================================
+function renderPhotoPrompts(){
+  const el=document.getElementById("photoPrompts");
+  if(!el)return;
+  if(!state.scenePhotoPrompts?.length){
+    el.innerHTML='<div class="empty">Scene Photo Prompt မရှိသေးပါ။ Generate ကိုနှိပ်ပါ။</div>';
+    return;
+  }
+  el.innerHTML=state.scenePhotoPrompts.map((p,i)=>{
+    const confirmed = p.confirmed ? true : false;
+    const confirmStyle = confirmed
+      ? "background:linear-gradient(100deg,#059669,#10b981);border:0;color:#fff;"
+      : "background:linear-gradient(100deg,#7c3aed,#2563eb);border:0;color:#fff;";
+    const confirmText = confirmed ? "✅ Confirmed" : "✅ Confirm";
+
+    return `
+    <div class="workflow-card">
+      <h3>📸 SCENE ${String(i+1).padStart(2,"0")} Photo Prompt <span class="pill">${state.scenes[i]?.duration||p.duration||5}s</span></h3>
+
+      <div class="script-field">
+        <label>🇲🇲 မြန်မာ Prompt <span class="sub">(ပြင်လို့ရ)</span></label>
+        <textarea class="photo-prompt-box" data-photo-my="${i}">${esc(p.prompt_my||"")}</textarea>
+      </div>
+      <div class="script-field" style="margin-top:8px">
+        <label>🇬🇧 English Prompt <span class="sub">(auto — မြန်မာ ပြင်ရင် auto update)</span></label>
+        <textarea class="photo-prompt-box" data-photo-en="${i}">${esc(p.prompt_en||"")}</textarea>
+        <button class="secondary copy" data-copy-photo-en="${i}" style="margin-top:6px">📋 English Prompt Copy</button>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+        <button class="secondary" data-regen-photo="${i}" style="flex:1;min-width:120px">🔄 ဒီ Scene ပြန် Generate</button>
+        <button data-confirm-photo="${i}" style="${confirmStyle};flex:1;min-width:120px;padding:11px 13px;border-radius:12px;font-weight:800;font-size:13px;cursor:pointer">${confirmText}</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  // Bind textarea inputs
+  el.querySelectorAll("[data-photo-my]").forEach(t=>{
+    t.oninput = debounce(async ()=>{
+      const i = +t.dataset.photoMy;
+      if(!state.scenePhotoPrompts[i]) return;
+      state.scenePhotoPrompts[i].prompt_my = t.value;
+      state.scenePhotoPrompts[i].confirmed = false;
+      state.finalScenesData = [];
+      // Auto translate → English
+      const en = await translateToEnglish(t.value);
+      if(en && state.scenePhotoPrompts[i]){
+        state.scenePhotoPrompts[i].prompt_en = en;
+        const enEl = document.querySelector(`[data-photo-en="${i}"]`);
+        if(enEl) enEl.value = en;
+      }
+      // Reset confirm button
+      const cBtn = document.querySelector(`[data-confirm-photo="${i}"]`);
+      if(cBtn){
+        cBtn.textContent = "✅ Confirm";
+        cBtn.style.background = "linear-gradient(100deg,#7c3aed,#2563eb)";
+      }
+    }, 800);
+  });
+
+  el.querySelectorAll("[data-photo-en]").forEach(t=>{
+    t.oninput = ()=>{
+      const i = +t.dataset.photoEn;
+      if(!state.scenePhotoPrompts[i]) return;
+      state.scenePhotoPrompts[i].prompt_en = t.value;
+      state.scenePhotoPrompts[i].confirmed = false;
+      state.finalScenesData = [];
+      const cBtn = document.querySelector(`[data-confirm-photo="${i}"]`);
+      if(cBtn){
+        cBtn.textContent = "✅ Confirm";
+        cBtn.style.background = "linear-gradient(100deg,#7c3aed,#2563eb)";
+      }
+    };
+  });
+
+  // Bind Confirm
+  el.querySelectorAll("[data-confirm-photo]").forEach(btn=>{
+    btn.onclick = ()=>{
+      const i = +btn.dataset.confirmPhoto;
+      if(!state.scenePhotoPrompts[i]) return;
+      const myEl = document.querySelector(`[data-photo-my="${i}"]`);
+      const enEl = document.querySelector(`[data-photo-en="${i}"]`);
+      state.scenePhotoPrompts[i].prompt_my = myEl?.value || "";
+      state.scenePhotoPrompts[i].prompt_en = enEl?.value || "";
+      state.scenePhotoPrompts[i].confirmed = true;
+      btn.textContent = "✅ Confirmed";
+      btn.style.background = "linear-gradient(100deg,#059669,#10b981)";
+      state.finalScenesData = [];
+      playSound('success');
+    };
+  });
+  // Bind Copy English Prompt (Scene တိုင်း)
+  el.querySelectorAll("[data-copy-photo-en]").forEach(btn=>{
+    btn.onclick = (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const i = +btn.dataset.copyPhotoEn;
+      const enEl = document.querySelector(`[data-photo-en="${i}"]`);
+      const text = enEl?.value || "";
+      if (text) copyText(text, btn);
+    };
+  });
+
+  // Bind Re-generate per scene
+  el.querySelectorAll("[data-regen-photo]").forEach(btn=>{
+    btn.onclick = async ()=>{
+      const i = +btn.dataset.regenPhoto;
+      if(!state.productionScripts[i]) return alert("Script Structure မရှိပါ။");
+      btn.disabled = true;
+      btn.textContent = "⏳ ဖန်တီးနေသည်...";
+      try{
+      const d = await callGemini(`Create ONE keyframe photo prompt for scene ${i+1} only.
+Use the 10-field Structure below as PRIMARY SOURCE.
+
+=== LOCKED CHARACTERS ===
+${JSON.stringify(state.characters.filter(c=>c.locked!==false), null, 2)}
+
+=== 10-FIELD STRUCTURE ===
+${JSON.stringify(state.productionScripts[i], null, 2)}
+
+=== INSTRUCTIONS ===
+Return ONLY JSON:
+{"prompt_my":"မြန်မာလို production-ready prompt","prompt_en":"English-only production-ready image prompt"}
+
+- prompt_my MUST BE IN NATURAL BURMESE.
+- prompt_en MUST BE IN ENGLISH ONLY.
+- Both must preserve ALL 10 fields (Scene, Location, Participants, Action, Emotion, Dialogue, Camera, Lighting, SFX, Atmosphere).
+- Preserve exact locked character identity: same face, age, hairstyle, body, costume, accessories, weapons, props.
+- NO TEXT, NO LOGO, NO WATERMARK.`);
+
+        state.scenePhotoPrompts[i].prompt_my = d.prompt_my || state.scenePhotoPrompts[i].prompt_my;
+        state.scenePhotoPrompts[i].prompt_en = d.prompt_en || state.scenePhotoPrompts[i].prompt_en;
+        state.scenePhotoPrompts[i].confirmed = false;
+        renderPhotoPrompts();
+      }catch(e){
+        alert("Re-generate fail: "+e.message);
+        btn.disabled = false;
+        btn.textContent = "🔄 ဒီ Scene ပြန် Generate";
+      }
+    };
+  });
+}
+
+// Debounce helper
+function debounce(fn, delay){
+  let t;
+  return function(...args){
+    clearTimeout(t);
+    t = setTimeout(()=>fn.apply(this,args), delay);
   };
 }
 
+async function generateScenePhotoPrompts(){
+  if(!state.scenes?.length)return alert("Scene Generation ကို အရင်လုပ်ပါ။");
+
+  syncSceneEdits();
+  bindWorkflowInputs();
+  document.querySelectorAll("[data-wf-type='script']").forEach(el=>{
+    const i=+el.dataset.wfIndex,key=el.dataset.wfKey;
+    if(state.productionScripts[i]) state.productionScripts[i][key]=el.value;
+  });
+
+  if(!state.productionScripts?.length){
+    return alert("Script Structure ကို အရင်ဖန်တီးပါ (သို့မဟုတ် Generate နှိပ်ပါ)။");
+  }
+
+  const status=document.getElementById("photoStatus");
+  if(status)status.textContent="⏳ Character Design Lock + Photo Prompt ဖန်တီးနေပါတယ်...";
+
+  const structurePayload = state.productionScripts.map((s,i)=>({
+    scene_number: i+1,
+    scene: s.scene || "",
+    location: s.location || "",
+    participants: s.participants || "",
+    action: s.action || "",
+    emotion: s.emotion || "",
+    dialogue: s.dialogue || "",
+    camera: s.camera || "",
+    lighting: s.lighting || "",
+    sfx: s.sfx || "",
+    atmosphere: s.atmosphere || "",
+    duration: s.duration || state.scenes[i]?.duration || 5
+  }));
+
+  // 🆕 LOCKED CHARACTERS — full details
+  const lockedChars = state.characters.filter(c=>c.locked!==false).map(c=>({
+    name: c.name,
+    role: c.role,
+    age: c.age,
+    description_my: c.description || ""
+  }));
+
+  try{
+    const d=await callGemini(`Create ONE keyframe photo prompt (in BOTH Myanmar AND English) for EVERY scene.
+
+=== LOCKED CHARACTERS (SOURCE OF TRUTH) ===
+${JSON.stringify(lockedChars, null, 2)}
+
+=== 10-FIELD STRUCTURE (PRIMARY SOURCE) ===
+${JSON.stringify(structurePayload, null, 2)}
+
+=== INSTRUCTIONS ===
+Return ONLY JSON:
+{"photo_prompts":[
+  {"scene_number":1,
+   "prompt_my":"မြန်မာလို production-ready photo prompt",
+   "prompt_en":"English-only production-ready image prompt"}
+]}
+
+CRITICAL RULES FOR prompt_en:
+1. START the prompt with:
+   "=== CHARACTER DESIGN LOCK (MUST MATCH EXACTLY) ==="
+2. For EACH character appearing in the scene, write:
+   "[Name]: [translated English description with ALL details — head type, face, hair, age, costume colors, weapons, accessories]"
+   - Translate the character's "description_my" into English.
+   - Preserve ALL physical details exactly.
+3. END the lock with "=== END LOCK ==="
+4. Then describe the scene (location, action, emotion, camera, lighting, atmosphere).
+5. Character description MUST be copied word-for-word from the translation.
+6. Do NOT redesign characters. Do NOT change colors, weapons, or accessories.
+
+CRITICAL RULES FOR prompt_my:
+- Natural Burmese, same scene content.
+- Include character design details in Burmese.
+
+For EACH scene preserve ALL 10 fields (Scene, Location, Participants, Action, Emotion, Dialogue, Camera, Lighting, SFX, Atmosphere).
+Use the scene's actual action and composition.
+NO TEXT, NO LOGO, NO WATERMARK in the image.
+END every prompt_en with: --ar ${val("Aspect Ratio").includes("16:9") ? "16:9" : "9:16"}`);
+
+    const arr=d.photo_prompts||d.scenes||d.result;
+    if(!Array.isArray(arr)||!arr.length)throw Error("Photo Prompts မရပါ။");
+    state.scenePhotoPrompts=state.scenes.map((scene,i)=>({
+      scene_number:i+1,
+      duration:scene.duration,
+      prompt_my:String(arr[i]?.prompt_my||""),
+      prompt_en:String(arr[i]?.prompt_en||""),
+      confirmed:false
+    }));
+
+    // Fallback if missing
+    for (let i = 0; i < state.scenePhotoPrompts.length; i++) {
+      const p = state.scenePhotoPrompts[i];
+      if(!p.prompt_my) p.prompt_my = await buildLocalPhotoPromptMy(state.productionScripts[i], state.scenes[i], i);
+      if(!p.prompt_en) p.prompt_en = await buildLocalPhotoPromptEn(state.productionScripts[i], state.scenes[i], i);
+    }
+  }catch(e){
+    // Full local fallback
+    state.scenePhotoPrompts = [];
+    for (let i = 0; i < state.scenes.length; i++) {
+      const my = await buildLocalPhotoPromptMy(state.productionScripts[i], state.scenes[i], i);
+      const en = await buildLocalPhotoPromptEn(state.productionScripts[i], state.scenes[i], i);
+      state.scenePhotoPrompts.push({
+        scene_number: i+1,
+        duration: state.scenes[i].duration,
+        prompt_my: my,
+        prompt_en: en,
+        confirmed: false
+      });
+    }
+    if(status)status.textContent="⚠️ AI Photo Prompt မရသဖြင့် local fallback သုံးထားပါသည်။";
+  }
+  renderPhotoPrompts();
+  if(status && !status.textContent.startsWith("⚠️"))status.textContent="✓ Scene Photo Prompts အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ။ မြန်မာ/English ပြင်ပြီး Confirm နှိပ်ပါ။";
+}
+
+// ==========================================
+// 📸 Local Photo Prompt Builders (Myanmar + English)
+// ==========================================
+async function buildLocalPhotoPromptMy(script, scene, i){
+  if(!script) script = {};
+  const lockedChars = state.characters.filter(c=>c.locked!==false);
+  const charList = lockedChars.map(c=>`${c.name} (${c.age||""}, ${c.role||""})`).join("၊ ");
+  return `🎬 ဇာတ်ဝင်ခန်း ${String(i+1).padStart(2,"0")} အတွက် ရုပ်ရှင်ဆန်သော Keyframe ပုံ Prompt။
+
+🎬 ဇာတ်ဝင်ခန်း: ${script.scene || "ဇာတ်ဝင်ခန်း "+(i+1)}
+📍 နေရာ/ပတ်ဝန်းကျင်: ${script.location || scene.location || val("Setting Culture")}
+👤 ပါဝင်သူများ: ${script.participants || scene.character || charList || "အဓိကဇာတ်ကောင်"}
+🎭 လုပ်ဆောင်ချက်: ${script.action || scene.action_my || scene.action || "ဇာတ်ဝင်ခန်းအတိုင်း လှုပ်ရှားသည်"}
+😮 မျက်နှာအမူအရာ: ${script.emotion || "သင့်လျော်သော ခံစားချက်"}
+📝 စကားပြော: ${script.dialogue ? "ဇာတ်ကောင် စကားပြောနေသည် (စာသား မထည့်ရ)" : "တိတ်ဆိတ်သော အခိုက်အတန့်"}
+📷 ကင်မရာ: ${script.camera || scene.camera || val("Camera Style")}
+💡 အလင်းအရောင်: ${script.lighting || scene.lighting || val("Lighting")}
+🔊 အသံအကျိုးသက်ရောက်မှု: ${script.sfx || scene.audio || val("Audio Style")}
+🌫️ အငွေ့အသက်: ${script.atmosphere || val("Genre")+" ခံစားချက်"}
+
+ဇာတ်ကောင် တည်ငြိမ်မှု: ${lockedChars.map(c=>`${c.name} — ${c.description||"မူရင်းအတိုင်း"}`).join("။ ")||"မူရင်းဇာတ်ကောင် ပုံစံအတိုင်း ထိန်းသိမ်းရမည်"}။
+မျက်နှာ၊ အသက်၊ ဆံပင်၊ အဝတ်အစား၊ အသုံးအဆောင်၊ လက်နက်၊ ပစ္စည်းအားလုံး မူရင်းအတိုင်း ထိန်းသိမ်းရမည်။
+${stylePhrase()} ပုံစံ၊ ${val("Genre")} အမျိုးအစား၊ ${val("Setting Culture")} ယဉ်ကျေးမှု၊ ${val("Video Quality")} အရည်အသွေး၊ 8k resolution။
+စာသား၊ Logo၊ Watermark မပါရ။`;
+}
+
+async function buildLocalPhotoPromptEn(script, scene, i){
+  if(!script) script = {};
+  const lockedChars = state.characters.filter(c=>c.locked!==false);
+
+  // Build character design lock (Myanmar → English)
+  const charLocks = [];
+  for (const c of lockedChars) {
+    let desc = (c.description || "").trim();
+    if (desc && hasBurmeseText(desc)) {
+      const en = await translateToEnglish(desc);
+      if (en && !hasBurmeseText(en)) desc = en;
+    }
+    charLocks.push(`${c.name}: ${desc || "exact same design as reference"}`);
+  }
+
+  const charLockBlock = charLocks.length
+    ? `=== CHARACTER DESIGN LOCK (MUST MATCH EXACTLY) ===\n${charLocks.join("\n")}\n=== END LOCK ===`
+    : "";
+
+  const aspect = val("Aspect Ratio").includes("16:9") ? "16:9" : "9:16";
+
+  const location = script.location || scene.location || val("Setting Culture");
+  const participants = script.participants || scene.character || lockedChars.map(c=>c.name).join(", ") || "Main character";
+  const action = script.action || scene.action_my || scene.action || "perform the scene action";
+  const emotion = script.emotion || "appropriate emotional expression";
+  const camera = script.camera || scene.camera || val("Camera Style");
+  const lighting = script.lighting || scene.lighting || val("Lighting");
+  const sfx = script.sfx || scene.audio || val("Audio Style");
+  const atmosphere = script.atmosphere || val("Genre") + " mood";
+  const dialogue = script.dialogue ? "Character is speaking (do not render text)" : "Silent moment";
+
+  return `${charLockBlock}
+
+Cinematic keyframe photo for Scene ${String(i+1).padStart(2,"0")}.
+Location: ${location}
+Participants: ${participants}
+Action: ${action}
+Emotion: ${emotion}
+Dialogue: ${dialogue}
+Camera: ${camera}
+Lighting: ${lighting}
+SFX: ${sfx}
+Atmosphere: ${atmosphere}
+
+CRITICAL: Do NOT redesign characters. Do NOT change armor, costume colors, weapons, or accessories. Keep EXACTLY the same as the CHARACTER DESIGN LOCK above.
+${stylePhrase()} art style, ${val("Genre")} genre, ${val("Setting Culture")} cultural setting, ${val("Video Quality")} quality, highly detailed facial features, production-ready composition, 8k resolution. NO TEXT, NO LOGO, NO WATERMARK. --ar ${aspect}`;
+}
+
+// ==========================================
+// 🎥 Build Scene Prompt Object (Photo EN → Video EN)
+// ==========================================
+async function buildScenePromptObject(s, i) {
+  const editedPhoto = state.scenePhotoPrompts?.[i]?.prompt_en?.trim() || "";
+  const script = state.productionScripts?.[i] || {};
+
+  let chars = script.participants || s.characters?.join(", ") || state.characters.filter(c=>c.locked!==false).map(c=>c.name).join(", ") || "Main character";
+if (hasBurmeseText(chars)) {
+  const translatedChars = await translateToEnglish(chars);
+  if (translatedChars && !hasBurmeseText(translatedChars)) chars = translatedChars;
+}
+
+  // 🆕 BATCH TRANSLATE — တစ်ခါတည်း (API 1 ကြိမ်ပဲ)
+  const tr = await batchTranslateSceneFields(script);
+
+  // Use translated (or original if translation failed)
+  const sceneName = tr.scene || "";
+  const location = tr.location || val("Setting Culture");
+  const englishAction = tr.action || "";
+  const emotion = tr.emotion || "neutral expression";
+  const camera = tr.camera || val("Camera Style");
+  const lighting = tr.lighting || val("Lighting");
+  const sfx = tr.sfx || val("Audio Style");
+  const atmosphere = tr.atmosphere || (val("Genre") + " mood");
+
+  // ============ DIALOGUE ============
+  let dialogueText = "";
+  const rawDialogue = (script.dialogue || s.dialogue || "").trim();
+  const selectedLang = val("Language");
+
+  if (rawDialogue && selectedLang !== "No Dialogue") {
+    // Dialogue ကို batch ထဲမှာ ပြန်ပြီးသား
+    let dialogueEn = tr.dialogue || "";
+
+    if (selectedLang === "Myanmar") {
+      // မြန်မာ + English ရော
+      const romanized = dialogueEn && !hasBurmeseText(dialogueEn) ? dialogueEn : "";
+      dialogueText = `, character says in Burmese: "${rawDialogue}"`;
+      if (romanized) dialogueText += ` (romanized: "${romanized}")`;
+    } else if (selectedLang === "English") {
+      if (dialogueEn && !hasBurmeseText(dialogueEn)) {
+        dialogueText = `, character says: "${dialogueEn}"`;
+      } else {
+        // Translate fail → မြန်မာလိုပဲ ထည့်
+        dialogueText = `, character says in Burmese: "${rawDialogue}"`;
+      }
+    } else {
+      // တခြား ဘာသာစကား
+      const translated = await translateToTargetLanguage(rawDialogue, selectedLang);
+      if (translated && translated !== `[${selectedLang}]`) {
+        dialogueText = `, character says speaking in ${selectedLang}: "${translated}"`;
+      }
+    }
+  }
+
+  // ============ VIDEO PROMPT ============
+  let videoPrompt = `High quality video sequence, Scene ${String(i+1).padStart(2,"0")}${sceneName ? " — "+sceneName : ""}. `;
+  videoPrompt += `Location: ${location}. `;
+  videoPrompt += `Participants: ${chars}. `;
+  if (englishAction) videoPrompt += `Action: ${englishAction}${dialogueText}. `;
+  if (emotion) videoPrompt += `Emotion: ${emotion}. `;
+  videoPrompt += `Camera: ${camera}. `;
+  videoPrompt += `Lighting: ${lighting}. `;
+  if (sfx) videoPrompt += `SFX: ${sfx}. `;
+  if (atmosphere) videoPrompt += `Atmosphere: ${atmosphere}. `;
+    const aspect = val("Aspect Ratio").includes("16:9") ? "16:9" : "9:16";
+  videoPrompt += `${stylePhrase()} style, ${val("Genre")} genre, ${val("Setting Culture")} culture, ${val("Video Quality")}, 8k resolution, cinematic lighting, 60fps. --ar ${aspect}`;
+
+  // ============ PHOTO PROMPT ============
+  let photoPrompt;
+  if (editedPhoto) {
+    photoPrompt = editedPhoto;
+  } else {
+    photoPrompt = await buildLocalPhotoPromptEn(script, s, i);
+  }
+  return {
+    videoPrompt,
+    photoPrompt,
+    duration: script.duration || s.duration || 5
+  };
+}
+// ==========================================
+// ⚡ Build Final From Scenes
+// ==========================================
 async function buildFinalFromScenes() {
   if (!state.scenes || !state.scenes.length) {
     state.finalScenesData = [];
@@ -1737,53 +3288,39 @@ async function buildFinalFromScenes() {
   }
 
   syncSceneEdits();
+  bindWorkflowInputs();
+
+  document.querySelectorAll("[data-wf-type='script']").forEach(el=>{
+    const i=+el.dataset.wfIndex,key=el.dataset.wfKey;
+    if(state.productionScripts[i]) state.productionScripts[i][key]=el.value;
+  });
+  document.querySelectorAll("[data-photo-my]").forEach(el=>{
+    const i=+el.dataset.photoMy;
+    if(state.scenePhotoPrompts[i]) state.scenePhotoPrompts[i].prompt_my=el.value;
+  });
+  document.querySelectorAll("[data-photo-en]").forEach(el=>{
+    const i=+el.dataset.photoEn;
+    if(state.scenePhotoPrompts[i]) state.scenePhotoPrompts[i].prompt_en=el.value;
+  });
 
   const statusEl = document.getElementById("finalStatus");
-  if (statusEl) statusEl.textContent = "⏳ သင်ပြင်ထားတဲ့ မြန်မာ Action ကိုသာ English ပြောင်းနေပါသည်...";
+  if (statusEl) statusEl.textContent = "⏳ Final Video Prompt ဖန်တီးနေပါတယ်...";
 
-  try {
-    const scenesToTranslate = state.scenes.map((s, idx) => {
-      const myanmarAction = s.action_my?.trim() || s.actionMm?.trim() || s.myanmarAction?.trim() || "";
-      return {
-        index: idx,
-        myanmar_action: myanmarAction,
-      };
-    });
-
-    console.log("✅ ဘာသာပြန်ပေးပို့မည့် သင့်စာသားအသစ်:", scenesToTranslate);
-
-    let d = await callGemini(`
---- STRICT RULES ---
-1. Translate ONLY the "myanmar_action" text I send you — NOTHING ELSE.
-2. Use ONLY that text as source — DO NOT use old/previous/any other descriptions.
-3. DO NOT translate, rewrite, or touch dialogue, names, style, genre, camera — keep all of them EXACTLY as they already are.
-4. Output ONLY: [{ "index": 0, "action": "YOUR_ENGLISH_HERE" }] — clean JSON only.
-
---- INPUT ---
-${JSON.stringify(scenesToTranslate, null, 2)}
-`);
-
-    let results = d?.scenes || d?.result || d;
-    if (!Array.isArray(results)) results = [];
-
-    results.forEach((sc) => {
-      const idx = Number(sc.index);
-      if (state.scenes[idx] && sc.action) {
-        state.scenes[idx].action = sc.action;
-        console.log(`✅ Scene ${idx} Action updated with YOUR text → English`);
-      }
-    });
-
-  } catch (e) {
-    console.warn("⚠️ ဘာသာပြန်အဆင့်တွင် အမှား-", e);
-    if (statusEl) statusEl.textContent = "⚠️ AI ဘာသာပြန်မရရှိပါ၊ သင့်စာသားကိုအတိုင်းဆက်သုံးမည်";
+  // Warning for unconfirmed
+  const unconfirmed = state.scenePhotoPrompts.filter(p=>!p.confirmed);
+  if (unconfirmed.length && state.scenePhotoPrompts.length) {
+    const msg = `Scene ${unconfirmed.map((_,i)=>i+1).join(", ")} ကို Confirm မလုပ်ရသေးဘူး။ ဆက်မလား?`;
+    if (!confirm(msg)) {
+      if (statusEl) statusEl.textContent = "⚠️ Confirm လုပ်ပြီးမှ ပြန်ကြိုးစားပါ။";
+      return;
+    }
   }
 
   state.finalScenesData = await Promise.all(
     state.scenes.map((s, i) => buildScenePromptObject(s, i))
   );
 
-  if (typeof renderFinalPrompts === "function") renderFinalPrompts();
+  renderFinalPrompts();
   if (statusEl) statusEl.textContent = "✓ Final AI Video Prompt အောင်မြင်စွာ ထုတ်ပြီးပါပြီ။";
 }
 
@@ -1791,6 +3328,9 @@ function totalScene() {
   return state.scenes.reduce((a, s) => a + (+s.duration || 0), 0);
 }
 
+// ==========================================
+// 📖 Summary / Blueprint / AutoDetect
+// ==========================================
 async function makeSummary(){
 let title=document.getElementById("title").value.trim(),story=document.getElementById("story").value.trim();
 if(!title&&!story)return alert("ကျေးဇူးပြု၍ Story Title (သို့မဟုတ်) အကြောင်းအရာ တစ်ခုခု ထည့်ပါ။");
@@ -1809,21 +3349,15 @@ renderChars();
 state.characters=localCharacterParser(state.summary||story);
 renderChars();
 }
-document.getElementById("summaryStatus").textContent="✓ Story Summary & Blueprint successfully created."
+document.getElementById("summaryStatus").textContent="✓ Story Summary & Blueprint အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ။"
 }catch(e){
 state.summary=story||title;
 document.getElementById("summary").value=state.summary;
 renderBlueprint(fallbackBlueprint(state.summary));
 state.characters=localCharacterParser(state.summary||story);
 renderChars();
-document.getElementById("summaryStatus").textContent="⚠️ AI Summary/Blueprint failed, fallback used. "+e.message;
+document.getElementById("summaryStatus").textContent="⚠️ AI Summary/Blueprint မရသဖြင့် fallback သုံးထားပါသည်။ "+e.message;
 }
-}
-
-function makeBlueprint(){
-let text=(document.getElementById("summary").value||document.getElementById("story").value||"").trim();
-if(!text)return alert("Story Input / Summary အရင်ထည့်ပါ။");
-renderBlueprint(state.blueprint||fallbackBlueprint(text));
 }
 
 async function autoDetect(){
@@ -1832,8 +3366,8 @@ async function autoDetect(){
 
   try {
     let promptText = `Analyze the following story text and extract entities in JSON format:
-    1. "characters": Main named individual characters ONLY. Keep original names (e.g., General ချန်းကျန်းဝူ).
-    2. "groups": ALL crowd/military/group entities (e.g., "စစ်သည် ၁၅၀", "စစ်သည် ၂၀၀", "Villagers", "Enemy Army").
+    1. "characters": Main named individual characters ONLY.
+    2. "groups": ALL crowd/military/group entities.
 
     Text: "${text}"
 
@@ -1869,24 +3403,20 @@ async function autoDetect(){
         description: g.description || ""
       }));
     } else {
-      state.groups = typeof localGroupParser === "function" ? localGroupParser(text) : [];
+      state.groups = localGroupParser(text);
     }
-
   } catch(e) {
-    console.error("AutoDetect Error:", e);
-    state.characters = typeof localCharacterParser === "function" ? localCharacterParser(text) : [];
-    state.groups = typeof localGroupParser === "function" ? localGroupParser(text) : [];
+    state.characters = localCharacterParser(text);
+    state.groups = localGroupParser(text);
   }
 
   renderChars();
-  if (typeof renderGroups === "function") {
-    renderGroups();
-  }
+  renderGroups();
 }
 
 function normalizeScenes(arr){
 return arr.map((s,i)=>{
-let actionMy=String(s.action_my||s.action||`ဇာတ်ဝင်ခန်း ${i+1} လှုပ်ရှားမှု။`).trim();
+let actionMy=String(s.action_my||s.action||`ဇာတ်ဝင်ခန်း ${i+1} ၏ လှုပ်ရှားမှုအကြောင်းအရာ။`).trim();
 return{
 duration:Math.min(10,Math.max(1,+s.duration_seconds||5)),
 character:String(s.character||state.characters.map(c=>c.name).filter(Boolean).join(", ")||"Main Character").replace(/[^\x00-\x7F]/g,"").trim(),
@@ -1917,8 +3447,12 @@ audio:val("Audio Style"),
 transition:"Smooth continuity-preserving transition."
 }));
 state.finalScenesData=[];
+state.productionScripts=[];
+state.scenePhotoPrompts=[];
 state.negative="low quality, blurry, distorted face, deformed hands, extra fingers, duplicate character, inconsistent face, age drift, costume drift, wrong weapon, warped background, flicker, jitter, bad anatomy, random text, watermark, logo";
 renderScenes();
+renderScriptStructure();
+renderPhotoPrompts();
 renderFinalPrompts();
 document.getElementById("finalStatus").textContent="✓ Scenes generated locally. Click 'Final AI Video Prompt ထုတ်ရန်' to build prompt.";
 }
@@ -1946,21 +3480,24 @@ async function generateScenes(){
       state.scenes[last].duration=Math.max(1,Math.min(10,state.scenes[last].duration-diff));
     }
     state.finalScenesData=[];
+    state.productionScripts=[];
+    state.scenePhotoPrompts=[];
     state.negative=d.negative_prompt||state.negative;
     state.thumb=d.thumbnail_prompt||"";
     state.thumbText=d.thumbnail_text||"";
     state.thumbNeg=d.thumbnail_negative_prompt||"";
     renderScenes();
+    renderScriptStructure();
+    renderPhotoPrompts();
     renderExtras();
     renderFinalPrompts();
     document.getElementById("finalStatus").textContent="✓ Scenes generated. Edit action/dialogue then click 'Final AI Video Prompt ထုတ်ရန်' below.";
 
     setRobotState(btn, "done");
-
+    btn.disabled = false;
   }catch(e){
     generateScenesLocal();
     document.getElementById("finalStatus").textContent="⚠️ AI Scene generation failed; local scene planner used. "+e.message;
-
     setRobotState(btn, "error");
     btn.disabled = false;
   }
@@ -1971,6 +3508,9 @@ document.getElementById("thumbPrompt").textContent=state.thumb||`Create a striki
 document.getElementById("thumbText").textContent=state.thumbText||document.getElementById("title").value.trim()||"Story";
 }
 
+// ==========================================
+// 🔄 Regenerate / Snapshot / Continue
+// ==========================================
 async function regenerate(){
 if(!document.getElementById("summary").value.trim()&&!document.getElementById("story").value.trim()){return alert("Story Input / Summary ထည့်ပါ။");}
 document.getElementById("finalStatus").textContent="⏳ Regenerating...";
@@ -1979,7 +3519,11 @@ let d=await callGemini("Regenerate a genuinely different creative version while 
 if(Array.isArray(d.scenes)){
 state.scenes=normalizeScenes(d.scenes);
 state.finalScenesData=[];
+state.productionScripts=[];
+state.scenePhotoPrompts=[];
 renderScenes();
+renderScriptStructure();
+renderPhotoPrompts();
 renderFinalPrompts();
 }
 state.negative=d.negative_prompt||state.negative;
@@ -1992,8 +3536,13 @@ function snapshotState(){
 return{
 part:state.part,title:document.getElementById("title").value,story:document.getElementById("story").value,
 summary:state.summary,blueprint:cloneData(state.blueprint),characters:cloneData(state.characters),
-groups:cloneData(state.groups),scenes:cloneData(state.scenes),finalScenesData:cloneData(state.finalScenesData),negative:state.negative,thumb:state.thumb,
-thumbText:state.thumbText,thumbNeg:state.thumbNeg,settings:settingsObj()
+groups:cloneData(state.groups),scenes:cloneData(state.scenes),finalScenesData:cloneData(state.finalScenesData),
+negative:state.negative,thumb:state.thumb,
+thumbText:state.thumbText,thumbNeg:state.thumbNeg,
+episodes:cloneData(state.episodes),
+productionScripts:cloneData(state.productionScripts),
+scenePhotoPrompts:cloneData(state.scenePhotoPrompts),
+settings:settingsObj()
 }
 }
 
@@ -2009,6 +3558,9 @@ state.part=snap.part;state.summary=snap.summary||"";state.blueprint=cloneData(sn
 state.characters=cloneData(snap.characters)||[];state.groups=cloneData(snap.groups)||[];
 state.scenes=cloneData(snap.scenes)||[];
 state.finalScenesData=cloneData(snap.finalScenesData)||[];
+state.episodes=cloneData(snap.episodes)||[];
+state.productionScripts=cloneData(snap.productionScripts)||[];
+state.scenePhotoPrompts=cloneData(snap.scenePhotoPrompts)||[];
 state.negative=snap.negative||"";state.thumb=snap.thumb||"";
 state.thumbText=snap.thumbText||"";state.thumbNeg=snap.thumbNeg||"";
 document.getElementById("title").value=snap.title||"";
@@ -2021,7 +3573,8 @@ if(el){el.value=v;el.dispatchEvent(new Event("change"))}
 })
 }
 if(state.blueprint){renderBlueprint(state.blueprint)}
-renderChars();renderScenes();renderExtras();renderFinalPrompts();
+renderChars();renderScenes();renderExtras();
+renderEpisodeStructure();renderScriptStructure();renderPhotoPrompts();renderFinalPrompts();
 updatePreviousButton()
 }
 
@@ -2038,7 +3591,7 @@ overlay.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.65);display
 const box=document.createElement("div");
 box.style.cssText="width:min(360px,100%);max-height:75vh;background:#181818;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.5);color:#fff;display:flex;flex-direction:column;";
 const title=document.createElement("div");
-title.textContent="📚 Select Part";
+title.textContent="📚 Part ရွေးရန်";
 title.style.cssText="font-size:20px;font-weight:700;margin-bottom:14px;text-align:center;";
 const list=document.createElement("div");
 list.style.cssText="overflow-y:auto;max-height:50vh;display:flex;flex-direction:column;gap:8px;padding-right:4px;";
@@ -2046,7 +3599,7 @@ list.style.cssText="overflow-y:auto;max-height:50vh;display:flex;flex-direction:
 parts.forEach(n=>{
 const btn=document.createElement("button");
 const isCurrent=n===state.part;
-btn.textContent=isCurrent?`Part ${n} (Current)`:`Part ${n}`;
+btn.textContent=isCurrent?`Part ${n} (လက်ရှိ)`:`Part ${n}`;
 btn.style.cssText=`width:100%;padding:13px 14px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:${isCurrent?'#1e3a8a':'#242424'};color:#fff;font-size:16px;font-weight:600;cursor:pointer;text-align:left;`;
 btn.onclick=()=>{
 const snap=state.history[n];
@@ -2058,7 +3611,7 @@ list.appendChild(btn);
 });
 
 const cancel=document.createElement("button");
-cancel.textContent="Cancel";
+cancel.textContent="မလုပ်တော့ပါ";
 cancel.style.cssText="width:100%;margin-top:14px;padding:12px;border:0;border-radius:10px;background:#333;color:#fff;font-size:15px;cursor:pointer;";
 cancel.onclick=()=>overlay.remove();
 box.appendChild(title);box.appendChild(list);box.appendChild(cancel);overlay.appendChild(box);document.body.appendChild(overlay);
@@ -2072,7 +3625,7 @@ if(state.part<maxPart&&state.history[maxPart]){restoreSnapshot(state.history[max
 const fromPart=state.part,nextPart=fromPart+1,backup=snapshotState();
 state.history[fromPart]=backup;
 
-document.getElementById("finalStatus").textContent="⏳ Continuing story...";
+document.getElementById("finalStatus").textContent="⏳ ဇာတ်လမ်း ဆက်နေပါတယ်...";
 try{
 let d=await callGemini(`Continue the exact story into Part ${nextPart}. Do NOT restart. Return a new story_summary, story_blueprint, characters and scenes for the continuation.`);
 state.part=nextPart;
@@ -2081,8 +3634,11 @@ if(d.story_blueprint){renderBlueprint(d.story_blueprint)}
 if(Array.isArray(d.characters)){state.characters=d.characters.map(c=>({...c,name:String(c.name||"Main Character").replace(/[^\x00-\x7F]/g,"").trim()||"Main Character",locked:true}))}
 if(Array.isArray(d.scenes)){state.scenes=normalizeScenes(d.scenes)}
 state.finalScenesData=[];
-renderChars();renderScenes();renderExtras();renderFinalPrompts();updatePreviousButton();
-document.getElementById("finalStatus").textContent=`✓ Part ${state.part} generated. Click 'Final AI Video Prompt ထုတ်ရန်' to build prompt.`;
+state.episodes=[];state.productionScripts=[];state.scenePhotoPrompts=[];
+renderChars();renderScenes();renderExtras();
+renderEpisodeStructure();renderScriptStructure();renderPhotoPrompts();renderFinalPrompts();
+updatePreviousButton();
+document.getElementById("finalStatus").textContent=`✓ Part ${state.part} ဖန်တီးပြီးပါပြီ။ Final Prompt ထုတ်ရန် နှိပ်ပါ။`;
 }catch(e){
 delete state.history[fromPart];
 document.getElementById("finalStatus").textContent="❌ "+e.message;
@@ -2094,15 +3650,16 @@ document.getElementById("saveApi").onclick=()=>{
 let k=document.getElementById("apiKey").value.replace(/[\u200B-\u200D\uFEFF]/g,"").trim();
 if(!k)return alert("API key ထည့်ပါ။");
 localStorage.setItem("gemini_api_key",k);
-document.getElementById("apiStatus").textContent="✓ Saved locally."
+document.getElementById("apiStatus").textContent="✓ ဒီစက်မှာ သိမ်းပြီးပါပြီ။"
 };
 
 let storedApiKey=localStorage.getItem("gemini_api_key");
 if(storedApiKey){
 document.getElementById("apiKey").value=storedApiKey;
-document.getElementById("apiStatus").textContent="✓ Local API key loaded."
+document.getElementById("apiStatus").textContent="✓ API key ရှိပြီးသား။"
 }
 
+// ============ SCRIPT CONTINUES IN CHUNK 4/4 ============
 // ==================================================
 // 🔗 Button Event Handlers
 // ==================================================
@@ -2110,10 +3667,10 @@ const testApiBtn = document.getElementById("testApi");
 if (testApiBtn) {
   testApiBtn.onclick = async () => {
     const statusEl = document.getElementById("apiStatus");
-    if (statusEl) statusEl.textContent = "⏳ Testing...";
+    if (statusEl) statusEl.textContent = "⏳ စမ်းသပ်နေပါတယ်...";
     try {
       await callGemini("Return a JSON object with test:true only.");
-      if (statusEl) statusEl.textContent = "✓ Gemini API connected.";
+      if (statusEl) statusEl.textContent = "✓ Gemini API ချိတ်ဆက်ပြီးပါပြီ။";
     } catch (e) {
       if (statusEl) statusEl.textContent = "❌ " + e.message;
     }
@@ -2173,26 +3730,79 @@ if (addCharBtn) {
   };
 }
 
+// ==================================================
+// 📺 Episode Structure Button
+// ==================================================
+const episodeBtn = document.getElementById("episodeBtn");
+if (episodeBtn) {
+  episodeBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      await generateEpisodeStructure();
+      setRobotState(this, "done");
+    } catch (e) {
+      console.error("Episode Error:", e);
+      setRobotState(this, "error");
+    }
+  };
+}
+
+// ==================================================
+// 📝 Script Structure Button
+// ==================================================
+const scriptBtn = document.getElementById("scriptBtn");
+if (scriptBtn) {
+  scriptBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      await generateProductionScript();
+      setRobotState(this, "done");
+    } catch (e) {
+      console.error("Script Error:", e);
+      setRobotState(this, "error");
+    }
+  };
+}
+
+// ==================================================
+// 🎨 Scene Photo Prompts Button
+// ==================================================
+const photoBtn = document.getElementById("photoBtn");
+if (photoBtn) {
+  photoBtn.onclick = async function () {
+    setRobotState(this, "working");
+    try {
+      await generateScenePhotoPrompts();
+      setRobotState(this, "done");
+    } catch (e) {
+      console.error("Photo Error:", e);
+      setRobotState(this, "error");
+    }
+  };
+}
+
+// ==================================================
+// ⚡ buildFinalBtn — buildFinalFromScenes (FIXED)
+// ==================================================
 const buildFinalBtn = document.getElementById("buildFinalBtn");
 if (buildFinalBtn) {
   buildFinalBtn.onclick = async function () {
+    setRobotState(this, "working");
+    const statusEl = document.getElementById("finalStatus");
     try {
-      if (typeof syncSceneEdits === "function") syncSceneEdits();
-      setRobotState(this, "working");
-
-      if (typeof buildScenePromptObject === "function") {
+      if (typeof buildFinalFromScenes === "function") {
+        await buildFinalFromScenes();
+      } else {
+        syncSceneEdits();
         state.finalScenesData = await Promise.all(
           state.scenes.map((s, idx) => buildScenePromptObject(s, idx))
         );
+        renderFinalPrompts();
       }
-
-      if (typeof renderFinalPrompts === "function") renderFinalPrompts();
       setRobotState(this, "done");
-      const statusEl = document.getElementById("finalStatus");
       if (statusEl) statusEl.textContent = "✓ Final AI Video Prompt အောင်မြင်စွာ ထုတ်ပြီးပါပြီ။";
     } catch (err) {
       console.error("Prompt Error:", err);
-      const statusEl = document.getElementById("finalStatus");
       if (statusEl) statusEl.textContent = "⚠️ အမှား – " + err.message;
       setRobotState(this, "error");
     }
@@ -2242,7 +3852,85 @@ if (prevBtn) {
 }
 
 // ==================================================
-// 📌 Copy Buttons (Event Delegation – ပိုစိတ်ချရ)
+// 🆕 Batch Export Handlers
+// ==================================================
+const copyAllPhotoBtn = document.getElementById("copyAllPhotoBtn");
+if (copyAllPhotoBtn) {
+  copyAllPhotoBtn.onclick = () => {
+    if (!state.scenePhotoPrompts || !state.scenePhotoPrompts.length) {
+      alert("ပထမဆုံး Scene Photo Prompts ထုတ်ပါ။");
+      return;
+    }
+    let allText = "";
+    state.scenePhotoPrompts.forEach((item, i) => {
+      const n = String(i + 1).padStart(2, "0");
+      const confirmed = item.confirmed ? "✓" : "⚠️ (Confirm မလုပ်ရသေး)";
+      allText += `=== SCENE ${n} PHOTO PROMPT ${confirmed} ===\n`;
+      allText += `[မြန်မာ]\n${item.prompt_my}\n\n[English]\n${item.prompt_en}\n\n\n`;
+    });
+    copyText(allText.trim(), copyAllPhotoBtn);
+  };
+}
+
+const copyAllVideoBtn = document.getElementById("copyAllVideoBtn");
+if (copyAllVideoBtn) {
+  copyAllVideoBtn.onclick = () => {
+    if (!state.finalScenesData || !state.finalScenesData.length) {
+      alert("ပထမဆုံး Final Video Prompt ထုတ်ပါ။");
+      return;
+    }
+    let allText = "";
+    state.finalScenesData.forEach((item, i) => {
+      const n = String(i + 1).padStart(2, "0");
+      allText += `=== SCENE ${n} VIDEO PROMPT ===\n${item.videoPrompt}\n\n`;
+    });
+    copyText(allText.trim(), copyAllVideoBtn);
+  };
+}
+
+const downloadAllBtn = document.getElementById("downloadAllBtn");
+if (downloadAllBtn) {
+  downloadAllBtn.onclick = () => {
+    if (!state.finalScenesData || !state.finalScenesData.length) {
+      alert("ပထမဆုံး Final Video Prompt ထုတ်ပါ။");
+      return;
+    }
+
+    const title = (document.getElementById("title").value || "story").replace(/[^\w\u1000-\u109F\-]+/g, "_");
+    const partLabel = `Part${state.part || 1}`;
+    let content = `AI VIDEO PROMPT MASTER — EXPORT\n`;
+    content += `Story: ${document.getElementById("title").value || "Untitled"}\n`;
+    content += `Part: ${state.part || 1}\n`;
+    content += `Exported: ${new Date().toISOString()}\n`;
+    content += `Aspect: ${val("Aspect Ratio")} | Genre: ${val("Genre")} | Style: ${val("Art Style")}\n`;
+    content += `${"=".repeat(60)}\n\n`;
+
+    const masterHeader = `Master continuity: Preserve every locked character exactly. Never change face, age, hairstyle, hair color, skin appearance, body shape, costume, armor, accessories, weapons or signature props. Preserve established location, time, relationships and unresolved story events.`;
+    content += `[MASTER CONTINUITY]\n${masterHeader}\n\n`;
+
+    state.finalScenesData.forEach((item, i) => {
+      const n = String(i + 1).padStart(2, "0");
+      content += `${"─".repeat(60)}\n`;
+      content += `SCENE ${n} — Duration: ${item.duration}s\n`;
+      content += `${"─".repeat(60)}\n\n`;
+      content += `🎥 VIDEO PROMPT:\n${item.videoPrompt}\n\n`;
+      content += `📸 PHOTO PROMPT:\n${item.photoPrompt}\n\n\n`;
+    });
+
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${title}_${partLabel}_prompts.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+}
+
+// ==================================================
+// 📌 Copy Buttons (Event Delegation)
 // ==================================================
 document.addEventListener("click", async (e) => {
   const btn = e.target.closest("button");
@@ -2251,8 +3939,7 @@ document.addEventListener("click", async (e) => {
   const copyActions = {
     "copySummary": () => document.getElementById("summary")?.value || "",
     "copyThumb": () => state.thumb || document.getElementById("thumbPrompt")?.textContent || "",
-    "copyThumbText": () => state.thumbText || document.getElementById("thumbText")?.textContent || "",
-    "copyFinalBtn": () => document.getElementById("finalPrompt")?.textContent || ""
+    "copyThumbText": () => state.thumbText || document.getElementById("thumbText")?.textContent || ""
   };
 
   if (copyActions[btn.id]) {
@@ -2268,6 +3955,15 @@ document.addEventListener("click", async (e) => {
     e.stopPropagation();
     const refEl = document.getElementById("ref_" + btn.dataset.copyref);
     await copyText(refEl?.value || "", btn);
+    return;
+  }
+
+  if (btn.dataset.copyTarget) {
+    e.preventDefault();
+    e.stopPropagation();
+    const targetEl = document.getElementById(btn.dataset.copyTarget);
+    const text = targetEl?.textContent || targetEl?.value || "";
+    await copyText(text, btn);
     return;
   }
 });
@@ -2297,16 +3993,22 @@ if (collapseSettingsBtn) {
   };
 }
 
-// ✅ စတင်ချိန် – ခလုတ်အားလုံးကို ပုံမှန်အခြေအနေ သတ်မှတ်ပေး
+// ==================================================
+// 🚀 Init — All buttons to ready state
+// ==================================================
 document.querySelectorAll(".btn-with-robot").forEach(btn => {
   const robot = btn.querySelector(".btn-robot");
   if (robot) robot.classList.add("robot-ready");
 });
 
 if (typeof renderChars === "function") renderChars();
+if (typeof renderEpisodeStructure === "function") renderEpisodeStructure();
+if (typeof renderScriptStructure === "function") renderScriptStructure();
+if (typeof renderPhotoPrompts === "function") renderPhotoPrompts();
 if (typeof renderExtras === "function") renderExtras();
 if (typeof updatePreviousButton === "function") updatePreviousButton();
+
 </script>
 
 </body>
-  </html>
+</html>  
