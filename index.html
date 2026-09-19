@@ -1983,21 +1983,22 @@ function renderFinalPrompts(){
     <button class="secondary copy" data-copy-master="1" style="margin-bottom:12px">📋 Master Header Copy လုပ်ရန်</button>
   `;
 
-state.finalScenesData.forEach((item, i) => {
-  let sNum = String(i + 1).padStart(2, "0");
-  html += `
-  <div class="final-scene-card">
-    <div class="final-prompt-title">
-      <span>🎬 SCENE ${sNum} VIDEO PROMPT</span>
-      <span class="pill">${item.duration}s</span>
-    </div>
+  state.finalScenesData.forEach((item, i) => {
+    let sNum = String(i + 1).padStart(2, "0");
+    html += `
+    <div class="final-scene-card">
+      <div class="final-prompt-title">
+        <span>🎬 SCENE ${sNum} VIDEO PROMPT</span>
+        <span class="pill">${item.duration}s</span>
+      </div>
 
-    <label style="color:#00f3ff !important; margin-top:4px; display:block;">🎥 Scene ${sNum} Video Prompt (English):</label>
-    <div class="out" id="vid_prompt_${i}" style="margin-top:4px;">${esc(item.videoPrompt)}</div>
-    <button class="secondary copy" data-copy-target="vid_prompt_${i}">📋 Scene ${sNum} Video Prompt Copy</button>
-  </div>
-  `;
-});
+      <label style="color:#00f3ff !important; margin-top:4px; display:block;">🎥 Scene ${sNum} Video Prompt (English):</label>
+      <div class="out" id="vid_prompt_${i}" style="margin-top:4px;">${esc(item.videoPrompt)}</div>
+      <button class="secondary copy" data-copy-target="vid_prompt_${i}">📋 Scene ${sNum} Video Prompt Copy</button>
+    </div>
+    `;
+  });
+
   el.innerHTML = html;
 
   const masterBtn = el.querySelector('[data-copy-master]');
@@ -2019,7 +2020,7 @@ state.finalScenesData.forEach((item, i) => {
 }
 
 // ==========================================
-// 👥 Characters Renderer
+// 👥 Characters Renderer  (FIX ၁)
 // ==========================================
 function renderChars(){
 const b=document.getElementById("charactersContainer");
@@ -2027,7 +2028,7 @@ if(!b)return;
 
 if(!state.characters.length){
 b.innerHTML='<div class="empty" style="margin-top:10px">ဇာတ်ကောင် မရှိသေးပါ။ Auto Detect သို့မဟုတ် Add Character ကိုနှိပ်ပါ။</div>';
-renderRefs();
+// 🆕 renderRefs() ဖျက် — API call မဖြစ်စေရန်
 renderGroups();
 return
 }
@@ -2053,7 +2054,7 @@ b.querySelectorAll(".char-card").forEach(card=>{
 card.onclick=()=>openCharacterModal(+card.dataset.ci)
 });
 
-renderRefs();
+// 🆕 renderRefs() ဖျက် — API call မဖြစ်စေရန်
 renderGroups();
 }
 
@@ -2068,6 +2069,7 @@ let bodyHtml=`
 
 openModal(`ဇာတ်ကောင် #${i+1}: ${esc(c.name||"Unnamed")}`, bodyHtml, `<button class="danger" id="m_del" style="margin-right:auto;">🗑 ဖျက်ရန်</button><button class="primary" id="m_save" style="width:auto;padding:9px 18px;">💾 သိမ်းရန်</button>`);
 
+// 🆕 FIX ၄ — Save → Photo + Final ဖျက်
 document.getElementById("m_save").onclick=()=>{
 state.characters[i].name=document.getElementById("m_name").value.replace(/[^\x00-\x7F]/g,"").trim()||"Character";
 state.characters[i].role=document.getElementById("m_role").value;
@@ -2077,16 +2079,21 @@ state.characters[i].locked=document.getElementById("m_lock").checked;
 closeModal();
 renderChars();
 state.finalScenesData=[];
+state.scenePhotoPrompts=[];
 renderFinalPrompts();
+renderPhotoPrompts();
 };
 
+// 🆕 FIX ၄ — Delete → Photo + Final ဖျက်
 document.getElementById("m_del").onclick=()=>{
 if(confirm("ဒီ ဇာတ်ကောင်ကို ဖျက်မှာ သေချာပါသလား?")){
 state.characters.splice(i,1);
 closeModal();
 renderChars();
 state.finalScenesData=[];
+state.scenePhotoPrompts=[];
 renderFinalPrompts();
+renderPhotoPrompts();
 }
 }
 }
@@ -2106,13 +2113,18 @@ return({
 }
 
 // ==========================================
-// 🖼️ Character Reference Prompt
+// 🖼️ Character Reference Prompt  (FIX ၃)
 // ==========================================
-
 async function refPrompt(c){
   const name = (c.name || "Main Character").replace(/[^\x00-\x7F]/g, "").trim() || "Main Character";
   const age = (c.age || "age appropriate").toString().trim();
-  const role = (c.role || "story character").toString().trim();
+
+  // 🆕 FIX ၃ — Role translate
+  let role = (c.role || "story character").toString().trim();
+  if (role && hasBurmeseText(role)) {
+    const translatedRole = await translateToEnglish(role);
+    if (translatedRole && !hasBurmeseText(translatedRole)) role = translatedRole;
+  }
 
   // Description: Myanmar → English translate
   let description = (c.description || "").trim();
@@ -2130,10 +2142,16 @@ async function refPrompt(c){
 
   return `Full character design sheet, ${age} ${name}, ${role}, ${description}, ${style} character art, ${genre} genre, ${culture} cultural setting. Maintain a highly detailed, consistent, recognizable character identity. Include full-body front view, left 3/4 view, right 3/4 view, side profiles, back view, close-up face shots, costume and accessory detail insets. Keep the EXACT SAME character in every view: identical face, eyes, nose, lips, jawline, skin, age, hairstyle, hair color, body proportions, physique, clothing, costume colors, accessories, footwear, weapons and signature props. IDENTITY LOCK: no identity drift, no age drift, no costume drift. NO WATERMARK, NO LOGO, NO TEXT anywhere. --ar 1:1 --style raw;`;
 }
- 
+
+// 🆕 FIX ၂ — renderRefs() card ဖျောက်ထားရင် return
 async function renderRefs(){
   const b = document.getElementById("refs");
   if(!b) return;
+
+  // 🆕 Card ဖျောက်ထားရင် API call မဖြစ်
+  const card = document.getElementById("characterRefsCard");
+  if (card && card.style.display === "none") return;
+
   if(!state.characters.length){
     b.innerHTML = '<span class="empty">Character ထည့်ပြီးနောက် Reference Prompt ပေါ်လာပါမယ်။</span>';
     return;
@@ -2166,6 +2184,7 @@ async function renderRefs(){
     };
   });
 }
+
 // ==========================================
 // 🧩 Blueprint
 // ==========================================
@@ -2244,7 +2263,7 @@ function estDuration(action, dialogue) {
 }
 
 // ==========================================
-// 🎬 Scenes Renderer (with Duration Bar)
+// 🎬 Scenes Renderer
 // ==========================================
 function renderScenes(){
 const b=document.getElementById("scenes");
@@ -2330,12 +2349,13 @@ renderFinalPrompts();
 function hasBurmeseText(text) {
   return /[\u1000-\u109F]/.test(text);
 }
+
 async function translateToEnglish(text) {
   if (!text || !text.trim()) return "";
   if (!hasBurmeseText(text)) return text;
 
   const apiKey = (document.getElementById("apiKey")?.value || localStorage.getItem("gemini_api_key") || "").trim();
-  if (!apiKey) return text; // ← Fallback ဖျက် — မူရင်းစာ ပြန်
+  if (!apiKey) return text;
 
   try {
     const model = document.getElementById("model").value;
@@ -2357,21 +2377,21 @@ async function translateToEnglish(text) {
     const data = await response.json();
     if (data.error) {
       console.warn("translateToEnglish API error:", data.error.message);
-      return text; // ← မူရင်းစာ ပြန်
+      return text;
     }
     if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
       const result = data.candidates[0].content.parts[0].text.trim();
-      if (hasBurmeseText(result)) return text; // ← မူရင်းစာ ပြန်
+      if (hasBurmeseText(result)) return text;
       return result;
     }
-    return text; // ← မူရင်းစာ ပြန်
+    return text;
   } catch (error) {
     console.warn("translateToEnglish error:", error);
-    return text; // ← မူရင်းစာ ပြန်
+    return text;
   }
 }
+
 async function batchTranslateSceneFields(script) {
-  // Collect all Myanmar fields
   const fields = {
     scene: script.scene || "",
     location: script.location || "",
@@ -2384,7 +2404,6 @@ async function batchTranslateSceneFields(script) {
     atmosphere: script.atmosphere || ""
   };
 
-  // Find which fields have Myanmar text
   const needsTranslation = {};
   Object.entries(fields).forEach(([k, v]) => {
     if (v && hasBurmeseText(v)) {
@@ -2392,13 +2411,12 @@ async function batchTranslateSceneFields(script) {
     }
   });
 
-  // If nothing to translate, return as-is
   if (Object.keys(needsTranslation).length === 0) {
     return fields;
   }
 
   const apiKey = (document.getElementById("apiKey")?.value || localStorage.getItem("gemini_api_key") || "").trim();
-  if (!apiKey) return fields; // No API — return original
+  if (!apiKey) return fields;
 
   try {
     const model = document.getElementById("model").value;
@@ -2426,7 +2444,7 @@ ${JSON.stringify(needsTranslation, null, 2)}`
 
     if (!res.ok) {
       console.warn("batchTranslateSceneFields: API", res.status);
-      return fields; // Fail → return original
+      return fields;
     }
 
     const data = await res.json();
@@ -2441,7 +2459,6 @@ ${JSON.stringify(needsTranslation, null, 2)}`
       return fields;
     }
 
-    // Merge translated fields back
     Object.keys(needsTranslation).forEach(k => {
       if (parsed[k] && typeof parsed[k] === "string" && !hasBurmeseText(parsed[k])) {
         fields[k] = parsed[k];
@@ -2454,7 +2471,7 @@ ${JSON.stringify(needsTranslation, null, 2)}`
     return fields;
   }
 }
-  
+
 async function translateToTargetLanguage(text, targetLangName) {
   if (!text || !text.trim()) return "";
 
@@ -2524,7 +2541,6 @@ function renderEpisodeStructure(){
       <button class="danger copy" data-delete-episode="${i}" style="margin-top:8px">🗑️ အပိုင်း ${String(i+1).padStart(2,"0")} ဖျက်ရန်</button>
     </div>`).join("");
 
-  // 🆕 + Add Episode button
   el.innerHTML += `
     <button class="primary" id="addEpisodeBtn" style="margin-top:10px">
       ➕ အပိုင်း အသစ် ထည့်ရန်
@@ -2533,7 +2549,6 @@ function renderEpisodeStructure(){
 
   bindWorkflowInputs();
 
-  // Bind delete episode
   el.querySelectorAll("[data-delete-episode]").forEach(btn=>{
     btn.onclick = ()=>{
       const i = +btn.dataset.deleteEpisode;
@@ -2543,7 +2558,6 @@ function renderEpisodeStructure(){
     };
   });
 
-  // Bind add episode
   const addBtn = document.getElementById("addEpisodeBtn");
   if(addBtn){
     addBtn.onclick = ()=>{
@@ -2560,6 +2574,7 @@ function renderEpisodeStructure(){
     };
   }
 }
+
 async function translateToMyanmar(text) {
   if (!text || !text.trim()) return "";
   if (hasBurmeseText(text)) return text;
@@ -2589,7 +2604,6 @@ async function translateToMyanmar(text) {
     const result = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!result) return text;
-    // If result still has English (no Myanmar), keep original
     if (!hasBurmeseText(result)) return text;
     return result;
   } catch (err) {
@@ -2597,6 +2611,7 @@ async function translateToMyanmar(text) {
     return text;
   }
 }
+
 async function autoTranslateEpisodeAll(){
   if(!state.episodes?.length) return;
 
@@ -2606,19 +2621,18 @@ async function autoTranslateEpisodeAll(){
     for(const key of fields){
       const v = ep[key]?.trim() || "";
       if(!v) continue;
-      if(hasBurmeseText(v)) continue; // မြန်မာဖြစ်ပြီးသား
+      if(hasBurmeseText(v)) continue;
       if(!/[a-zA-Z]/.test(v)) continue;
 
-      // English → Myanmar
       const my = await translateToMyanmar(v);
       if(my) ep[key] = my;
     }
   }
 }
+
 async function autoFillEmptyEpisodeFields(){
   if(!state.episodes?.length) return;
 
-  // Empty fields တွေ ရှိလား စစ်
   const fields = ["story_purpose","main_conflict","key_events","turning_point","ending_hook"];
   let hasEmpty = false;
   for(const ep of state.episodes){
@@ -2652,7 +2666,6 @@ Return ONLY JSON:
         fields.forEach(key=>{
           const cur = state.episodes[i][key]?.trim() || "";
           const nv = String(newEp[key]||"").trim();
-          // Only fill if current is empty
           if(!cur && nv){
             state.episodes[i][key] = nv;
           }
@@ -2663,6 +2676,7 @@ Return ONLY JSON:
     console.warn("Auto-fill empty episode fields failed:", e);
   }
 }
+
 async function generateEpisodeStructure(){
   const summary=document.getElementById("summary")?.value.trim()||"";
   const story=document.getElementById("story")?.value.trim()||"";
@@ -2700,7 +2714,6 @@ Return ONLY JSON:
 
     if(!state.episodes.length)throw Error("Episode Structure မရပါ။");
 
-    // 🆕 Auto-translate any English that slipped through + auto-fill empty fields
     if(status)status.textContent="⏳ မြန်မာလို ပြန်ဘာသာပြန်နေပါတယ်...";
     await autoTranslateEpisodeAll();
     if(status)status.textContent="⏳ Empty field များ ဖြည့်နေပါတယ်...";
@@ -2721,8 +2734,9 @@ Return ONLY JSON:
   renderEpisodeStructure();
   if(status && !status.textContent.startsWith("⚠️"))status.textContent="✓ Episode Structure အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ။ ပြင်လိုပါက textarea တွင် တိုက်ရိုက်ပြင်နိုင်ပါသည်။";
 }
+
 // ==========================================
-// 📝 Script Structure — 10 Fields (မြန်မာ)
+// 📝 Script Structure — 10 Fields
 // ==========================================
 function workflowInput(i,type,en,mm,key,value){
   return `<div class="script-field">
@@ -2741,16 +2755,13 @@ function bindWorkflowInputs(){
       state.finalScenesData=[];
     };
 
-    // 🆕 onblur — English ပါလာရင် auto translate မြန်မာလို
     el.onblur = async ()=>{
       const i=+el.dataset.wfIndex,key=el.dataset.wfKey,type=el.dataset.wfType;
       const val = el.value.trim();
       if(!val) return;
-      // English text (no Myanmar) + contains Latin letters
       if(hasBurmeseText(val)) return;
       if(!/[a-zA-Z]/.test(val)) return;
 
-      // Translate to Myanmar
       const my = await translateToMyanmar(val);
       if(my && my !== val){
         el.value = my;
@@ -2761,6 +2772,7 @@ function bindWorkflowInputs(){
     };
   });
 }
+
 function renderScriptStructure(){
   const el=document.getElementById("scriptStructure");
   if(!el)return;
@@ -2855,7 +2867,7 @@ Preserve exact scene meaning and locked character identity.`);
 }
 
 // ==========================================
-// 🎨 Scene Photo Prompts — မြန်မာ + English (၂ မျိုး)
+// 🎨 Scene Photo Prompts
 // ==========================================
 function renderPhotoPrompts(){
   const el=document.getElementById("photoPrompts");
@@ -2879,11 +2891,13 @@ function renderPhotoPrompts(){
         <label>🇲🇲 မြန်မာ Prompt <span class="sub">(ပြင်လို့ရ)</span></label>
         <textarea class="photo-prompt-box" data-photo-my="${i}">${esc(p.prompt_my||"")}</textarea>
       </div>
+
       <div class="script-field" style="margin-top:8px">
         <label>🇬🇧 English Prompt <span class="sub">(auto — မြန်မာ ပြင်ရင် auto update)</span></label>
         <textarea class="photo-prompt-box" data-photo-en="${i}">${esc(p.prompt_en||"")}</textarea>
         <button class="secondary copy" data-copy-photo-en="${i}" style="margin-top:6px">📋 English Prompt Copy</button>
       </div>
+
       <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
         <button class="secondary" data-regen-photo="${i}" style="flex:1;min-width:120px">🔄 ဒီ Scene ပြန် Generate</button>
         <button data-confirm-photo="${i}" style="${confirmStyle};flex:1;min-width:120px;padding:11px 13px;border-radius:12px;font-weight:800;font-size:13px;cursor:pointer">${confirmText}</button>
@@ -2891,7 +2905,6 @@ function renderPhotoPrompts(){
     </div>`;
   }).join("");
 
-  // Bind textarea inputs
   el.querySelectorAll("[data-photo-my]").forEach(t=>{
     t.oninput = debounce(async ()=>{
       const i = +t.dataset.photoMy;
@@ -2899,14 +2912,12 @@ function renderPhotoPrompts(){
       state.scenePhotoPrompts[i].prompt_my = t.value;
       state.scenePhotoPrompts[i].confirmed = false;
       state.finalScenesData = [];
-      // Auto translate → English
       const en = await translateToEnglish(t.value);
       if(en && state.scenePhotoPrompts[i]){
         state.scenePhotoPrompts[i].prompt_en = en;
         const enEl = document.querySelector(`[data-photo-en="${i}"]`);
         if(enEl) enEl.value = en;
       }
-      // Reset confirm button
       const cBtn = document.querySelector(`[data-confirm-photo="${i}"]`);
       if(cBtn){
         cBtn.textContent = "✅ Confirm";
@@ -2930,7 +2941,6 @@ function renderPhotoPrompts(){
     };
   });
 
-  // Bind Confirm
   el.querySelectorAll("[data-confirm-photo]").forEach(btn=>{
     btn.onclick = ()=>{
       const i = +btn.dataset.confirmPhoto;
@@ -2946,7 +2956,7 @@ function renderPhotoPrompts(){
       playSound('success');
     };
   });
-  // Bind Copy English Prompt (Scene တိုင်း)
+
   el.querySelectorAll("[data-copy-photo-en]").forEach(btn=>{
     btn.onclick = (ev) => {
       ev.preventDefault();
@@ -2958,7 +2968,6 @@ function renderPhotoPrompts(){
     };
   });
 
-  // Bind Re-generate per scene
   el.querySelectorAll("[data-regen-photo]").forEach(btn=>{
     btn.onclick = async ()=>{
       const i = +btn.dataset.regenPhoto;
@@ -2966,7 +2975,7 @@ function renderPhotoPrompts(){
       btn.disabled = true;
       btn.textContent = "⏳ ဖန်တီးနေသည်...";
       try{
-      const d = await callGemini(`Create ONE keyframe photo prompt for scene ${i+1} only.
+        const d = await callGemini(`Create ONE keyframe photo prompt for scene ${i+1} only.
 Use the 10-field Structure below as PRIMARY SOURCE.
 
 === LOCKED CHARACTERS ===
@@ -2998,7 +3007,6 @@ Return ONLY JSON:
   });
 }
 
-// Debounce helper
 function debounce(fn, delay){
   let t;
   return function(...args){
@@ -3039,7 +3047,6 @@ async function generateScenePhotoPrompts(){
     duration: s.duration || state.scenes[i]?.duration || 5
   }));
 
-  // 🆕 LOCKED CHARACTERS — full details
   const lockedChars = state.characters.filter(c=>c.locked!==false).map(c=>({
     name: c.name,
     role: c.role,
@@ -3095,14 +3102,12 @@ END every prompt_en with: --ar ${val("Aspect Ratio").includes("16:9") ? "16:9" :
       confirmed:false
     }));
 
-    // Fallback if missing
     for (let i = 0; i < state.scenePhotoPrompts.length; i++) {
       const p = state.scenePhotoPrompts[i];
       if(!p.prompt_my) p.prompt_my = await buildLocalPhotoPromptMy(state.productionScripts[i], state.scenes[i], i);
       if(!p.prompt_en) p.prompt_en = await buildLocalPhotoPromptEn(state.productionScripts[i], state.scenes[i], i);
     }
   }catch(e){
-    // Full local fallback
     state.scenePhotoPrompts = [];
     for (let i = 0; i < state.scenes.length; i++) {
       const my = await buildLocalPhotoPromptMy(state.productionScripts[i], state.scenes[i], i);
@@ -3122,7 +3127,7 @@ END every prompt_en with: --ar ${val("Aspect Ratio").includes("16:9") ? "16:9" :
 }
 
 // ==========================================
-// 📸 Local Photo Prompt Builders (Myanmar + English)
+// 📸 Local Photo Prompt Builders
 // ==========================================
 async function buildLocalPhotoPromptMy(script, scene, i){
   if(!script) script = {};
@@ -3151,7 +3156,6 @@ async function buildLocalPhotoPromptEn(script, scene, i){
   if(!script) script = {};
   const lockedChars = state.characters.filter(c=>c.locked!==false);
 
-  // Build character design lock (Myanmar → English)
   const charLocks = [];
   for (const c of lockedChars) {
     let desc = (c.description || "").trim();
@@ -3196,22 +3200,20 @@ ${stylePhrase()} art style, ${val("Genre")} genre, ${val("Setting Culture")} cul
 }
 
 // ==========================================
-// 🎥 Build Scene Prompt Object (Photo EN → Video EN)
+// 🎥 Build Scene Prompt Object
 // ==========================================
 async function buildScenePromptObject(s, i) {
   const editedPhoto = state.scenePhotoPrompts?.[i]?.prompt_en?.trim() || "";
   const script = state.productionScripts?.[i] || {};
 
   let chars = script.participants || s.characters?.join(", ") || state.characters.filter(c=>c.locked!==false).map(c=>c.name).join(", ") || "Main character";
-if (hasBurmeseText(chars)) {
-  const translatedChars = await translateToEnglish(chars);
-  if (translatedChars && !hasBurmeseText(translatedChars)) chars = translatedChars;
-}
+  if (hasBurmeseText(chars)) {
+    const translatedChars = await translateToEnglish(chars);
+    if (translatedChars && !hasBurmeseText(translatedChars)) chars = translatedChars;
+  }
 
-  // 🆕 BATCH TRANSLATE — တစ်ခါတည်း (API 1 ကြိမ်ပဲ)
   const tr = await batchTranslateSceneFields(script);
 
-  // Use translated (or original if translation failed)
   const sceneName = tr.scene || "";
   const location = tr.location || val("Setting Culture");
   const englishAction = tr.action || "";
@@ -3221,17 +3223,14 @@ if (hasBurmeseText(chars)) {
   const sfx = tr.sfx || val("Audio Style");
   const atmosphere = tr.atmosphere || (val("Genre") + " mood");
 
-  // ============ DIALOGUE ============
   let dialogueText = "";
   const rawDialogue = (script.dialogue || s.dialogue || "").trim();
   const selectedLang = val("Language");
 
   if (rawDialogue && selectedLang !== "No Dialogue") {
-    // Dialogue ကို batch ထဲမှာ ပြန်ပြီးသား
     let dialogueEn = tr.dialogue || "";
 
     if (selectedLang === "Myanmar") {
-      // မြန်မာ + English ရော
       const romanized = dialogueEn && !hasBurmeseText(dialogueEn) ? dialogueEn : "";
       dialogueText = `, character says in Burmese: "${rawDialogue}"`;
       if (romanized) dialogueText += ` (romanized: "${romanized}")`;
@@ -3239,11 +3238,9 @@ if (hasBurmeseText(chars)) {
       if (dialogueEn && !hasBurmeseText(dialogueEn)) {
         dialogueText = `, character says: "${dialogueEn}"`;
       } else {
-        // Translate fail → မြန်မာလိုပဲ ထည့်
         dialogueText = `, character says in Burmese: "${rawDialogue}"`;
       }
     } else {
-      // တခြား ဘာသာစကား
       const translated = await translateToTargetLanguage(rawDialogue, selectedLang);
       if (translated && translated !== `[${selectedLang}]`) {
         dialogueText = `, character says speaking in ${selectedLang}: "${translated}"`;
@@ -3251,7 +3248,6 @@ if (hasBurmeseText(chars)) {
     }
   }
 
-  // ============ VIDEO PROMPT ============
   let videoPrompt = `High quality video sequence, Scene ${String(i+1).padStart(2,"0")}${sceneName ? " — "+sceneName : ""}. `;
   videoPrompt += `Location: ${location}. `;
   videoPrompt += `Participants: ${chars}. `;
@@ -3261,22 +3257,23 @@ if (hasBurmeseText(chars)) {
   videoPrompt += `Lighting: ${lighting}. `;
   if (sfx) videoPrompt += `SFX: ${sfx}. `;
   if (atmosphere) videoPrompt += `Atmosphere: ${atmosphere}. `;
-    const aspect = val("Aspect Ratio").includes("16:9") ? "16:9" : "9:16";
+  const aspect = val("Aspect Ratio").includes("16:9") ? "16:9" : "9:16";
   videoPrompt += `${stylePhrase()} style, ${val("Genre")} genre, ${val("Setting Culture")} culture, ${val("Video Quality")}, 8k resolution, cinematic lighting, 60fps. --ar ${aspect}`;
 
-  // ============ PHOTO PROMPT ============
   let photoPrompt;
   if (editedPhoto) {
     photoPrompt = editedPhoto;
   } else {
     photoPrompt = await buildLocalPhotoPromptEn(script, s, i);
   }
+
   return {
     videoPrompt,
     photoPrompt,
     duration: script.duration || s.duration || 5
   };
 }
+
 // ==========================================
 // ⚡ Build Final From Scenes
 // ==========================================
@@ -3306,7 +3303,6 @@ async function buildFinalFromScenes() {
   const statusEl = document.getElementById("finalStatus");
   if (statusEl) statusEl.textContent = "⏳ Final Video Prompt ဖန်တီးနေပါတယ်...";
 
-  // Warning for unconfirmed
   const unconfirmed = state.scenePhotoPrompts.filter(p=>!p.confirmed);
   if (unconfirmed.length && state.scenePhotoPrompts.length) {
     const msg = `Scene ${unconfirmed.map((_,i)=>i+1).join(", ")} ကို Confirm မလုပ်ရသေးဘူး။ ဆက်မလား?`;
